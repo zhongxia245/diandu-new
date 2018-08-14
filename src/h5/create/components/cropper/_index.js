@@ -13,16 +13,7 @@ export default class ModalCropper extends Component {
   }
 
   onCropper = () => {
-    // let imgData = this.refs.cropper.getCroppedCanvas().toDataURL()
-    // let blobImg = convertBase64UrlToBlob(imgData)
-    // let formData = new FormData()
-    // let nameImg = `${new Date().getTime()}.png`
-    // formData.append('file', blobImg, nameImg)
-    // Axios.post(BASE_URL + '/php/webuploader.php', formData).then(resp => {
-    //   this.props.onClose(resp.data)
-    // })
-
-    uploadBase64Img(this.refs.cropper.getCroppedCanvas()).then(result => {
+    uploadBase64Img(this.cropper.getCroppedCanvas()).then(result => {
       this.props.onClose(result.data)
     })
   }
@@ -32,7 +23,9 @@ export default class ModalCropper extends Component {
     return (
       <div className="react-cropper">
         <Cropper
-          ref="cropper"
+          ref={dom => {
+            this.cropper = dom
+          }}
           src={url}
           style={{ height: 400, width: '100%' }}
           // Cropper.js options

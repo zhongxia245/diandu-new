@@ -30,7 +30,6 @@ let showDelConfirm = false
 let confirmModal = null
 
 class Point extends Component {
-  Ï
   constructor(props) {
     super(props)
     this.state = {

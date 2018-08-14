@@ -17,6 +17,8 @@ const NormalPoint = ({
   other,
   active,
   getPageItemBgAutoWH,
+  setPointData,
+  getPointData,
   ...otherProps
 }) => {
   let autoWH = getPageItemBgAutoWH(other.baseInfo)
@@ -114,7 +116,19 @@ const CustomImg = ({
 
 // 区域点读点
 const CustomArea = props => {
-  const { data, pageIndex, pointIndex, className, style, other, active, getPageItemBgAutoWH, ...otherProps } = props
+  const {
+    data,
+    pageIndex,
+    pointIndex,
+    className,
+    style,
+    other,
+    active,
+    getPageItemBgAutoWH,
+    setPointData,
+    getPointData,
+    ...otherProps
+  } = props
   let autoWH = getPageItemBgAutoWH(other.baseInfo)
   let pointStyle = {
     left: data.x * autoWH.width,
