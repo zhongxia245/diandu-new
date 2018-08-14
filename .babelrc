@@ -1,0 +1,27 @@
+{
+  "plugins": [
+    [
+      "transform-runtime",
+      {
+        "polyfill": true
+      }
+    ],
+    [
+      "import",
+      {
+        "libraryName": "antd-mobile",
+        "style": "css"
+      }
+    ]
+  ],
+  "presets": [
+    [
+      "env",
+      {
+        "modules": false
+      }
+    ],
+    "stage-0",
+    "react"
+  ]
+}

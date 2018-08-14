@@ -1,0 +1,25 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 498.73770491803276 365.076" enable-background="new 0 0 500 365.076" xml:space="preserve" class="horizontalOnly" style="position: absolute;">
+<g id="hx">
+	<g id="nw" transform="translate(0,0) scale(1,1)">
+		<g>
+			<polygon fill="#BE8431" points="0,0 120.403,182.538 0,365.076 126.5,365.076 126.5,0 		" class="color-1" data-color="#BE8431"></polygon>
+		</g>
+	</g>
+	<g id="ne" transform="translate(0,0) scale(1,1)">
+		<g>
+			<polygon fill="#BE8431" points="394.609,0 347.841,0 453.228,182.538 347.841,365.076 394.609,365.076 500,182.538 		" class="color-1" data-color="#BE8431"></polygon>
+		</g>
+		<g>
+			<polygon fill="#BE8431" points="301.069,0 254.298,0 359.688,182.538 254.298,365.076 301.069,365.076 406.453,182.538 		" class="color-1" data-color="#BE8431"></polygon>
+		</g>
+		<g>
+			<polygon fill="#BE8431" points="210.777,0 210.777,365.076 316.168,182.538 		" class="color-1" data-color="#BE8431"></polygon>
+		</g>
+	</g>
+	<g id="n" transform="translate(0,0) scale(1,1)">
+		<g>
+			<rect x="126.5" fill="#BE8431" width="85" height="368.215" class="color-1" data-color="#BE8431"></rect>
+		</g>
+	</g>
+</g>
+</svg>

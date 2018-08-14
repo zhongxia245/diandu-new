@@ -1,0 +1,70 @@
+@pointActiveBgColor: #ff7c80; // 点读点选中的颜色
+@pointBgColor: #66cccc; // 点读点背景色
+.point {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: @pointBgColor;
+  color: #fff;
+  font-size: 26px;
+  user-select: none;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.point--active {
+  background-color: @pointActiveBgColor; // filter: drop-shadow(@pointActiveBgColor 0px 0px 10px);
+}
+
+.point__custom-area--rect {
+  border-radius: 0;
+}
+
+.point__custom-area--circle {
+  border-radius: 50%;
+}
+
+.point__custom-area--square {
+  border-radius: 0;
+}
+
+.point__custom-text {
+  p {
+    position: absolute;
+    width: 200%;
+    height: auto;
+    text-align: center;
+    top: 105%;
+    left: -50%;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    background: #08a1ef;
+    padding: 5px 10px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+}
+
+.point__custom-img {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  width: 100%;
+  height: auto;
+}
+
+.point__custom-area--video {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.point__custom-shape {
+  border-radius: 0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: 0;
+}

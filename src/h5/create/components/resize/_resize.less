@@ -1,0 +1,97 @@
+@resizeBtnBorderColor: #0dbf0d; // 改变区域大小的点颜色
+@resizeBtnBgColor: #fff; // 改变区域大小的点颜色
+.u-resize {
+  width: 8px;
+  height: 8px;
+  background: @resizeBtnBgColor;
+  border: 1px solid @resizeBtnBorderColor;
+  position: absolute;
+}
+
+.u-resize__left {
+  left: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: w-resize;
+  border-radius: 50%;
+}
+
+.u-resize__right {
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: e-resize;
+  border-radius: 50%;
+}
+
+.u-resize__top {
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: n-resize;
+  border-radius: 50%;
+}
+
+.u-resize__bottom {
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: s-resize;
+  border-radius: 50%;
+}
+
+.u-resize__lt {
+  top: -4px;
+  left: -4px;
+  cursor: nw-resize;
+}
+
+.u-resize__lb {
+  cursor: sw-resize;
+  left: -4px;
+  bottom: -4px;
+}
+
+.u-resize__rt {
+  right: -4px;
+  top: -4px;
+  cursor: ne-resize;
+}
+
+.u-resize__rb {
+  right: -4px;
+  bottom: -4px;
+  cursor: se-resize;
+}
+
+.u-resize__border-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-left: 1px solid @resizeBtnBorderColor;
+}
+
+.u-resize__border-top {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  border-top: 1px solid @resizeBtnBorderColor;
+}
+
+.u-resize__border-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  border-right: 1px solid @resizeBtnBorderColor;
+}
+
+.u-resize__border-bottom {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border-bottom: 1px solid @resizeBtnBorderColor;
+}

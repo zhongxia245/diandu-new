@@ -1,0 +1,124 @@
+.tools__tip {
+  padding: 15px;
+  text-align: center;
+}
+
+.am-modal-close {
+  cursor: pointer;
+}
+
+/* 上传内容 */
+
+.content-upload {
+  position: relative;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  background: #eee;
+  text-align: center;
+  line-height: 2;
+  cursor: pointer;
+  .content-upload__progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10%;
+    height: 100%;
+    background: #00cc99;
+    z-index: 9;
+  }
+  a[download] {
+    position: absolute;
+    top: 0;
+    top: 50%;
+    right: 10px;
+    font-size: 12px;
+    transform: translateY(-50%);
+  }
+}
+
+/* 富文本编辑器 */
+
+.content-editor {
+  position: relative;
+  .rdw-image-modal {
+    right: 0;
+    left: auto;
+  }
+  .rdw-editor-main {
+    max-height: 450px;
+    .rdw-image-imagewrapper img {
+      max-width: 200px;
+      max-height: 200px;
+    }
+  }
+}
+
+.content-footer__btns {
+  margin-top: 10px;
+  text-align: right;
+  .u-btn {
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+/* 简单输入框样式 */
+
+.content-input {
+  padding: 5px;
+  p {
+    margin-bottom: 10px;
+  }
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #efefef;
+    border-radius: 3px;
+  }
+}
+
+/* 点击按钮出现弹窗样式 */
+
+.content-button {
+  padding: 15px;
+  p {
+    margin-bottom: 20px;
+  }
+  .u-btn {
+    display: block;
+  }
+}
+
+.modal__content-editor {
+  width: 800px;
+  .modal-mul-notes__tab {
+    position: relative;
+    width: 100%;
+    user-select: none;
+    .am-icon {
+      position: absolute;
+      right: 5px;
+      top: 0px;
+      cursor: pointer;
+    }
+  }
+  .modal-mul-notes__footer {
+    margin-top: 15px;
+    .u-btn {
+      margin-right: 10px;
+    }
+  }
+  .rdw-editor-main {
+    height: 300px;
+  }
+  .rdw-image-imagewrapper {
+    img {
+      max-width: 200px;
+    }
+  }
+  .am-tabs-default-bar-tab {
+    cursor: pointer;
+  }
+}
