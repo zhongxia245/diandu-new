@@ -21,31 +21,3 @@ export function isiPad() {
 export function isMobile() {
   return !!navigator.userAgent.match(/AppleWebKit.*Mobile.*/)
 }
-
-/**
- * 比较版本号 ，大于等于返回 true
- * @param {string} version1  版本1
- * @param {string} version2  版本2
- */
-export function compareVersion(version1, version2) {
-  version1 = version1.split('.')
-  version2 = version2.split('.')
-  if (parseInt(version1[0], 10) > parseInt(version2[0], 10)) {
-    return true
-  } else if (parseInt(version1[0], 10) < parseInt(version2[0], 10)) {
-    return false
-  } else {
-    if (parseInt(version1[1], 10) > parseInt(version2[1], 10)) {
-      return true
-    } else if (parseInt(version1[1], 10) < parseInt(version2[1], 10)) {
-      return false
-    } else {
-      if (parseInt(version1[2], 10) > parseInt(version2[2], 10)) {
-        return true
-      } else if (parseInt(version1[2], 10) < parseInt(version2[2], 10)) {
-        return false
-      }
-    }
-  }
-  return true
-}

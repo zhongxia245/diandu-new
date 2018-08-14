@@ -32,8 +32,7 @@ const defaultConfig = {
   // 文件引用路径别名
   alias: {
     common: path.resolve(__dirname, 'src/common'),
-    '@create': path.resolve(__dirname, 'src/h5/create'),
-    '@show': path.resolve(__dirname, 'src/h5/show')
+    '@h5': path.resolve(__dirname, 'src/h5')
   },
   // rem 转换基准
   basePixel: 100,
@@ -56,8 +55,7 @@ const defaultConfig = {
    * html: h5/create.pug => h5/create/index.jsx
    */
   injectCheck: (html, js) => {
-    let matchHtml = html.replace('.pug', '')
-    return `${matchHtml}/index` === js
+    return html === js
   }
 }
 

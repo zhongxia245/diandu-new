@@ -1,7 +1,7 @@
 import Axios from 'axios'
 import { Toast } from 'antd-mobile'
 import { isDev, urlParam } from 'common/js/utils'
-import { saveHandler, getHandler } from './_data_handler'
+import { saveHandler, getHandler } from './data_handler'
 import queryString from 'common/js/utils/query_string'
 import { convertBase64UrlToBlob } from '@h5/page/create/utils/_index'
 

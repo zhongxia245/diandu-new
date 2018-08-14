@@ -1,37 +1,4 @@
-import localCache from './local_cache.js'
 import queryString from './query_string'
-/**
- * 数字增加千位浮
- * 1000001 => 1,000,001
- * @param {*} number
- * @param {*} places
- * @param {*} symbol
- * @param {*} thousand
- * @param {*} decimal
- */
-const formatNum = (number, places, symbol, thousand, decimal) => {
-  number = number || 0
-  places = !isNaN((places = Math.abs(places))) ? places : 0
-  symbol = symbol !== undefined ? symbol : ''
-  thousand = thousand || ','
-  decimal = decimal || '.'
-  let i, j
-  let negative = number < 0 ? '-' : ''
-  i = parseInt((number = Math.abs(+number || 0).toFixed(places)), 10) + ''
-  j = (j = i.length) > 3 ? j % 3 : 0
-  return (
-    symbol +
-    negative +
-    (j ? i.substr(0, j) + thousand : '') +
-    i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + thousand) +
-    (places
-      ? decimal +
-        Math.abs(number - i)
-          .toFixed(places)
-          .slice(2)
-      : '')
-  )
-}
 
 /**
  * 时间格式化
@@ -59,34 +26,6 @@ const dateFormat = (date, format) => {
     }
   }
   return format
-}
-
-/**
- * 生成UUID
- * example: uuid(10)
- */
-const uuid = (len, radix) => {
-  let chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('')
-  let uuid = []
-  let i
-  radix = radix || chars.length
-
-  if (len) {
-    for (i = 0; i < len; i++) uuid[i] = chars[0 | (Math.random() * radix)]
-  } else {
-    let r
-    uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-'
-    uuid[14] = '4'
-
-    for (i = 0; i < 36; i++) {
-      if (!uuid[i]) {
-        r = 0 | (Math.random() * 16)
-        uuid[i] = chars[i === 19 ? (r & 0x3) | 0x8 : r]
-      }
-    }
-  }
-
-  return uuid.join('')
 }
 
 // 是否为本地开发
@@ -213,15 +152,4 @@ const getVideoImage = (src, currentTime, callback, scale) => {
   })
 }
 
-export {
-  queryString,
-  localCache,
-  uuid,
-  formatNum,
-  isDev,
-  dateFormat,
-  urlParam,
-  calculateWHByDom,
-  hex2Rgba,
-  getVideoImage
-}
+export { queryString, isDev, dateFormat, urlParam, calculateWHByDom, hex2Rgba, getVideoImage }

@@ -1,0 +1,43 @@
+// @import '~swiper/dist/css/swiper.min.css';
+@import '../../../common/css/_base.less';
+html,
+body,
+#container,
+.show,
+.swiper-container-horizontal,
+.swiper-wrapper,
+.swiper-slide {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-pagination {
+  color: #333;
+}
+
+.show {
+  display: flex;
+  flex-direction: column;
+  @media @desktop {
+    flex-direction: row;
+  }
+  @media @mobile {
+    .swiper-button-prev,
+    .swiper-button-next {
+      display: none;
+    }
+  }
+}
+
+#bg-audio__mask {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: transparent;
+}
+
+.u-padding-10 {
+  padding: 10px;
+}
