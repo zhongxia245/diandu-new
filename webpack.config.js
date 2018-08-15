@@ -5,7 +5,7 @@ const glob = require('glob')
 const HappyPack = require('happypack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const QiniuPlugin = require('./webpack.qiniu')
+// const QiniuPlugin = require('./webpack.qiniu')
 
 const CONFIG = require('./config')
 
@@ -23,8 +23,8 @@ const getEntries = pattern => {
   }, {})
 }
 
-const jsRegx = `src/${CONFIG.inputPath}/**/*.jsx`
-const htmlRegx = `src/${CONFIG.inputPath}/**/*.pug`
+const jsRegx = `${CONFIG.inputPath}/**/*.jsx`
+const htmlRegx = `${CONFIG.inputPath}/**/*.pug`
 const jsEntries = isLocal && CONFIG.useOnly ? CONFIG.only : getEntries(jsRegx)
 const htmlEntries = getEntries(htmlRegx)
 

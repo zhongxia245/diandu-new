@@ -26,13 +26,13 @@ const defaultConfig = {
     }
   },
   // 入口目录
-  inputPath: 'h5',
+  inputPath: 'src',
   // 输出目录
   outputPath: 'dist',
   // 文件引用路径别名
   alias: {
     common: path.resolve(__dirname, 'src/common'),
-    '@h5': path.resolve(__dirname, 'src/h5')
+    '@': path.resolve(__dirname, 'src')
   },
   // rem 转换基准
   basePixel: 100,
@@ -46,13 +46,13 @@ const defaultConfig = {
   useOnly: false,
   // 选择性打包入口
   only: {
-    'h5/create/index': path.resolve(__dirname, 'src/h5/create/index.jsx'),
-    'h5/show/index': path.resolve(__dirname, 'src/h5/show/index.jsx')
+    'create/index': path.resolve(__dirname, 'src/page/create/index.jsx'),
+    'show/index': path.resolve(__dirname, 'src/page/show/index.jsx')
   },
   /**
    * js 选择性注入判断函数
    * eg：
-   * html: h5/create.pug => h5/create/index.jsx
+   * html: src/create.pug => src/create/index.jsx
    */
   injectCheck: (html, js) => {
     return html === js
