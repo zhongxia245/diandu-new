@@ -70,7 +70,11 @@ class App extends Component {
         callback: result => {
           if (result) {
             let covers = getFieldValue('covers') || []
-            covers[index] = result
+            if (isDev()) {
+              covers[index] = result
+            } else {
+              covers[index] = `/edu/course/diandu_v1/${result}`
+            }
             setFieldsValue({ covers: covers })
           }
         }

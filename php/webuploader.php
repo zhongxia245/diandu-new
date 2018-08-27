@@ -36,7 +36,7 @@ function resize_image($uploadedfile, $dst)
 
 // 设置上传目录;
 $path = "../uploads/";
-$returnPath = "../uploads/";
+$returnPath = "./uploads/";
 
 if (!empty($_FILES)) {
 	// 	得到上传的临时文件流;

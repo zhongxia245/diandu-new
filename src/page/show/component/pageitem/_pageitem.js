@@ -39,7 +39,7 @@ export default class PageItem extends Component {
     }
 
     return (
-      <div className={classnames('pageitem', className)}>
+      <div className={classnames('pageitem', `pageitem-${pageIndex}`, className)}>
         {/* use swiper lazy load image */}
         <div className="pageitem__wrapper swiper-lazy" style={style} data-background={baseInfo.bgSrc}>
           {points.map((point, index) => {

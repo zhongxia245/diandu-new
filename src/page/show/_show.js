@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import classnames from 'classnames'
-import Swiper from 'swiper/dist/js/swiper.js'
+import 'swiper/dist/css/swiper.min.css'
+import Swiper from 'swiper/dist/js/swiper.min.js'
 import { isMobile } from 'common/js/utils/user_agent.js'
 import { PageItem, Header } from './component/_index'
 import Event from 'common/js/event.js'
 import { EVENT_NAME } from './common/_const'
-import { runAnimation } from './common/_animation'
+import { runAnimation, runBlink } from './common/_animation'
 export default class Show extends Component {
   constructor(props) {
     super(props)
@@ -44,7 +45,8 @@ export default class Show extends Component {
       on: {
         transitionEnd: swiper => {
           let pointData = pages[this.swiper.activeIndex]
-          runAnimation(pointData, this.swiper.activeIndex)
+          // runAnimation(pointData, this.swiper.activeIndex)
+          runBlink(this.swiper.activeIndex)
         }
       }
     }
@@ -73,6 +75,7 @@ export default class Show extends Component {
       },
       () => {
         this.initSwiper()
+        runBlink(0)
       }
     )
 
@@ -113,10 +116,7 @@ export default class Show extends Component {
     const pages = form.getFieldValue('pages') || []
     return (
       <div className="show">
-        <Header
-          form={this.props.form}
-          bgAudioSrc={this.props.data.bgAudio && this.props.data.bgAudio.src}
-        />
+        <Header form={this.props.form} bgAudioSrc={this.props.data.bgAudio && this.props.data.bgAudio.src} />
         <div className="swiper-container pageitem__content">
           <div className="swiper-wrapper">
             {pages.map((item, index) => {
