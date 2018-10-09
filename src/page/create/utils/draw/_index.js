@@ -7,7 +7,7 @@ import './_index.less'
 const DEFAULT_CONFIG = {
   disabled: false,
   useLine: true,
-  drawAfterRemove: true, //绘制完成后，移除DOM节点，使用React来自动渲染
+  drawAfterRemove: true, // 绘制完成后，移除DOM节点，使用React来自动渲染
   type: 'rect'
 }
 

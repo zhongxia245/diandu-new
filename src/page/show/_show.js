@@ -44,7 +44,7 @@ export default class Show extends Component {
       effect: 'slide', // 'slide'（普通切换、默认）,"fade"（淡入）"cube"（方块）"coverflow"（3d流）"flip"（3d翻转）
       on: {
         transitionEnd: swiper => {
-          let pointData = pages[this.swiper.activeIndex]
+          // let pointData = pages[this.swiper.activeIndex]
           // runAnimation(pointData, this.swiper.activeIndex)
           runBlink(this.swiper.activeIndex)
         }

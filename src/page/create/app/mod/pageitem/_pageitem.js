@@ -29,7 +29,7 @@ import { POINT_SIZE, PAGE_SIZE, PRE_PAGE_ID, PRE_POINT_CLASS, PRE_PAGE_CLASS, PA
 import PageTplList from './mod/page_tpl_list/_page_tpl_list'
 import PageShape from './mod/page_shape/_page_shape'
 
-let uploadedCount = 0 //成功上传数量
+let uploadedCount = 0 // 成功上传数量
 let fileCount = 0 // 上传文件列表数量
 
 class PageItem extends Component {

@@ -1,7 +1,7 @@
 /**
  * 处理视频点读点格式设置的一些个性化参数设置【只有视频点读点有的】
  */
-import './_video.less'
+import './index.less'
 import React, { Component } from 'react'
 import { Slider } from 'antd-mobile'
 import CustomModal from 'common/js/components/_custom_modal.js'

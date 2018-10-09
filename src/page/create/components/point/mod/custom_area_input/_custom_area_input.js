@@ -10,7 +10,7 @@ import React, { Component } from 'react'
 import classnames from 'classnames'
 import { ResizeControl } from '@/page/create/components/_index'
 import ContentEditable from 'react-contenteditable'
-import MoveOrClick from '@/page/create/common/_move_or_click'
+import MoveOrClick from '@/page/create/common/move_or_click'
 
 class CustomAreaInput extends Component {
   constructor(props) {

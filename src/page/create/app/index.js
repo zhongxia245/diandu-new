@@ -1,7 +1,7 @@
 /**
  * 2018-03-07 07:52:53
  */
-import './_index.less'
+import './index.less'
 import React, { Component } from 'react'
 import { createForm } from 'rc-form'
 import classnames from 'classnames'
@@ -21,7 +21,7 @@ class App extends Component {
 
   componentDidMount() {
     const { setFieldsValue, getFieldProps } = this.props.form
-    //FIXED: 先注册表单，使用才不用警告
+    // FIXED: 先注册表单，使用才不用警告
     getFieldProps('covers')
     getFieldProps('pages')
     setFieldsValue(this.props.data)
@@ -106,7 +106,7 @@ class App extends Component {
     // return false
   }
 
-  //添加点读页
+  // 添加点读页
   handleAddPage = () => {
     const { setFieldsValue, getFieldValue } = this.props.form
     let pages = getFieldValue('pages')

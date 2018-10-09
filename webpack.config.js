@@ -126,7 +126,7 @@ module.exports = {
     proxy: CONFIG.proxy,
     historyApiFallback: true,
     inline: true,
-    progress: true,
+    progress: false,
     compress: true,
     port: CONFIG.port,
     host: '127.0.0.1',

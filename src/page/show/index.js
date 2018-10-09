@@ -1,10 +1,13 @@
 import './_index.less'
 import 'animate.css'
+
 import './handle/_index'
+
 import { createForm } from 'rc-form'
 import { Toast } from 'antd-mobile'
 import queryString from 'common/js/utils/query_string'
 import { getData } from '@/ajax'
+
 import { setShare } from './common/_share'
 import Show from './_show'
 import ReactIScroll from 'react-iscroll'

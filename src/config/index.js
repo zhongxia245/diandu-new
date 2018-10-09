@@ -11,9 +11,9 @@ export const PRE_POINT_CLASS = 'js-point' // 点读点移动标识样式
 
 // 事件参数
 export const EVENT_NAMES = {
-  DISABLED_ADD_POINT: 'event_disabled_add_point', //禁止添加点读点
-  ENABLE_ADD_POINT: 'event_enable_add_point', //允许添加点读点
-  POINT_ADD_CUSTOME: 'point_add_custom' //添加点读点
+  DISABLED_ADD_POINT: 'event_disabled_add_point', // 禁止添加点读点
+  ENABLE_ADD_POINT: 'event_enable_add_point', // 允许添加点读点
+  POINT_ADD_CUSTOME: 'point_add_custom' // 添加点读点
 }
 // 点读点大小
 export const POINT_SIZE = 50

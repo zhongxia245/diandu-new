@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * 该文件会先构建出来，放在common/js/dist目录下
  * 然后在html文件里面直接引用

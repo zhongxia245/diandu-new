@@ -148,7 +148,7 @@ class Point extends Component {
           pointJsx = <CustomImg {...newProps} />
         } else {
           //  if (pointData.customTitle)  这个字段存折自定义点读点的文字内容
-          //自定义文字
+          // 自定义文字
           pointJsx = <CustomText {...newProps} />
         }
       }

@@ -1,4 +1,5 @@
 import queryString from './query_string'
+import uuid from 'uuid/v4'
 
 /**
  * 时间格式化

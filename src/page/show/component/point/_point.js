@@ -348,7 +348,7 @@ class Point extends Component {
           // 自定义图片
           jsx = this.renderCustomImg()
         } else if (pointData.customTitle) {
-          //自定义文字
+          // 自定义文字
           jsx = this.renderCustomText()
         }
       }
