@@ -16,6 +16,9 @@ const DEFAULT_CONFIG = {
   auto: true,
   server: BASE_URL + '/php/webuploader.php', // 'http://webuploader.duapp.com/server/fileupload.php',
   pick: '',
+  // 分片上传，上传大文件的时候，需要分片，否则会撑爆内存
+  chunked: true,
+  chunkSize: 5 * 1024 * 1024, // 默认值 5M
   threads: 1,
   accept: {
     title: 'Images',
