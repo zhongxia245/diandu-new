@@ -1,4 +1,4 @@
-import './_index.less'
+import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
 import Axios from 'axios'
@@ -73,23 +73,13 @@ export default class CustomShapePoint extends Component {
         {...otherProps}
         key={pointIndex}
         style={pointStyle}
-        className={classnames(
-          'point',
-          `point__${pageIndex}_${pointIndex}`,
-          'point__custom-shape',
-          className,
-          {
-            'point--active': active
-          }
-        )}
+        className={classnames('point', `point__${pageIndex}_${pointIndex}`, 'point__custom-shape', className, {
+          'point--active': active
+        })}
         data-index={pointIndex}
       >
         {active ? <ResizeControl {...this.props} /> : ''}
-        {svgData ? (
-          <i dangerouslySetInnerHTML={{ __html: this.state.svgData }} />
-        ) : (
-          ''
-        )}
+        {svgData ? <i dangerouslySetInnerHTML={{ __html: this.state.svgData }} /> : ''}
       </div>
     )
   }

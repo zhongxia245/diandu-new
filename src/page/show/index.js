@@ -1,17 +1,19 @@
-import './_index.less'
+import './index.less'
 import 'animate.css'
+import './handle'
 
-import './handle/_index'
+import React from 'react'
+import ReactDOM from 'react-dom'
 
 import { createForm } from 'rc-form'
 import { Toast } from 'antd-mobile'
+import ReactIScroll from 'react-iscroll'
+import iScroll from 'iscroll'
 import queryString from 'common/js/utils/query_string'
 import { getData } from '@/ajax'
 
 import { setShare } from './common/_share'
-import Show from './_show'
-import ReactIScroll from 'react-iscroll'
-import iScroll from 'iscroll'
+import Show from './show'
 
 let id = queryString('id')
 
@@ -36,7 +38,7 @@ if (id) {
         <ReactIScroll iScroll={iScroll}>
           <RcShow data={data} />
         </ReactIScroll>,
-        document.getElementById('container')
+        document.getElementById('app')
       )
     } else {
       Toast.info('对不起，该点读为收费项目，请付费查看', 100, null, false)

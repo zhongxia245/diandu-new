@@ -2,6 +2,7 @@ import 'webuploader/dist/webuploader.css'
 import './_index.less'
 import React, { Component } from 'react'
 import WebUploader from 'webuploader/dist/webuploader.html5only.min.js'
+import uuid from 'uuid/v4'
 import _ from 'lodash'
 import { isDev } from 'common/js/utils'
 import { Toast } from 'antd-mobile'
@@ -49,6 +50,9 @@ export default class ReactWebUploader extends Component {
     this.uploader = WebUploader.create({
       ...DEFAULT_CONFIG,
       pick: '#' + (id || DEFAULT_PICK),
+      formData: {
+        uuid: uuid()
+      },
       ...config
     })
 

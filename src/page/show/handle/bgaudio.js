@@ -1,7 +1,7 @@
 import { Toast } from 'antd-mobile'
 import Event from 'common/js/event.js'
 import { EVENT_NAME } from '../common/_const'
-import { setAudioSrc } from './_util'
+import { setAudioSrc } from './util'
 
 const bgAudioPlayer = new Audio()
 let isSetBgAudioSrc = false

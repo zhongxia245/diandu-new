@@ -5,7 +5,7 @@
  * 1. 选中该点读点，然后点击才内容，才能进行编辑
  * 2. 如果不想编辑了， 目前的做法是在在其他区域外点击一下
  */
-import './_custom_area_input.less'
+import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
 import { ResizeControl } from '@/page/create/components/_index'

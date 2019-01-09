@@ -45,6 +45,7 @@ class CustomAreaVideo extends Component {
       getPageItemBgAutoWH,
       ...otherProps
     } = this.props
+
     let autoWH = getPageItemBgAutoWH(other.baseInfo)
     let pointStyle = {
       ...style,
@@ -53,7 +54,9 @@ class CustomAreaVideo extends Component {
       width: data.width * autoWH.width,
       height: data.height * autoWH.height
     }
+
     let pointData = data.data || {}
+
     // 有视频海报，则展示，否则去获取视频的第一帧当做海报
     if (this.state.videoPoster) {
       pointStyle.backgroundImage = `url(${this.state.videoPoster})`
