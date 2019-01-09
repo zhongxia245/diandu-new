@@ -38,7 +38,7 @@ export const POINT_FORMAT_CONFIG = [
     max: 20,
     min: 0,
     step: 1,
-    defaultValue: 1
+    defaultValue: 0
   },
   {
     type: POINT_FORMAT_TYPE.SLIDER,
@@ -180,7 +180,10 @@ const getConfigByTypeList = (types = [], mergeDefault = true) => {
   return newConfig
 }
 
-// 根据点读点类型获取点读格式化配置
+/**
+ * 根据点读点类型获取点读格式化配置
+ * @param {string} type 点读点类型
+ */
 export const getFormatConfigByType = type => {
   switch (type) {
     case 'video':
@@ -199,15 +202,19 @@ export const getFormatConfigByType = type => {
 
 /**
  * 获取指定类型点读点的样式
- * @param {*} data format_config  点读点格式设置的值
- * @param {*} type 点读点类型
- * 为什么要这边处理，而不是直接把样式写到数据里面？
+ * @param {object} data format_config  点读点格式设置的值
+ * @param {string} type 点读点类型
+ *
+ * WHY:为什么要这边处理，而不是直接把样式写到数据里面？
  * 因为有的样式由多个配置来控制，因此需要计算一下。 比如边框，所以这里用计算得出
  */
 export const getFormatConfigStyle = pointData => {
   const { format_config, type, data } = pointData
   let configs = getFormatConfigByType(type) || []
-  let styles = {}
+
+  let styles = {
+    border: '0px solid #000'
+  }
 
   if (format_config) {
     for (let i = 0; i < configs.length; i++) {
@@ -216,12 +223,18 @@ export const getFormatConfigStyle = pointData => {
 
       // 边框透明度和边框颜色处理一个即可
       if (key === 'border_opacity' && format_config[key] !== undefined) {
-        let color = hex2Rgba(format_config['border_color'], format_config['border_opacity'])
+        // FIXED: 产品建议，透明度1表示透明，0 标识不透明, 跟CSS样式相反
+        let color = hex2Rgba(format_config['border_color'], 1 - format_config['border_opacity'])
         styles['borderColor'] = color
       } else if (key === 'border_color') {
-        continue
+        // 如果有颜色，没有边线透明度，则只返回颜色
+        if (format_config['border_opacity'] === undefined) {
+          styles[styleName] = 1 - format_config[key]
+        } else {
+          continue
+        }
       } else if (key === 'point_scale' && format_config[key]) {
-        // 点读点缩放
+        // NOTE: 点读点缩放
         // 如果使用 scale 缩放，会和某一些动画冲突，比如 animation.css 的 bounce
         // 因此放弃使用 scale， 而是使用宽高
         // 注意：区域模式，则没有点读点大小设置选项，因此参数应该不起作用

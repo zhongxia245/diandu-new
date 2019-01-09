@@ -1,4 +1,4 @@
-import './_color.less'
+import './index.less'
 import React, { Component } from 'react'
 
 class ColorItem extends Component {

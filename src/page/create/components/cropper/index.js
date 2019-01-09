@@ -1,4 +1,4 @@
-import './_index.less'
+import './index.less'
 import React, { Component } from 'react'
 import Cropper from 'react-cropper'
 import 'cropperjs/dist/cropper.css'

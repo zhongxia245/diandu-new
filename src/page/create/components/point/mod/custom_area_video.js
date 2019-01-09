@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import classnames from 'classnames'
 import { getVideoImage } from 'common/js/utils'
-import ResizeControl from '../../resize/_resize'
+import ResizeControl from '../../resize'
 class CustomAreaVideo extends Component {
   constructor(props) {
     super(props)

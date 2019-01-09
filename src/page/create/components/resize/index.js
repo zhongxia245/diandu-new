@@ -1,20 +1,18 @@
-import './_resize.less'
+/**
+ * 组件描述：
+ * 改变自定义区域大小的组件，支持上下左右，以及4个边角拉动，改变大小
+ */
+import './index.less'
 import React, { Component } from 'react'
 import { EVENT_NAMES } from '@/config'
 import { Drag } from '@/page/create/utils/_index'
 import Event from 'common/js/event.js'
 
 let originalPointData = null
+
 class ResizeControl extends Component {
   componentDidMount() {
-    const {
-      pageIndex,
-      pointIndex,
-      getPointData,
-      setPointData,
-      other,
-      getPageItemBgAutoWH
-    } = this.props
+    const { pageIndex, pointIndex, getPointData, setPointData, other, getPageItemBgAutoWH } = this.props
     // 点读点大小改变
     Drag({
       selector: `.point__${pageIndex}_${pointIndex} .js-resize-size`,
@@ -111,25 +109,13 @@ class ResizeControl extends Component {
         <div className="u-resize__border-right" />
         <div className="u-resize__border-bottom" />
         <div className="js-resize-size u-resize u-resize__lb" data-flag="lb" />
-        <div
-          className="js-resize-size u-resize u-resize__left"
-          data-flag="left"
-        />
+        <div className="js-resize-size u-resize u-resize__left" data-flag="left" />
         <div className="js-resize-size u-resize u-resize__lt" data-flag="lt" />
-        <div
-          className="js-resize-size u-resize u-resize__top"
-          data-flag="top"
-        />
+        <div className="js-resize-size u-resize u-resize__top" data-flag="top" />
         <div className="js-resize-size u-resize u-resize__rt" data-flag="rt" />
-        <div
-          className="js-resize-size u-resize u-resize__right"
-          data-flag="right"
-        />
+        <div className="js-resize-size u-resize u-resize__right" data-flag="right" />
         <div className="js-resize-size u-resize u-resize__rb" data-flag="rb" />
-        <div
-          className="js-resize-size u-resize u-resize__bottom"
-          data-flag="bottom"
-        />
+        <div className="js-resize-size u-resize u-resize__bottom" data-flag="bottom" />
       </React.Fragment>
     )
   }

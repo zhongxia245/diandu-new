@@ -1,7 +1,7 @@
-import ModalCropper from './cropper/_index'
-import Point from './point/_point'
-import SliderItem from './slider/_index.js'
-import ColorItem from './color/_color.js'
-import ResizeControl from './resize/_resize'
+import ModalCropper from './cropper'
+import Point from './point'
+import SliderItem from './slider'
+import ColorItem from './color'
+import ResizeControl from './resize'
 
 export { ModalCropper, Point, SliderItem, ColorItem, ResizeControl }

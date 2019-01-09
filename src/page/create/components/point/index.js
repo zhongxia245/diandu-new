@@ -3,7 +3,7 @@
  * 创建页面，点读点组件
  * 后期支持多种形式的渲染,渲染成各种点读点类型的模式展示
  */
-import './_point.less'
+import './index.less'
 import React, { Component } from 'react'
 import { Modal } from 'antd-mobile'
 import { calculateWHByDom } from 'common/js/utils'
