@@ -14,8 +14,7 @@ module.exports = class QiniuPlugin {
   }
 
   apply(compiler) {
-    compiler.hooks.afterEmit.tap('after-emit', (compilation) => {
-
+    compiler.hooks.afterEmit.tap('after-emit', compilation => {
       let assets = compilation.assets
       let hash = compilation.hash
       let uploadPath = this.options.path
@@ -34,7 +33,7 @@ module.exports = class QiniuPlugin {
       let uploadedFiles = 0
 
       // 结束提示
-      let finish = (err) => {
+      let finish = err => {
         spinner.succeed()
         console.log('\n')
       }
@@ -63,7 +62,7 @@ module.exports = class QiniuPlugin {
       }).start()
 
       // 上传至七牛
-      const performUpload = function (fileName) {
+      const performUpload = function(fileName) {
         let file = assets[fileName] || {}
         let key = path.posix.join(uploadPath, fileName)
         let putPolicy = new qiniu.rs.PutPolicy({ scope: bucket + ':' + key })
@@ -73,7 +72,7 @@ module.exports = class QiniuPlugin {
 
         return new Promise((resolve, reject) => {
           let begin = Date.now()
-          formUploader.putFile(uploadToken, key, file.existsAt, putExtra, function (err, body) {
+          formUploader.putFile(uploadToken, key, file.existsAt, putExtra, function(err, body) {
             uploadedFiles++
             spinner.text = progress(uploadedFiles, totalFiles)
 
@@ -87,7 +86,7 @@ module.exports = class QiniuPlugin {
       }
 
       // 设置并发上传数量
-      const execStack = function (err) {
+      const execStack = function(err) {
         if (err) {
           console.log('\n')
           return Promise.reject(err)
@@ -97,9 +96,7 @@ module.exports = class QiniuPlugin {
         let files = filesNames.splice(0, batch)
 
         if (files.length) {
-          return Promise.all(
-            files.map(performUpload)
-          ).then(() => execStack(), execStack)
+          return Promise.all(files.map(performUpload)).then(() => execStack(), execStack)
         } else {
           return Promise.resolve()
         }

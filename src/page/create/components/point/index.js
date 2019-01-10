@@ -89,7 +89,7 @@ class Point extends Component {
       if ((keyCode === KEY_CODE['backspace'] || keyCode === KEY_CODE['delete']) && !showDelConfirm) {
         // delete ， 选中的点读点， 并且是未被删除的
         showDelConfirm = true
-        confirmModal = Modal.alert('确定删除该点读点？', '', [
+        confirmModal = Modal.alert('确定删除该点读点？', '（ ESC可快捷取消，Enter可快速删除 ）', [
           {
             text: '取消',
             style: 'default',

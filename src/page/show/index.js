@@ -32,7 +32,7 @@ if (id) {
     console.log(data)
     if (checkCharge(data)) {
       setShare(data.share)
-      document.title = data.title
+      document.title = `${data.title} - 点读`
 
       ReactDOM.render(
         <ReactIScroll iScroll={iScroll}>

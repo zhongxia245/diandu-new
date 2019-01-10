@@ -138,6 +138,8 @@ class Point extends Component {
     let pointData = data.data || {}
     let posterTime = pointData.posterTime || 0
 
+    let hasPoster = data.data.src
+
     const handlePlayPcVideo = index => {
       let domVideo = this[`ref_video_${index}`]
       if (domVideo) {
@@ -152,21 +154,27 @@ class Point extends Component {
     }
 
     if (!this.state.isLoadedPoster && data.data.src) {
-      this.setState({ isLoadedPoster: true })
       getVideoImage(data.data.src, posterTime, imgData => {
-        this.setState({ videoPoster: imgData.base64 })
+        this.setState({ videoPoster: imgData.base64, isLoadedPoster: true })
       })
     }
+
     // 自定义区域，则不需要缩放，因为存放的大小是百分比的大小，不是固定的数值
     let style = {
       width: `${data.width * 100}%`,
       height: `${data.height * 100}%`,
       ...this.getPointPosition()
     }
-    // 有视频海报，则展示，否则去获取视频的第一帧当做海报
-    if (this.state.videoPoster) {
+
+    if (hasPoster && this.state.videoPoster) {
+      // 有视频海报，则展示，否则去获取视频的第一帧当做海报
+      style.display = 'block'
+      style.backgroundSize = 'inherit'
       style.backgroundImage = `url(${this.state.videoPoster})`
+    } else {
+      style.display = 'none'
     }
+
     return (
       <div
         className={classnames(

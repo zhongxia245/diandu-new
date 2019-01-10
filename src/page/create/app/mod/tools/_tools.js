@@ -20,7 +20,8 @@ class Tools extends Component {
     super(props)
     this.state = {
       uploading: false,
-      uploadProgress: 0
+      uploadProgress: 0,
+      selectNewAreaStyle: false // 选择新的自定义区域样式(矩形，圆，正方形等)
     }
   }
 
@@ -28,7 +29,7 @@ class Tools extends Component {
     const { pageIndex, pointIndex } = this.props
     const { getFieldValue } = this.props.form
     let pagesData = getFieldValue('pages') || []
-    return pagesData[pageIndex]['points'][pointIndex] || {}
+    return (pagesData[pageIndex] && pagesData[pageIndex]['points'][pointIndex]) || {}
   }
 
   setPointData = newState => {
@@ -94,6 +95,8 @@ class Tools extends Component {
     const { pageIndex } = this.props
     let pointData = this.getPointData()
 
+    this.setState({ selectNewAreaStyle: true })
+
     new DrawCustomArea({
       id: PRE_PAGE_ID + pageIndex,
       type: type,
@@ -118,6 +121,7 @@ class Tools extends Component {
       drawEndCallback: () => {
         // 如果马上派发事件，则还是会触发点读背景页上的点击事件
         setTimeout(() => {
+          this.setState({ selectNewAreaStyle: false })
           Event.emit(EVENT_NAMES.ENABLE_ADD_POINT, pageIndex)
         }, 100)
       }
@@ -328,6 +332,7 @@ class Tools extends Component {
               })}
               onClick={this.handleDraw.bind(this, 'rect')}
             />
+
             <div
               className={classnames('tools__trigger--square', {
                 'tools__trigger--active': data.areaType === 'square'
@@ -342,6 +347,9 @@ class Tools extends Component {
               onClick={this.handleDraw.bind(this, 'circle')}
             />
           </div>
+          {this.state.selectNewAreaStyle ? (
+            <p className="tools__draw_area_tip">现在可以在背景页上绘制新的区域样式</p>
+          ) : null}
         </div>
       )
     }
