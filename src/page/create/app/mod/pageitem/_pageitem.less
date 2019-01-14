@@ -1,6 +1,7 @@
 @pageitem_header_height: 84px;
 @pageitem_header_setting_height: 68px;
-@pageitem_content_height: 450px;
+@pageitem_content_height: 562px;
+@pageitem_content_width: 1000px;
 .pageitem {
   position: relative;
   display: flex;
@@ -8,14 +9,14 @@
   margin-bottom: 50px;
   height: @pageitem_header_height+ @pageitem_header_setting_height+ @pageitem_content_height;
   .pageitem__left {
-    width: 800px;
+    width: @pageitem_content_width;
     position: relative;
     z-index: 1; // 区域文本框的遮罩可以遮住所有的内容
   }
   .pageitem__right {
     overflow: auto;
-    flex: 1;
-    margin-left: 20px;
+    width: 350px;
+    margin-left: 10px;
     height: 100%;
     position: relative;
     z-index: 0; // 区域文本框的遮罩可以遮住所有的内容
@@ -80,7 +81,7 @@
     overflow: hidden;
     align-items: center;
     justify-content: center;
-    width: 800px;
+    width: @pageitem_content_width;
     height: @pageitem_content_height;
     background: #111;
     .pageitem-content__tip {

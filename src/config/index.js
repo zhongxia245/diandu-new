@@ -20,8 +20,8 @@ export const POINT_SIZE = 50
 
 // 点读页面宽高
 export const PAGE_SIZE = {
-  width: 800,
-  height: 450
+  width: 1000,
+  height: 562
 }
 
 /**

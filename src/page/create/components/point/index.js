@@ -25,7 +25,7 @@ const KEY_CODE = {
   esc: 27
 }
 
-let showDelConfirm = false
+// 删除的确定弹窗
 let confirmModal = null
 
 class Point extends Component {
@@ -35,9 +35,26 @@ class Point extends Component {
       videoPoster: '',
       isLoadVideoImage: false
     }
+
+    // 鼠标是否在点读点上
+    this.isHover = false
   }
 
   componentDidMount() {
+    const { pageIndex, pointIndex } = this.props
+
+    // FIXED: 鼠标是否在点读点上，在的话，按delete键才能删除
+    $(`.point__${pageIndex}_${pointIndex}`).hover(
+      e => {
+        this.isHover = true
+        $(e.currentTarget).attr('data-hover', 'true')
+      },
+      e => {
+        this.isHover = false
+        $(e.currentTarget).removeAttr('data-hover')
+      }
+    )
+
     window.removeEventListener('keydown', this.handleDelPoint)
     window.addEventListener('keydown', this.handleDelPoint)
   }
@@ -68,7 +85,7 @@ class Point extends Component {
   }
 
   handleRemoveData = () => {
-    showDelConfirm = false
+    confirmModal = null
     this.setPointData({
       isRemove: true
     })
@@ -79,6 +96,9 @@ class Point extends Component {
     const { active } = this.props
     let pointData = this.getPointData()
 
+    // 是否展示删除弹窗
+    let notShowDeleteConfirm = Boolean(localStorage.getItem('diandu:point_delete_confirm'))
+
     // 如果是可编辑的文本框,文本框，文本域，则delete不能删除
     if (e.target.contentEditable === 'true' || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
       return
@@ -86,31 +106,50 @@ class Point extends Component {
 
     // 当前获取焦点，并且未删除的点读点
     if (active && !pointData.isRemove) {
-      if ((keyCode === KEY_CODE['backspace'] || keyCode === KEY_CODE['delete']) && !showDelConfirm) {
-        // delete ， 选中的点读点， 并且是未被删除的
-        showDelConfirm = true
-        confirmModal = Modal.alert('确定删除该点读点？', '（ ESC可快捷取消，Enter可快速删除 ）', [
-          {
-            text: '取消',
-            style: 'default',
-            onPress: () => {
-              showDelConfirm = false
-            }
-          },
-          {
-            text: '确定',
-            onPress: () => {
-              this.handleRemoveData()
-            }
+      if ((keyCode === KEY_CODE['backspace'] || keyCode === KEY_CODE['delete']) && !confirmModal) {
+        if (notShowDeleteConfirm) {
+          if (this.isHover) {
+            this.handleRemoveData()
           }
-        ])
-      } else if (confirmModal && showDelConfirm) {
+        } else {
+          // delete ， 选中的点读点， 并且是未被删除的
+          confirmModal = Modal.alert(
+            '确定删除该点读点？',
+            <label className="cbx__confirm-delete">
+              <input
+                type="checkbox"
+                onClick={e => {
+                  notShowDeleteConfirm = e.target.checked
+                }}
+              />
+              下次删除不再确认？
+            </label>,
+            [
+              {
+                text: '取消',
+                style: 'default',
+                onPress: () => {
+                  confirmModal = null
+                }
+              },
+              {
+                text: '确定',
+                onPress: () => {
+                  this.handleRemoveData()
+                  // 下次删除则不需要在弹出删除弹窗
+                  notShowDeleteConfirm && localStorage.setItem('diandu:point_delete_confirm', true)
+                }
+              }
+            ]
+          )
+        }
+      } else if (confirmModal) {
         if (keyCode === KEY_CODE['enter']) {
           this.handleRemoveData()
           confirmModal.close()
         } else if (keyCode === KEY_CODE['esc']) {
-          showDelConfirm = false
           confirmModal.close()
+          confirmModal = null
         }
       }
     }
