@@ -19,8 +19,8 @@ import {
 } from './mod/_index'
 
 const KEY_CODE = {
-  backspace: 9,
-  delete: 8,
+  backspace: 8,
+  delete: 46,
   enter: 13,
   esc: 27
 }
