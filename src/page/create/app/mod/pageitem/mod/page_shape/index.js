@@ -1,8 +1,8 @@
-import './_page_shape.less'
+import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
 import { Tabs } from 'antd-mobile'
-import { common, shapes, category } from './_config'
+import { common, shapes, category } from './config'
 
 const TABS_CONFIG = [{ title: '共享资源' }, { title: '我的资源' }]
 

@@ -11,7 +11,7 @@ import { isDev, queryString } from 'common/js/utils'
 import { saveData } from '@/ajax'
 import { ModalCropper } from '@/page/create/components/_index'
 import { PAGE_SIZE } from '@/config'
-import { PageItem, Header } from './mod/_index'
+import { PageItem, Header } from './mod'
 
 class App extends Component {
   constructor(props) {

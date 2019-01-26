@@ -2,7 +2,7 @@
  * 点读页面工具栏
  * TODO:需要拆分代码，否则代码有点多了
  */
-import './_tools.less'
+import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
 import { Tabs, Grid, Switch, Checkbox } from 'antd-mobile'
@@ -12,8 +12,8 @@ import { SliderItem, ColorItem } from '@/page/create/components/_index'
 import { POINT, TOOLS_TABS, PRE_PAGE_ID, PRE_POINT_CLASS, EVENT_NAMES, getFormatConfigByType } from '@/config'
 import { DrawCustomArea } from '@/page/create/utils/draw/_index'
 import Event from 'common/js/event.js'
-import RenderContent from './mod/rendercontent/_index'
-import { AnimationSetting } from './mod/toolitem/_index'
+import RenderContent from './mod/rendercontent'
+import { AnimationSetting } from './mod/toolitem'
 
 class Tools extends Component {
   constructor(props) {

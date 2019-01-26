@@ -1,7 +1,7 @@
 /**
  * TODO:目前注释掉了分组，但是数据中默认还是保存着分组信息
  */
-import './_page_tpl_list.less'
+import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
 import { Toast, Modal } from 'antd-mobile'

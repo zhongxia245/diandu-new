@@ -1,3 +1,6 @@
+/**
+ * 点读页Header的插入图形功能资源
+ */
 export const category = [
   { category: '', title: '全部' },
   { category: 'common', title: '常用' },

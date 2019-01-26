@@ -9,7 +9,7 @@
  * 3. 删除点读点
  * 4. 点读点移动
  */
-import './_pageitem.less'
+import './index.less'
 import React, { Component } from 'react'
 import { ReactWebUploader } from 'common/js/components'
 import { Modal, Toast } from 'antd-mobile'
@@ -23,11 +23,11 @@ import CustomModal from 'common/js/components/_custom_modal.js'
 import { Drag, getImageWH } from '@/page/create/utils/_index'
 import { savePageTpl, getPageTpl, uploadBase64Img } from '@/ajax'
 import { Point } from '@/page/create/components/_index'
-import { Tools } from '../_index'
-import { ALLOW_ADD_POINT, initEvent } from './_event_handle'
+import { Tools } from '../index'
+import { ALLOW_ADD_POINT, initEvent } from './event_handle'
 import { POINT_SIZE, PAGE_SIZE, PRE_PAGE_ID, PRE_POINT_CLASS, PRE_PAGE_CLASS, PAGE_CONTENT_TYPE } from '@/config'
-import PageTplList from './mod/page_tpl_list/_page_tpl_list'
-import PageShape from './mod/page_shape/_page_shape'
+import PageTplList from './mod/page_tpl_list'
+import PageShape from './mod/page_shape'
 
 let uploadedCount = 0 // 成功上传数量
 let fileCount = 0 // 上传文件列表数量

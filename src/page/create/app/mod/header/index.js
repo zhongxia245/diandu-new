@@ -1,4 +1,4 @@
-import './_index.less'
+import './index.less'
 import React, { Component } from 'react'
 
 class Header extends Component {
