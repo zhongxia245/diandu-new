@@ -6,7 +6,7 @@
  * 目前返回的相对路径，在 /h5 根目录下的html 刚好可以访问这个图片路径。
  */
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import './_index.less'
+import './index.less'
 import React, { Component } from 'react'
 import { EditorState, convertToRaw, ContentState } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'

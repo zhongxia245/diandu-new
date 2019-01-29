@@ -1,8 +1,8 @@
 .modal__exam {
   width: 350px !important;
   .question-item {
-    height: 280px;
     overflow: auto;
+    height: 280px;
   }
 }
 
@@ -24,8 +24,12 @@
   display: flex;
   align-items: center;
   margin-bottom: 15px;
+
   user-select: none;
-  .am-icon {
+  .anticon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-right: 10px;
     width: 30px;
     height: 30px;
@@ -33,10 +37,10 @@
     cursor: pointer;
   }
   select {
+    margin-bottom: 0;
+    margin-left: 49px;
     width: 90px;
     height: 32px;
-    margin-left: 49px;
-    margin-bottom: 0;
   }
 }
 
@@ -52,6 +56,7 @@
     text-align: center;
     line-height: 35px;
     cursor: pointer;
+
     user-select: none;
     &:active {
       opacity: 0.9;
@@ -68,8 +73,8 @@
     border-radius: 3px;
   }
   .answers {
-    max-height: 300px;
     overflow: auto;
+    max-height: 300px;
     li {
       display: flex;
       align-items: center;

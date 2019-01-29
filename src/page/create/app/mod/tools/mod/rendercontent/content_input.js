@@ -3,12 +3,7 @@
  * 渲染成编辑器[文本框使用，多页签文本框使用]
  */
 import React, { Component } from 'react'
-import { Toast } from 'antd-mobile'
-
-// const isUrl = url => {
-//   var reg = /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/
-//   return reg.test(url)
-// }
+import { message } from 'antd'
 
 class ContentInput extends Component {
   constructor(props) {
@@ -37,13 +32,8 @@ class ContentInput extends Component {
     let pointData = getPointData()
     let data = pointData.data || {}
 
-    // TODO:window下提示地址有误，验证不通过，Mac 上没法复现，因此先去掉
-    // if (isUrl(link)) {
     setPointData({ data: { ...data, link: link } })
-    Toast.success('保存超链接成功!', 2, null, false)
-    // } else {
-    //   Toast.fail('请检查是否为正确的 URL 格式', 2, null, false)
-    // }
+    message.success('保存超链接成功!')
   }
 
   render() {

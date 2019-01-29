@@ -1,7 +1,7 @@
 /**
  * 把Antd-mobile 的 Model 组件，封装成函数调用的方式
- * import CustomModal from 'common/js/components/_custom_modal.js'
- * CustomModal.show({render:(prpos)=><div>Hello Modal!</div>})
+ * import CustomModal from 'common/js/components/custom_modal.js'
+ * CustomModal.show({render:(props)=><div>Hello Modal!</div>})
  */
 import { Modal } from 'antd-mobile'
 

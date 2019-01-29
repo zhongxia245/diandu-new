@@ -1,5 +1,5 @@
 import Exam from './_exam'
-import CustomModal from 'common/js/components/_custom_modal.js'
+import CustomModal from 'common/js/components/custom_modal.js'
 
 export const showExamModal = ({ onSubmit, questions }) => {
   CustomModal.show({

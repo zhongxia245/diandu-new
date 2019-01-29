@@ -1,22 +1,26 @@
 /**
  * 2018-03-07 07:52:53
+ * 创建点读页面入口页
  */
 import './index.less'
+import 'antd-mobile/dist/antd-mobile.less'
 import React, { Component } from 'react'
 import { createForm } from 'rc-form'
 import classnames from 'classnames'
-import { Icon, Toast } from 'antd-mobile'
-import { ReactWebUploader, CustomModal } from 'common/js/components'
+import { message, Icon } from 'antd'
+import { ReactWebUploader, CustomModal, IconFont } from 'common/js/components'
 import { isDev, queryString } from 'common/js/utils'
-import { saveData } from '@/ajax'
 import { ModalCropper } from '@/page/create/components/_index'
+import { saveData } from '@/ajax'
 import { PAGE_SIZE } from '@/config'
 import { PageItem, Header } from './mod'
 
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      uploadProgressBgAudio: null
+    }
   }
 
   componentDidMount() {
@@ -103,7 +107,6 @@ class App extends Component {
     let covers = getFieldValue('covers') || []
     covers.splice(index, 1)
     setFieldsValue({ covers: covers })
-    // return false
   }
 
   // 添加点读页
@@ -131,6 +134,13 @@ class App extends Component {
     setFieldsValue({ pages: pages })
   }
 
+  // 全局点读页设置
+  // 设置点读页空白区域颜色，点读点大小，点读页切换的动画
+  handleGlobalPageSetting = () => {
+    CustomModal.show({ render: props => <div>Hello Modal!</div> })
+  }
+
+  // 提交点读页
   handleSubmit = () => {
     this.props.form.validateFields((err, data) => {
       if (err) {
@@ -141,7 +151,7 @@ class App extends Component {
             break
           }
         }
-        Toast.info(firstError, 3, null, false)
+        message.error(firstError, 3, null)
       } else {
         saveData(this.props.id, data).then(id => {
           let unitId = queryString('unitid')
@@ -173,7 +183,7 @@ class App extends Component {
             type="text"
             style={{ width: 423 }}
             placeholder="页面的标题"
-            {...getFieldProps('title', { rules: [{ required: true }] })}
+            {...getFieldProps('title', { rules: [{ required: true, message: '页面标题不能为空!' }] })}
           />
         </div>
 
@@ -182,7 +192,7 @@ class App extends Component {
           <textarea
             style={{ width: 708, height: 100 }}
             placeholder="介绍测试的相关内容、注意点等,简洁不能超过100字"
-            {...getFieldProps('intro', { rules: [{ required: true }] })}
+            {...getFieldProps('intro', { rules: [{ required: true, message: '简介不能为空!' }] })}
           />
         </div>
 
@@ -236,7 +246,7 @@ class App extends Component {
                 <React.Fragment>
                   <Icon
                     className="upload__btn-del"
-                    type="cross"
+                    type="close"
                     onClick={this.handleDelCovers.bind(this, item, index)}
                   />
                   <img src={covers[index]} />
@@ -414,7 +424,9 @@ class App extends Component {
     let pages = getFieldValue('pages') || []
     return (
       <section>
-        <div className="setting__title">点读页设置</div>
+        <div className="setting__title">
+          点读页设置 <IconFont type="shezhi" onClick={this.handleGlobalPageSetting} />
+        </div>
         <div className="setting__item u-padding-0">
           <div style={{ width: '100%' }}>
             {pages.map((item, index) => {

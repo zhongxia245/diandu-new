@@ -1,7 +1,6 @@
 .slider-item {
-  padding: 10px;
-  padding-bottom: 20px;
-  margin-bottom: 10px;
+  margin-bottom: .1rem;
+  padding-bottom: 10px;
   .slider-item__title {
     height: 30px;
     margin-bottom: 10px;
@@ -18,11 +17,15 @@
       line-height: 30px !important;
     }
   }
-  .am-slider-wrapper {
-    padding-left: 10px;
-    padding-top: 10px;
-  }
-  .am-slider-track {
-    background: #01ca97;
+  .ant-slider {
+    margin: 0;
+    &:hover {
+      .ant-slider-track {
+        background: #01ca97;
+      }
+    }
+    .ant-slider-track {
+      background: #01ca97;
+    }
   }
 }

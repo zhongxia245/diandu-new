@@ -3,8 +3,8 @@
  */
 import './index.less'
 import React, { Component } from 'react'
-import { Slider } from 'antd-mobile'
-import CustomModal from 'common/js/components/_custom_modal.js'
+import { Slider } from 'antd'
+import CustomModal from 'common/js/components/custom_modal.js'
 import Event from 'common/js/event.js'
 import { getVideoImage } from 'common/js/utils'
 

@@ -4,46 +4,50 @@
   position: relative;
   width: 100%;
   height: 100%;
-  .am-checkbox.am-checkbox-checked .am-checkbox-inner {
-    background: #00cc98;
-  }
   /*
     工具栏的各项 tabs 样式
   */
-  .am-tabs-default-bar-tab {
-    padding: 0 5px;
-    width: 50px !important;
-    height: 55px !important;
-    border-right: 0;
-    border-bottom: 1px solid #ccc;
-    background: @bgBar;
-    color: #000;
-    text-align: center;
-    font-size: 14px;
-    line-height: 1.5;
-    cursor: pointer;
-    user-select: none;
-    &:last-child {
-      border: 0;
+  .ant-tabs {
+    // 这么多层，只是为了样式覆盖
+    .ant-tabs-card-bar .ant-tabs-nav-container .ant-tabs-nav-wrap .ant-tabs-nav {
+      .ant-tabs-tab {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0 5px;
+        width: 50px;
+        height: 50px;
+        border: 1px solid #ccc;
+        border-top: 0;
+        border-radius: 0;
+        background: @bgBar;
+        color: #000;
+        text-align: center;
+        white-space: normal;
+        word-break: break-all;
+        font-size: 14px;
+        line-height: 1.5;
+        cursor: pointer;
+        user-select: none;
+        &:first-child {
+          border-top: 1px solid #ccc;
+        }
+      }
+      .ant-tabs-tab-active {
+        padding-right: 5px !important;
+        background: #fff !important;
+      }
     }
-  }
-  .am-tabs-default-bar-underline {
-    display: none;
-  }
-  .am-tabs-default-bar-content {
-    border-top: 1px solid #ccc;
-  }
-  .am-tabs-default-bar {
-    background: @bgBar  !important;
-  }
-  .am-tabs-default-bar-tab-active {
-    background: #fff;
+    .ant-tabs-left-content {
+      padding-left: 0;
+    }
   }
 }
 
 .tools__draw_area_tip {
-  font-size: 12px;
   color: #999;
+  font-size: 12px;
   line-height: 1.5;
 }
 
@@ -51,7 +55,6 @@
   overflow-y: auto;
   border: 1px solid #ddd;
   border-left: 0;
-  border-radius: 3px;
   h4 {
     padding-left: 20px;
     height: 35px;
@@ -127,10 +130,10 @@
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 9;
     width: 10%;
     height: 100%;
     background: #00cc99;
-    z-index: 9;
   }
   a[download] {
     position: absolute;
@@ -143,13 +146,6 @@
 }
 
 .tools__trigger {
-  .trigger__checkbox {
-    margin-right: 30px;
-    user-select: none;
-    .am-checkbox {
-      margin-right: 10px;
-    }
-  }
   .tools-item__content {
     text-align: center;
   }

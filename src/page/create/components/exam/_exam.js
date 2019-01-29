@@ -1,6 +1,6 @@
 import './_exam.less'
 import React, { Component } from 'react'
-import { Icon, Toast } from 'antd-mobile'
+import { Icon, message } from 'antd'
 
 class Exam extends Component {
   constructor(props) {
@@ -52,10 +52,7 @@ class Exam extends Component {
       if (checked) {
         questions[currentIndex]['answerIndex'].push(index)
       } else {
-        questions[currentIndex]['answerIndex'].splice(
-          questions[currentIndex]['answerIndex'].indexOf(index),
-          1
-        )
+        questions[currentIndex]['answerIndex'].splice(questions[currentIndex]['answerIndex'].indexOf(index), 1)
       }
     } else {
       questions[currentIndex]['answerIndex'] = index
@@ -92,10 +89,7 @@ class Exam extends Component {
 
   handleNextPage = () => {
     let { currentIndex, questions } = this.state
-    currentIndex =
-      currentIndex + 1 >= questions.length
-        ? questions.length - 1
-        : currentIndex + 1
+    currentIndex = currentIndex + 1 >= questions.length ? questions.length - 1 : currentIndex + 1
     this.setState({ currentIndex })
   }
 
@@ -119,7 +113,7 @@ class Exam extends Component {
         currentIndex: currentIndex - 1 < 0 ? 0 : currentIndex - 1
       })
     } else {
-      Toast.info('至少需要有一个题目', 3, null, false)
+      message.info('至少需要有一个题目')
     }
   }
 
@@ -162,17 +156,11 @@ class Exam extends Component {
 
           // 复选框，则判断答案是否在数组里面
           let checked =
-            type === 1
-              ? Array.isArray(answerIndex) && answerIndex.indexOf(index) !== -1
-              : answerIndex === index
+            type === 1 ? Array.isArray(answerIndex) && answerIndex.indexOf(index) !== -1 : answerIndex === index
           return (
             <li key={`${currentIndex}_${index}`}>
               <input
-                name={
-                  type === 1
-                    ? `checkbox_answer_${currentIndex}_${index}`
-                    : 'radio_answer'
-                }
+                name={type === 1 ? `checkbox_answer_${currentIndex}_${index}` : 'radio_answer'}
                 type={type === 1 ? 'checkbox' : 'radio'}
                 onClick={this.handleChangeAnswerIndex.bind(this, index)}
                 checked={checked}
@@ -193,11 +181,7 @@ class Exam extends Component {
   renderQuestionItem(data) {
     return (
       <div className="question-item">
-        <textarea
-          placeholder="请输入题干"
-          value={data.question}
-          onChange={this.handleChangeTextarea}
-        />
+        <textarea placeholder="请输入题干" value={data.question} onChange={this.handleChangeTextarea} />
         {this.renderAnswer(data)}
       </div>
     )
@@ -214,21 +198,13 @@ class Exam extends Component {
     let questionType = questions[currentIndex]['type']
     return (
       <div className="exam__header">
-        <Icon type="left" onClick={this.handlePrePage} />
+        <Icon type="left" style={{ marginRight: 0 }} onClick={this.handlePrePage} />
         <span>
           {currentIndex + 1}/{questions.length}
         </span>
         <Icon type="right" onClick={this.handleNextPage} />
-        <Icon
-          type="plus"
-          className="u-padding-6 u-btn-bg"
-          onClick={this.handleAddQuestion}
-        />
-        <Icon
-          type="cross"
-          className="u-btn-bg"
-          onClick={this.handleDelQuestion}
-        />
+        <Icon type="plus" className="u-padding-6 u-btn-bg" onClick={this.handleAddQuestion} />
+        <Icon type="close" className="u-btn-bg" onClick={this.handleDelQuestion} />
 
         <select name="questioinType" onChange={this.handleChangeQuestionType}>
           <option value={0} selected={questionType === 0}>
@@ -248,11 +224,7 @@ class Exam extends Component {
   renderFooter() {
     return (
       <div className="exam__footer">
-        <div
-          className="exam__btn"
-          style={{ width: '70%', marginLeft: '30%' }}
-          onClick={this.handleAddAnswerItem}
-        >
+        <div className="exam__btn" style={{ width: '70%', marginLeft: '30%' }} onClick={this.handleAddAnswerItem}>
           新增选项
         </div>
         <div className="exam__btn" onClick={this.handleSubmit}>

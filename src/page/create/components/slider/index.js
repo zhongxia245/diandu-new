@@ -1,6 +1,6 @@
 import './index.less'
 import React, { Component } from 'react'
-import { Slider } from 'antd-mobile'
+import { Slider } from 'antd'
 
 class SliderItem extends Component {
   constructor(props) {

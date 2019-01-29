@@ -1,15 +1,16 @@
 /**
  * 点读页面工具栏
- * TODO:需要拆分代码，否则代码有点多了
  */
 import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
-import { Tabs, Grid, Switch, Checkbox } from 'antd-mobile'
+// 目前grid无法替换
+import { Grid } from 'antd-mobile'
+import { Checkbox, Switch, Tabs } from 'antd'
 import { ReactWebUploader } from 'common/js/components'
 import { SliderItem, ColorItem } from '@/page/create/components/_index'
 
-import { POINT, TOOLS_TABS, PRE_PAGE_ID, PRE_POINT_CLASS, EVENT_NAMES, getFormatConfigByType } from '@/config'
+import { POINT, PRE_PAGE_ID, PRE_POINT_CLASS, EVENT_NAMES, getFormatConfigByType } from '@/config'
 import { DrawCustomArea } from '@/page/create/utils/draw/_index'
 import Event from 'common/js/event.js'
 import RenderContent from './mod/rendercontent'
@@ -387,6 +388,7 @@ class Tools extends Component {
             <Checkbox
               checked={data['runType'] === 'start_run'}
               className="trigger__checkbox"
+              style={{ marginBottom: 10 }}
               onChange={handleStateCheckChange.bind(this, 'start_run')}
             >
               初始及运动
@@ -423,8 +425,9 @@ class Tools extends Component {
               点
             </Checkbox>
           </div>
-          {data.triggerType === 'area' ? renderCustomArea() : ''}
-          {data.triggerType === 'point' ? renderCustomPoint() : ''}
+          {data.triggerType === 'area' && renderCustomArea()}
+          {data.triggerType === 'point' && renderCustomPoint()}
+          {pointData.type === 'video' && <div className="u-btn u-btn--small u-btn--green u-m10">设置播放区</div>}
         </div>
       </div>
     )
@@ -433,12 +436,22 @@ class Tools extends Component {
   render() {
     return (
       <div className="pageitem__tools">
-        <Tabs animated={false} useOnPan={false} tabs={TOOLS_TABS} tabBarPosition="left" tabDirection="vertical">
-          {this.renderType()}
-          <RenderContent setPointData={this.setPointData} getPointData={this.getPointData} {...this.props} />
-          {this.renderFormat()}
-          {this.renderTrigger()}
-          <AnimationSetting {...this.props} getPointData={this.getPointData} setPointData={this.setPointData} />
+        <Tabs tabPosition="left" type="card">
+          <Tabs.TabPane tab="类型选择" key={0}>
+            {this.renderType()}
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="内容上传" key={1}>
+            {<RenderContent setPointData={this.setPointData} getPointData={this.getPointData} {...this.props} />}
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="格式设置" key={2}>
+            {this.renderFormat()}
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="激发模式" key={3}>
+            {this.renderFormat()}
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="动画设置" key={4}>
+            <AnimationSetting {...this.props} getPointData={this.getPointData} setPointData={this.setPointData} />
+          </Tabs.TabPane>
         </Tabs>
       </div>
     )

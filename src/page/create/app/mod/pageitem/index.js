@@ -1,5 +1,4 @@
 /**
- * TODO:
  * 2018-07-16 21:53:09
  * 重构一下代码，保持代码在300行内
  *
@@ -12,13 +11,13 @@
 import './index.less'
 import React, { Component } from 'react'
 import { ReactWebUploader } from 'common/js/components'
-import { Modal, Toast } from 'antd-mobile'
+import { Modal, message } from 'antd'
 import html2canvas from 'html2canvas'
 import _ from 'lodash'
 
 import { calculateWHByDom } from 'common/js/utils'
 import { IconFont } from 'common/js/components'
-import CustomModal from 'common/js/components/_custom_modal.js'
+import CustomModal from 'common/js/components/custom_modal.js'
 
 import { Drag, getImageWH } from '@/page/create/utils/_index'
 import { savePageTpl, getPageTpl, uploadBase64Img } from '@/ajax'
@@ -154,17 +153,16 @@ class PageItem extends Component {
   }
 
   handleDelPage = () => {
-    Modal.alert('确定删除该点读页吗？', '', [
-      { text: '取消', style: 'default' },
-      {
-        text: '确定',
-        onPress: () => {
-          let pageData = this.getPageData()
-          pageData.isRemove = true
-          this.setPageData(pageData)
-        }
+    Modal.confirm({
+      title: '确定删除该点读页吗？',
+      okText: '确定',
+      cancelText: '取消',
+      onOk: () => {
+        let pageData = this.getPageData()
+        pageData.isRemove = true
+        this.setPageData(pageData)
       }
-    ])
+    })
   }
 
   filesQueued = files => {
@@ -247,47 +245,34 @@ class PageItem extends Component {
 
   // 绘制层级关系
   handleLevelSetting = () => {
-    Toast.info('努力建设中...')
+    message.info('努力建设中...')
   }
 
   // 动画设置
   handleAnimationSetting = () => {
-    Toast.info('努力建设中...')
+    message.info('努力建设中...')
   }
 
-  handleSaveTpl = () => {
-    Modal.prompt('把该点读页保存成模板', '请输入点读页模板名称', [
-      { text: '取消' },
-      {
-        text: '确定',
-        onPress: val =>
-          new Promise((resolve, reject) => {
-            if (!val) {
-              Toast.info('点读页模板名称不能为空', 2, null, false)
-              reject()
-            } else {
-              Toast.loading('正在保存')
-              // 把当前点读页生成一张图片，然后保存在背景图片
-              html2canvas(document.querySelector(`#${PRE_PAGE_ID}${this.props.pageIndex}`)).then(canvas => {
-                uploadBase64Img(canvas).then(result => {
-                  let pageData = this.getPageData()
-                  let tplData = {
-                    name: val,
-                    type: 'normal',
-                    pic: result.data,
-                    data: JSON.stringify(pageData),
-                    desc: '' // 暂无描述，
-                  }
-                  savePageTpl(tplData).then(result => {
-                    Toast.success('已把当前点读页保存成模板')
-                    resolve()
-                  })
-                })
-              })
-            }
-          })
+  handleSaveTpl = async () => {
+    let name = prompt('请输入点读页模板的名称？')
+
+    if (name) {
+      message.loading('保存中...')
+      // 把当前点读页生成一张图片，然后保存在背景图片
+      let canvas = await html2canvas(document.querySelector(`#${PRE_PAGE_ID}${this.props.pageIndex}`))
+      let result = await uploadBase64Img(canvas)
+
+      let tplData = {
+        name: name,
+        type: 'normal',
+        pic: result.data,
+        data: JSON.stringify(this.getPageData()),
+        desc: '' // 暂无描述，
       }
-    ])
+      await savePageTpl(tplData)
+      message.destroy()
+      message.success('已把当前点读页保存成模板！')
+    }
   }
 
   handleShowTplList = () => {
@@ -323,8 +308,8 @@ class PageItem extends Component {
     let pagesData = allData['pages'] || []
 
     if (pageIndex - 1 > 0) {
-      // 最后一个点读页
-      Toast.info('已经是第一个点读页了', 3, null, false)
+      // 第一个点读页
+      message.info('已经是第一个点读页了')
     } else {
       let tempIndex = pagesData[pageIndex - 1]['sort']
       pagesData[pageIndex - 1]['sort'] = pagesData[pageIndex]['sort']
@@ -341,7 +326,7 @@ class PageItem extends Component {
 
     if (pageIndex + 1 >= pagesData.length) {
       // 最后一个点读页
-      Toast.info('已经是最后一个点读页了', 3, null, false)
+      message.info('已经是最后一个点读页了')
     } else {
       let tempIndex = pagesData[pageIndex + 1]['sort']
       pagesData[pageIndex + 1]['sort'] = pagesData[pageIndex]['sort']

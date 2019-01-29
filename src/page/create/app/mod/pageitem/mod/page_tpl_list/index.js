@@ -4,10 +4,7 @@
 import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
-import { Toast, Modal } from 'antd-mobile'
-
-// const TABS = [{ title: '默认', sub: '1' }, { title: '默认1', sub: '2' }]
-
+import { message, Modal } from 'antd'
 class PageTplList extends Component {
   constructor(props) {
     super(props)
@@ -30,22 +27,22 @@ class PageTplList extends Component {
       // 如果当前点读页有内容，则提示是否覆盖，否则则直接覆盖
       let oldPageData = getPageData()
       if (oldPageData && oldPageData.baseInfo && oldPageData.baseInfo.bgSrc) {
-        Modal.alert('模板选择提示', '当前点读页已有内容，是否覆盖?', [
-          { text: '取消' },
-          {
-            text: '覆盖',
-            onPress: () => {
-              setPageData(pageData)
-              this.props.onClose()
-            }
+        Modal.confirm({
+          title: '模板选择提示',
+          content: '当前点读页已有内容，是否覆盖?',
+          cancelText: '取消',
+          okText: '覆盖',
+          onOk: () => {
+            setPageData(pageData)
+            this.props.onClose()
           }
-        ])
+        })
       } else {
         setPageData(pageData)
         this.props.onClose()
       }
     } else {
-      Toast.info('请选择一个点读页模板', 3, null, false)
+      message.info('请选择一个点读页模板')
     }
   }
 

@@ -1,10 +1,8 @@
 import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
-import { Tabs } from 'antd-mobile'
+import { Tabs } from 'antd'
 import { common, shapes, category } from './config'
-
-const TABS_CONFIG = [{ title: '共享资源' }, { title: '我的资源' }]
 
 class PageShape extends Component {
   constructor(props) {
@@ -55,10 +53,7 @@ class PageShape extends Component {
           return (
             <li key={index}>
               <img src={item.src} alt={item.alt} title={item.desc} />
-              <div
-                className="page-shape-list__btn u-btn--green"
-                onClick={this.handleInsertShape.bind(this, item)}
-              >
+              <div className="page-shape-list__btn u-btn--green" onClick={this.handleInsertShape.bind(this, item)}>
                 插入
               </div>
             </li>
@@ -97,9 +92,13 @@ class PageShape extends Component {
   render() {
     return (
       <div className="page-shape">
-        <Tabs tabs={TABS_CONFIG} tabBarPosition="left" animated={false}>
-          {this.renderImgs()}
-          {this.renderShape()}
+        <Tabs tabPosition="left">
+          <Tabs.TabPane tab="共享资源" key={1}>
+            {this.renderImgs()}
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="我的资源" key={2}>
+            {this.renderShape()}
+          </Tabs.TabPane>
         </Tabs>
       </div>
     )

@@ -4,7 +4,7 @@
  */
 import React, { Component } from 'react'
 
-import CustomModal from 'common/js/components/_custom_modal.js'
+import CustomModal from 'common/js/components/custom_modal.js'
 
 class ContentButton extends Component {
   handleShowModal = () => {

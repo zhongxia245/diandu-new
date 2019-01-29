@@ -1,6 +1,6 @@
 import Event from 'common/js/event.js'
 import { EVENT_NAME } from '../common/_const'
-import CustomModal from 'common/js/components/_custom_modal.js'
+import CustomModal from 'common/js/components/custom_modal.js'
 
 Event.on(EVENT_NAME.MODAL_NOTE_SHOW, pointData => {
   let content = (pointData.data && pointData.data.content) || ''

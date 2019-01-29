@@ -4,15 +4,14 @@
  */
 import React, { Component } from 'react'
 import { showExamModal } from '@/page/create/components/exam/_index'
-import { Toast } from 'antd-mobile'
-
+import { message } from 'antd'
 class ContentModalExam extends Component {
   handleSubmit = questions => {
     const { getPointData, setPointData } = this.props
     let pointData = getPointData()
     let data = pointData.data || {}
     setPointData({ data: { ...data, questions: questions } })
-    Toast.success('保存测试数据成功!', 2, null, false)
+    message.success('保存测试数据成功!')
   }
 
   getData = () => {
@@ -33,10 +32,7 @@ class ContentModalExam extends Component {
     return (
       <div className="content-button">
         <p>点击按钮，弹窗设置测试内容</p>
-        <div
-          className="u-btn u-white u-btn--green"
-          onClick={this.handleShowModal}
-        >
+        <div className="u-btn u-white u-btn--green" onClick={this.handleShowModal}>
           {`点击${questions.length > 0 ? '修改' : '设置'}测试内容`}
         </div>
       </div>

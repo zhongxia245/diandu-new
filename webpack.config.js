@@ -82,7 +82,16 @@ let plugins = [
   new HappyPack({
     id: 'less',
     threadPool: happyThreadPool,
-    loaders: ['css-loader?minimize', 'postcss-loader', 'less-loader']
+    loaders: [
+      'css-loader?minimize',
+      'postcss-loader',
+      {
+        loader: 'less-loader',
+        options: {
+          javascriptEnabled: true
+        }
+      }
+    ]
   }),
   ...htmlPlugins,
   new MiniCssExtractPlugin({

@@ -16,7 +16,7 @@ import {
   CustomAreaInput,
   CustomAreaVideo,
   CustomShapePoint
-} from './mod/_index'
+} from './mod'
 
 const KEY_CODE = {
   backspace: 8,
@@ -168,7 +168,7 @@ class Point extends Component {
       getPointData: this.getPointData
     }
 
-    let pointJsx = null
+    let pointJsx = <NormalPoint {...newProps} />
 
     if ((pointData.triggerType === 'area' && data.width) || pointData.triggerType === 'point') {
       // 使用自定义触发区域
@@ -185,8 +185,7 @@ class Point extends Component {
         if (pointData.customPath) {
           // 自定义图片
           pointJsx = <CustomImg {...newProps} />
-        } else {
-          //  if (pointData.customTitle)  这个字段存折自定义点读点的文字内容
+        } else if (pointData.customTitle) {
           // 自定义文字
           pointJsx = <CustomText {...newProps} />
         }
@@ -195,8 +194,6 @@ class Point extends Component {
       pointJsx = <CustomAreaInput {...newProps} />
     } else if (data.type === PAGE_CONTENT_TYPE['shape']['name']) {
       pointJsx = <CustomShapePoint {...newProps} />
-    } else {
-      pointJsx = <NormalPoint {...newProps} />
     }
 
     return pointJsx

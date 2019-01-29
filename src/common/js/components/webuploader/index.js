@@ -1,5 +1,5 @@
 import 'webuploader/dist/webuploader.css'
-import './_index.less'
+import './index.less'
 import React, { Component } from 'react'
 import WebUploader from 'webuploader/dist/webuploader.html5only.min.js'
 import uuid from 'uuid/v4'

@@ -4,7 +4,7 @@
  */
 import React, { Component } from 'react'
 import { DraftEditor } from 'common/js/components'
-import { Toast } from 'antd-mobile'
+import { message } from 'antd'
 
 class ContentEditor extends Component {
   constructor(props) {
@@ -34,7 +34,7 @@ class ContentEditor extends Component {
       this.setState({
         html: html
       })
-      Toast.success('保存注解信息成功!', 2, null, false)
+      message.success('保存注解信息成功!')
     }
   }
 

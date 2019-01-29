@@ -2,7 +2,7 @@
  * 点击视频点读点播放处理
  */
 import { Toast } from 'antd-mobile'
-import CustomModal from 'common/js/components/_custom_modal.js'
+import CustomModal from 'common/js/components/custom_modal.js'
 import Event from 'common/js/event.js'
 import { EVENT_NAME } from '../common/_const'
 

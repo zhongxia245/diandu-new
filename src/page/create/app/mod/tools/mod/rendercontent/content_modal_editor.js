@@ -3,9 +3,10 @@
  * 渲染成编辑器[文本框使用，多页签文本框使用]
  */
 import React, { Component } from 'react'
-import { Toast, Tabs, Modal } from 'antd-mobile'
+import { Tabs, Modal } from 'antd-mobile'
+import { message } from 'antd'
 
-import CustomModal from 'common/js/components/_custom_modal.js'
+import CustomModal from 'common/js/components/custom_modal.js'
 import { DraftEditor } from 'common/js/components'
 
 class ContentModalEditor extends Component {
@@ -132,7 +133,7 @@ class ModalEditor extends Component {
       }
     })
     onClose && onClose()
-    Toast.success('保存成功', 3, null, false)
+    message.success('保存成功')
   }
 
   render() {

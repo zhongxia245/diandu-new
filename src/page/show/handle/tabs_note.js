@@ -1,6 +1,6 @@
 import Event from 'common/js/event.js'
 import { EVENT_NAME } from '../common/_const'
-import CustomModal from 'common/js/components/_custom_modal.js'
+import CustomModal from 'common/js/components/custom_modal.js'
 import { Tabs } from 'antd-mobile'
 
 Event.on(EVENT_NAME.MODAL_TABSNOTE_SHOW, pointData => {

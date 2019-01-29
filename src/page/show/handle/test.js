@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import Swiper from 'swiper/dist/js/swiper.js'
 import Event from 'common/js/event.js'
 import { isMobile } from 'common/js/utils/user_agent.js'
-import CustomModal from 'common/js/components/_custom_modal.js'
+import CustomModal from 'common/js/components/custom_modal.js'
 import { EVENT_NAME } from '../common/_const'
 
 Event.on(EVENT_NAME.MODAL_TEST_SHOW, pointData => {
