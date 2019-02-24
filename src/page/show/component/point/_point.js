@@ -58,10 +58,10 @@ class Point extends Component {
   }
 
   getPointPosition = () => {
-    const { data } = this.props
+    const { data, form } = this.props
     // 自定义区域，则不需要缩放，因为存放的大小是百分比的大小，不是固定的数值
 
-    let formatStyle = getFormatConfigStyle(data)
+    let formatStyle = getFormatConfigStyle(data, form)
 
     return {
       ...formatStyle,

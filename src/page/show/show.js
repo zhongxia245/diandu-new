@@ -1,12 +1,13 @@
+import 'swiper/dist/css/swiper.min.css'
 import React, { Component } from 'react'
 import classnames from 'classnames'
-import 'swiper/dist/css/swiper.min.css'
 import Swiper from 'swiper/dist/js/swiper.min.js'
 import { isMobile } from 'common/js/utils/user_agent.js'
 import { PageItem, Header } from './component/_index'
 import Event from 'common/js/event.js'
 import { EVENT_NAME } from './common/_const'
 import { runAnimation, runBlink } from './common/_animation'
+
 export default class Show extends Component {
   constructor(props) {
     super(props)
@@ -114,6 +115,7 @@ export default class Show extends Component {
   render() {
     const { form } = this.props
     const pages = form.getFieldValue('pages') || []
+
     return (
       <div className="show">
         <Header form={this.props.form} bgAudioSrc={this.props.data.bgAudio && this.props.data.bgAudio.src} />

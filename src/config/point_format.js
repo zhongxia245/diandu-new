@@ -200,20 +200,34 @@ export const getFormatConfigByType = type => {
   }
 }
 
+const getPointSizeScale = rcForm => {
+  if (rcForm) {
+    const { getFieldValue } = rcForm
+    let data = getFieldValue('globalSetting') || {}
+    return {
+      transform: `scale(${data.pointSizeScale / 100})`
+    }
+  }
+  return null
+}
+
 /**
  * 获取指定类型点读点的样式
- * @param {object} data format_config  点读点格式设置的值
- * @param {string} type 点读点类型
+ * @param {object} data pointData  点读点数据
+ * @param {object} rcForm rcForm的属性方法
  *
  * WHY:为什么要这边处理，而不是直接把样式写到数据里面？
  * 因为有的样式由多个配置来控制，因此需要计算一下。 比如边框，所以这里用计算得出
  */
-export const getFormatConfigStyle = pointData => {
+export const getFormatConfigStyle = (pointData, rcForm) => {
   const { format_config, type, data } = pointData
   let configs = getFormatConfigByType(type) || []
 
+  let pointScaleStyle = getPointSizeScale(rcForm)
+
   let styles = {
-    border: '0px solid #000'
+    border: '0px solid #000',
+    ...pointScaleStyle
   }
 
   if (format_config) {

@@ -2,5 +2,6 @@ import IconFont from './iconfont'
 import ReactWebUploader from './webuploader'
 import CustomModal from './custom_modal'
 import DraftEditor from './drafteditor'
+import CustomAntdModal from './custom_antd_modal'
 
-export { IconFont, ReactWebUploader, CustomModal, DraftEditor }
+export { IconFont, ReactWebUploader, CustomModal, CustomAntdModal, DraftEditor }

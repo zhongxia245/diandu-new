@@ -40,9 +40,7 @@ class PageItem extends Component {
   }
 
   componentDidMount() {
-    initEvent({
-      form: this.props.form
-    })
+    initEvent({ form: this.props.form })
 
     /**
      * 点读点功能移动功能
@@ -370,6 +368,8 @@ class PageItem extends Component {
    */
   renderPage() {
     const { baseInfo, hide = false } = this.getPageData()
+    const { getFieldValue } = this.props.form
+    let globalSettingData = getFieldValue('globalSetting') || []
 
     let JsxDom = (
       <div className="pageitem-content__tip">
@@ -381,6 +381,7 @@ class PageItem extends Component {
         </p>
       </div>
     )
+
     if (baseInfo && baseInfo.bgSrc) {
       let autoWH = this.getPageItemBgAutoWH(baseInfo)
       let style = {
@@ -401,7 +402,7 @@ class PageItem extends Component {
     }
 
     return (
-      <div className="pageitem__content">
+      <div className="pageitem__content" style={{ backgroundColor: globalSettingData.pageBgColor }}>
         {hide ? <div className="pageitem__mask">该点读页处于隐藏状态,不会展示页面展示</div> : ''}
         {JsxDom}
       </div>

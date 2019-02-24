@@ -8,9 +8,9 @@ import React, { Component } from 'react'
 import { createForm } from 'rc-form'
 import classnames from 'classnames'
 import { message, Icon } from 'antd'
-import { ReactWebUploader, CustomModal, IconFont } from 'common/js/components'
+import { ReactWebUploader, CustomModal, IconFont, CustomAntdModal } from 'common/js/components'
 import { isDev, queryString } from 'common/js/utils'
-import { ModalCropper } from '@/page/create/components/_index'
+import { ModalCropper, GlobalPageSetting } from '@/page/create/components'
 import { saveData } from '@/ajax'
 import { PAGE_SIZE } from '@/config'
 import { PageItem, Header } from './mod'
@@ -28,6 +28,7 @@ class App extends Component {
     // FIXED: 先注册表单，使用才不用警告
     getFieldProps('covers')
     getFieldProps('pages')
+    getFieldProps('globalSetting')
     setFieldsValue(this.props.data)
   }
 
@@ -137,7 +138,11 @@ class App extends Component {
   // 全局点读页设置
   // 设置点读页空白区域颜色，点读点大小，点读页切换的动画
   handleGlobalPageSetting = () => {
-    CustomModal.show({ render: props => <div>Hello Modal!</div> })
+    CustomAntdModal.show({
+      title: '全局点读页设置',
+      footer: null,
+      render: props => <GlobalPageSetting form={this.props.form} {...props} />
+    })
   }
 
   // 提交点读页
@@ -451,7 +456,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <Header />
         <div className="page">
           <div className="page__header">创建点读页</div>
@@ -475,7 +480,7 @@ class App extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </React.Fragment>
     )
   }
 }

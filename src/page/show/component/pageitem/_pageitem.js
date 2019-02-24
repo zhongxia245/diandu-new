@@ -38,8 +38,13 @@ export default class PageItem extends Component {
       transform: `scale(${scale})`
     }
 
+    const globalSetting = form.getFieldValue('globalSetting') || {}
+
     return (
-      <div className={classnames('pageitem', `pageitem-${pageIndex}`, className)}>
+      <div
+        className={classnames('pageitem', `pageitem-${pageIndex}`, className)}
+        style={{ backgroundColor: globalSetting.pageBgColor }}
+      >
         {/* use swiper lazy load image */}
         <div className="pageitem__wrapper swiper-lazy" style={style} data-background={baseInfo.bgSrc}>
           {points.map((point, index) => {

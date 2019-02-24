@@ -159,7 +159,8 @@ class Point extends Component {
     const { data } = this.props
     let pointData = data.data || {}
 
-    let style = getFormatConfigStyle(data)
+    let style = getFormatConfigStyle(data, this.props.form)
+
     let newProps = {
       style,
       ...this.props,
