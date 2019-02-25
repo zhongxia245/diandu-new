@@ -5,7 +5,7 @@
 import React from 'react'
 import classnames from 'classnames'
 import { POINT_SIZE } from '@/config'
-import { ResizeControl } from '@/page/create/components/_index'
+import { ResizeControl } from '@/page/create/components'
 
 // 普通点读点
 const NormalPoint = ({

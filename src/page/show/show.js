@@ -29,6 +29,7 @@ export default class Show extends Component {
   initSwiper = () => {
     const { data } = this.props
     let pages = data['pages'] || []
+    let globalSetting = data['globalSetting'] || {}
 
     let swiperOptions = {
       keyboard: false,
@@ -42,7 +43,7 @@ export default class Show extends Component {
         loadPrevNext: true,
         loadPrevNextAmount: 1
       },
-      effect: 'slide', // 'slide'（普通切换、默认）,"fade"（淡入）"cube"（方块）"coverflow"（3d流）"flip"（3d翻转）
+      effect: globalSetting.swiperEffect || 'slide', // 'slide'（普通切换、默认）,"fade"（淡入）"cube"（方块）"coverflow"（3d流）"flip"（3d翻转）
       on: {
         transitionEnd: swiper => {
           // let pointData = pages[this.swiper.activeIndex]
@@ -51,6 +52,8 @@ export default class Show extends Component {
         }
       }
     }
+
+    console.log(swiperOptions)
 
     // PC需要前进后退按钮
     if (!isMobile()) {

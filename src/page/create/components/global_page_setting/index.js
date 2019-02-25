@@ -1,6 +1,6 @@
 import './index.less'
 import React, { Component } from 'react'
-import { Slider, Button } from 'antd'
+import { Slider, Button, Radio } from 'antd'
 
 const marks = {
   50: {
@@ -21,24 +21,20 @@ class GlobalPageSetting extends Component {
     let data = getFieldValue('globalSetting') || {}
     this.state = {
       pageBgColor: data.pageBgColor || '#000000',
-      pointSizeScale: data.pointSizeScale || 100
+      pointSizeScale: data.pointSizeScale || 100,
+      swiperEffect: data.swiperEffect || 'slide'
     }
   }
 
-  handleChangeColor = e => {
-    let val = e.target.value
-    this.setState({ pageBgColor: val })
-  }
-
-  handleChange = val => {
-    this.setState({ pointSizeScale: val })
+  handleChange = (name, e) => {
+    let val = e.target ? e.target.value : e
+    this.setState({ [name]: val })
   }
 
   onSubmit = () => {
     const { onCancel, form } = this.props
-    const { setFieldsValue, getFieldsValue } = form
+    const { setFieldsValue } = form
     setFieldsValue({ globalSetting: this.state })
-    console.log(getFieldsValue())
     onCancel && onCancel()
   }
 
@@ -46,11 +42,10 @@ class GlobalPageSetting extends Component {
     return `${val}%`
   }
 
-  render() {
+  renderPageTab() {
     const { pageBgColor, pointSizeScale } = this.state
-
     return (
-      <div className="global-page-setting">
+      <React.Fragment>
         <div className="global-page-setting__item">
           <h4>1. 请设置点读点大小的默认比例(%)</h4>
           <p>(在点读页中可单独对点读点设置大小)</p>
@@ -58,15 +53,50 @@ class GlobalPageSetting extends Component {
             defaultValue={pointSizeScale}
             max={200}
             min={50}
+            step={25}
             marks={marks}
             tipFormatter={this.tipFormatter}
-            onChange={this.handleChange}
+            onChange={this.handleChange.bind(this, 'pointSizeScale')}
           />
         </div>
         <div className="global-page-setting__item">
           <h4>2. 请设置点读页外空白区域的颜色</h4>
-          <input type="color" value={pageBgColor} onChange={this.handleChangeColor} />
+          <input type="color" value={pageBgColor} onChange={this.handleChange.bind(this, 'pageBgColor')} />
         </div>
+      </React.Fragment>
+    )
+  }
+
+  renderSwitchAnimation() {
+    const { swiperEffect } = this.state
+    const ANIMATIONS = [
+      { name: '位移切换', value: 'slide' },
+      { name: '淡入淡出', value: 'fade' },
+      { name: '3d流', value: 'coverflow' },
+      // { name: '立方体', value: 'cube' },
+      { name: '3d翻转', value: 'flip' }
+    ]
+    return (
+      <React.Fragment>
+        <div className="global-page-setting__item">
+          <h4>3. 请设置点读页切换时的特效模式</h4>
+          <Radio.Group value={swiperEffect} onChange={this.handleChange.bind(this, 'swiperEffect')}>
+            {ANIMATIONS.map((item, index) => (
+              <Radio key={index} value={item['value']}>
+                {item['name']}
+              </Radio>
+            ))}
+          </Radio.Group>
+        </div>
+      </React.Fragment>
+    )
+  }
+
+  render() {
+    return (
+      <div className="global-page-setting">
+        {this.renderPageTab()}
+        {this.renderSwitchAnimation()}
         <div className="global-page-setting__footer">
           <Button type="default" onClick={this.props.onCancel}>
             取消

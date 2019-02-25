@@ -2,7 +2,7 @@ import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
 import Axios from 'axios'
-import { ResizeControl } from '@/page/create/components/_index'
+import { ResizeControl } from '@/page/create/components'
 
 export default class CustomShapePoint extends Component {
   constructor(props) {

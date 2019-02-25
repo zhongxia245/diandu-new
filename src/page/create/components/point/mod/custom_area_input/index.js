@@ -8,7 +8,7 @@
 import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
-import { ResizeControl } from '@/page/create/components/_index'
+import { ResizeControl } from '@/page/create/components'
 import ContentEditable from 'react-contenteditable'
 import MoveOrClick from '@/page/create/common/move_or_click'
 

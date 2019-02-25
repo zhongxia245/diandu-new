@@ -8,7 +8,7 @@ import classnames from 'classnames'
 import { Grid } from 'antd-mobile'
 import { Checkbox, Switch, Tabs } from 'antd'
 import { ReactWebUploader } from 'common/js/components'
-import { SliderItem, ColorItem } from '@/page/create/components/_index'
+import { SliderItem, ColorItem } from '@/page/create/components'
 
 import { POINT, PRE_PAGE_ID, PRE_POINT_CLASS, EVENT_NAMES, getFormatConfigByType } from '@/config'
 import { DrawCustomArea } from '@/page/create/utils/draw/_index'

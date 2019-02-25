@@ -10,10 +10,9 @@ import classnames from 'classnames'
 import { message, Icon } from 'antd'
 import { ReactWebUploader, CustomModal, IconFont, CustomAntdModal } from 'common/js/components'
 import { isDev, queryString } from 'common/js/utils'
-import { ModalCropper, GlobalPageSetting } from '@/page/create/components'
+import { ModalCropper, GlobalPageSetting, PageItem, AppHeader } from '@/page/create/components'
 import { saveData } from '@/ajax'
 import { PAGE_SIZE } from '@/config'
-import { PageItem, Header } from './mod'
 
 class App extends Component {
   constructor(props) {
@@ -430,7 +429,7 @@ class App extends Component {
     return (
       <section>
         <div className="setting__title">
-          点读页设置 <IconFont type="shezhi" onClick={this.handleGlobalPageSetting} />
+          点读页全局设置 <IconFont type="shezhi" onClick={this.handleGlobalPageSetting} />
         </div>
         <div className="setting__item u-padding-0">
           <div style={{ width: '100%' }}>
@@ -457,7 +456,7 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <Header />
+        <AppHeader />
         <div className="page">
           <div className="page__header">创建点读页</div>
           <div className="page__setting">

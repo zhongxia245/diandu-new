@@ -21,12 +21,9 @@ import CustomModal from 'common/js/components/custom_modal.js'
 
 import { Drag, getImageWH } from '@/page/create/utils/_index'
 import { savePageTpl, getPageTpl, uploadBase64Img } from '@/ajax'
-import { Point } from '@/page/create/components/_index'
-import { Tools } from '../index'
+import { PageItemTools, PageShape, PageTplList, Point } from '../index'
 import { ALLOW_ADD_POINT, initEvent } from './event_handle'
 import { POINT_SIZE, PAGE_SIZE, PRE_PAGE_ID, PRE_POINT_CLASS, PRE_PAGE_CLASS, PAGE_CONTENT_TYPE } from '@/config'
-import PageTplList from './mod/page_tpl_list'
-import PageShape from './mod/page_shape'
 
 let uploadedCount = 0 // 成功上传数量
 let fileCount = 0 // 上传文件列表数量
@@ -513,7 +510,7 @@ class PageItem extends Component {
 
         <div className="pageitem__right">
           {/* 工具栏 */}
-          <Tools pointIndex={currentSelectPointIndex} pageIndex={pageIndex} form={form} />
+          <PageItemTools pointIndex={currentSelectPointIndex} pageIndex={pageIndex} form={form} />
         </div>
       </div>
     )
