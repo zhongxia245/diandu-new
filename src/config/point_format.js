@@ -31,7 +31,7 @@ export const POINT_FORMAT_CONFIG = [
     name: 'border_opacity',
     max: 1,
     min: 0,
-    step: 0.01,
+    step: 0.05,
     defaultValue: 0,
     marks: { 0: '不透明', 1: '透明' }
   },
@@ -43,7 +43,7 @@ export const POINT_FORMAT_CONFIG = [
     max: 20,
     min: 0,
     step: 1,
-    defaultValue: 0
+    defaultValue: 1
   },
   {
     type: POINT_FORMAT_TYPE.SLIDER,
@@ -52,7 +52,7 @@ export const POINT_FORMAT_CONFIG = [
     styleName: 'opacity',
     max: 1,
     min: 0,
-    step: 0.01,
+    step: 0.05,
     defaultValue: 0,
     marks: { 0: '不透明', 1: '透明' }
   },
@@ -82,7 +82,8 @@ export const POINT_FORMAT_CONFIG = [
     type: POINT_FORMAT_TYPE.COLOR,
     title: '背景颜色',
     name: 'background_color',
-    styleName: 'backgroundColor'
+    styleName: 'backgroundColor',
+    showTransparent: true // 显示透明
   },
   {
     type: POINT_FORMAT_TYPE.COLOR,
@@ -160,7 +161,10 @@ export const POINT_FORMAT_CONFIG = [
 ]
 
 // 通用的点读点配置，每个点读点都有
-const DEFAULT_FORMAT_CONFIG = ['point_scale', 'border_opacity', 'border_width', 'btn_opacity', 'border_color']
+const DEFAULT_FORMAT_CONFIG = ['point_scale', 'border_opacity', 'border_width', 'border_color', 'btn_opacity']
+
+// 区域点读点的配置
+const DEFAULT_AREA_FORMAT_CONFIG = ['background_color']
 
 // 不同点读点类型特有的设置参数
 const POINT_FORMAT_CONFIG_TYPE = {
@@ -189,6 +193,9 @@ const POINT_FORMAT_CONFIG_TYPE = {
  * @param isArea 是否为区域点读点
  */
 const getConfigByTypeList = (types = [], mergeDefault = true, isArea = false) => {
+  if (isArea) {
+    types = _.unionWith(DEFAULT_AREA_FORMAT_CONFIG, types)
+  }
   if (mergeDefault) {
     types = _.unionWith(DEFAULT_FORMAT_CONFIG, types)
   }
@@ -236,15 +243,18 @@ export const getFormatConfigByType = (type, isArea) => {
   }
 }
 
+// 获取点读点缩放样式
 const getPointSizeScale = rcForm => {
   if (rcForm) {
     const { getFieldValue } = rcForm
-    let data = getFieldValue('globalSetting') || {}
-    return {
-      transform: `scale(${data.pointSizeScale / 100})`
+    let data = getFieldValue('globalSetting')
+    if (data && data.pointSizeScale) {
+      return {
+        transform: `scale(${data.pointSizeScale / 100})`
+      }
     }
   }
-  return null
+  return {}
 }
 
 /**
@@ -256,68 +266,77 @@ const getPointSizeScale = rcForm => {
  * 因为有的样式由多个配置来控制，因此需要计算一下。 比如边框，所以这里用计算得出
  */
 export const getFormatConfigStyle = (pointData, rcForm) => {
-  const { format_config, type, data } = pointData
-  let configs = getFormatConfigByType(type) || []
+  const { type, format_config = {}, data = {} } = pointData
+
+  let configs = getFormatConfigByType(type, data['triggerType'] === 'area') || []
 
   let pointScaleStyle = getPointSizeScale(rcForm)
-
   let styles = {
-    border: '0px solid #000',
+    border: '1px solid #66cccc',
     ...pointScaleStyle
   }
 
-  if (format_config) {
-    for (let i = 0; i < configs.length; i++) {
-      let styleName = configs[i]['styleName']
-      let key = configs[i]['name']
-      if (key === 'btn_opacity') {
-        // FIXED: 产品建议，透明度1表示透明，0 标识不透明, 跟CSS样式相反
-        styles[styleName] = 1 - format_config['btn_opacity']
-      }
-      // 边框透明度和边框颜色处理一个即可
-      else if (key === 'border_opacity' && format_config[key] !== undefined) {
-        // FIXED: 产品建议，透明度1表示透明，0 标识不透明, 跟CSS样式相反
-        let color = hex2Rgba(format_config['border_color'], 1 - format_config['border_opacity'])
-        styles['borderColor'] = color
-      } else if (key === 'border_color') {
-        // 如果有颜色，没有边线透明度，则只返回颜色
-        if (format_config['border_opacity'] === undefined) {
-          styles[styleName] = 1 - format_config[key]
-        } else {
-          continue
-        }
-      } else if (key === 'point_scale' && format_config[key]) {
-        // NOTE: 点读点缩放
-        // 如果使用 scale 缩放，会和某一些动画冲突，比如 animation.css 的 bounce
-        // 因此放弃使用 scale， 而是使用宽高
-        // 注意：区域模式，则没有点读点大小设置选项，因此参数应该不起作用
-        // styles['transform'] = `scale(${format_config[key] / 100})`
-        if (data && data.triggerType === 'area') {
-          continue
-        } else {
-          styles['width'] = ((styles['width'] || 50) * format_config[key]) / 100
-          styles['height'] = ((styles['height'] || 50) * format_config[key]) / 100
-        }
-      } else if (key === 'font_setting') {
-        // 字体设置（加粗，斜体，下划线）
-        if (format_config[key]) {
-          let fontConfigs = configs[i]['configs']
-          for (let j = 0; j < fontConfigs.length; j++) {
-            if (format_config[key][fontConfigs[j]['name']]) {
-              styles[fontConfigs[j]['styleName']] = fontConfigs[j]['value']
-            }
-          }
-        }
-      } else if (['font_family', 'text_align'].indexOf(key) !== -1) {
-        // 字体设置
-        if (format_config[key]) {
-          let fontFamilyList = configs[i]['values']
-          styles[styleName] = fontFamilyList[format_config[key]]['value']
-        }
-      } else if (styleName && format_config && format_config[key] !== undefined) {
-        // 其他常规样式设置
+  for (let i = 0; i < configs.length; i++) {
+    let styleName = configs[i]['styleName']
+    let key = configs[i]['name']
+
+    if (key === 'btn_opacity' && format_config[key] !== undefined) {
+      // FIXED: 产品建议，透明度1表示透明，0 标识不透明, 跟CSS样式相反
+      styles[styleName] = 1 - format_config[key]
+    }
+
+    // 边框透明度和边框颜色处理一个即可
+    // FIXED: 产品建议，透明度1表示透明，0 标识不透明, 跟CSS样式相反
+    else if (key === 'border_opacity' && format_config[key] !== undefined) {
+      let color = hex2Rgba(format_config['border_color'], 1 - format_config[key])
+      styles['borderColor'] = color
+    }
+
+    // 如果有颜色，没有边线透明度，则只返回颜色
+    else if (key === 'border_color') {
+      if (!format_config['border_opacity'] && format_config[key]) {
         styles[styleName] = format_config[key]
       }
+      continue
+    }
+
+    // NOTE: 点读点缩放
+    // 如果使用 scale 缩放，会和某一些动画冲突，比如 animation.css 的 bounce
+    // 因此放弃使用 scale， 而是使用宽高
+    // 注意：区域模式，则没有点读点大小设置选项，因此参数应该不起作用
+    // styles['transform'] = `scale(${format_config[key] / 100})`
+    else if (key === 'point_scale' && format_config[key]) {
+      if (data && data.triggerType === 'area') {
+        continue
+      } else {
+        styles['width'] = ((styles['width'] || 50) * format_config[key]) / 100
+        styles['height'] = ((styles['height'] || 50) * format_config[key]) / 100
+      }
+    }
+
+    // 字体设置（加粗，斜体，下划线）
+    else if (key === 'font_setting') {
+      if (format_config[key]) {
+        let fontConfigs = configs[i]['configs']
+        for (let j = 0; j < fontConfigs.length; j++) {
+          if (format_config[key][fontConfigs[j]['name']]) {
+            styles[fontConfigs[j]['styleName']] = fontConfigs[j]['value']
+          }
+        }
+      }
+    }
+
+    // 字体设置
+    else if (['font_family', 'text_align'].indexOf(key) !== -1) {
+      if (format_config[key]) {
+        let fontFamilyList = configs[i]['values']
+        styles[styleName] = fontFamilyList[format_config[key]]['value']
+      }
+    }
+
+    // 其他常规样式设置
+    else if (styleName && format_config[key] !== undefined) {
+      styles[styleName] = format_config[key]
     }
   }
 

@@ -1,13 +1,16 @@
 @import './format_config.less';
 @bgBar: #e1f0ee; // tabbar栏背景色
+
 .pageitem__tools {
   position: relative;
   width: 100%;
   height: 100%;
+
   /*
     工具栏的各项 tabs 样式
   */
   .ant-tabs {
+
     // 这么多层，只是为了样式覆盖
     .ant-tabs-card-bar .ant-tabs-nav-container .ant-tabs-nav-wrap .ant-tabs-nav {
       .ant-tabs-tab {
@@ -30,15 +33,18 @@
         line-height: 1.5;
         cursor: pointer;
         user-select: none;
+
         &:first-child {
           border-top: 1px solid #ccc;
         }
       }
+
       .ant-tabs-tab-active {
         padding-right: 5px !important;
         background: #fff !important;
       }
     }
+
     .ant-tabs-left-content {
       padding-left: 0;
     }
@@ -46,15 +52,18 @@
 }
 
 .tools__draw_area_tip {
-  color: #999;
+  color: #666;
   font-size: 12px;
   line-height: 1.5;
+  border: 1px dashed #ddd;
+  border-radius: 3px;
 }
 
 .tools__item {
   overflow-y: auto;
   border: 1px solid #ddd;
   border-left: 0;
+
   h4 {
     padding-left: 20px;
     height: 35px;
@@ -68,14 +77,17 @@
 .tools-item__content {
   padding: 15px;
   padding-bottom: 0;
+
   h5 {
     margin-bottom: 10px;
     color: #01ca97;
   }
+
   .format-config__item {
     display: block;
     margin-bottom: 10px;
     border-bottom: 1px solid #EFEFEF;
+
     &:last-child {
       border-bottom: 0;
     }
@@ -88,29 +100,36 @@
     margin-bottom: 20px;
     padding-bottom: 10px;
     border-bottom: 1px dotted #ddd;
+
     &:last-child {
       border-bottom: 0;
     }
   }
+
   .tools-type__item--active {
     background: #ddd;
+
     .am-grid-text {
       color: #01ca97 !important;
     }
   }
+
   .am-grid-item-content {
     padding: 0 !important;
   }
+
   .am-grid-item,
   .am-switch {
     cursor: pointer;
   }
+
   .am-grid.am-grid-square .am-grid-item .am-grid-item-inner-content {
     .am-grid-icon {
       margin: 0;
       width: 30px !important;
       height: 30px;
     }
+
     .am-grid-text {
       margin-top: 5px;
       word-break: keep-all;
@@ -126,6 +145,7 @@
   text-align: center;
   line-height: 2;
   cursor: pointer;
+
   .content-upload__progress {
     position: absolute;
     top: 0;
@@ -135,6 +155,7 @@
     height: 100%;
     background: #00cc99;
   }
+
   a[download] {
     position: absolute;
     top: 0;
@@ -149,13 +170,16 @@
   .tools-item__content {
     text-align: center;
   }
+
   .tools__trigger-type {
     padding: 20px;
     border-bottom: 1px dashed #ccc;
   }
+
   .tools__trigger--active {
     background: #00cc99;
   }
+
   .tools__trigger--rect {
     margin-right: 30px;
     width: 50px;
@@ -163,6 +187,7 @@
     border: 1px solid #999;
     cursor: pointer;
   }
+
   .tools__trigger--square {
     margin-right: 30px;
     width: 30px;
@@ -170,6 +195,7 @@
     border: 1px solid #999;
     cursor: pointer;
   }
+
   .tools__trigger--circle {
     width: 30px;
     height: 30px;
@@ -177,35 +203,44 @@
     border-radius: 50%;
     cursor: pointer;
   }
+
   .am-list-item {
     cursor: pointer;
     user-select: none;
+
     .am-list-content {
       font-size: 14px !important;
     }
   }
+
   .tools__trigger-content {
     padding: 10px;
+
     input {
       margin-top: 10px;
       width: 80% !important;
     }
   }
+
   .tools__trigger-type-list {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 20px 0;
   }
+
   .tools__trigger-content-item {
     padding: 20px 0;
     border-bottom: 1px dashed #ccc;
+
     &:last-child {
       border-bottom: 0;
     }
+
     .am-slider-wrapper {
       padding: 20px;
     }
+
     .am-checkbox-wrapper {
       display: block;
       margin-bottom: 10px;
@@ -219,6 +254,7 @@
   align-content: center;
   justify-content: center;
   padding: 10px 20px;
+
   span {
     display: flex;
     align-items: center;

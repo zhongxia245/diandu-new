@@ -1,5 +1,6 @@
 @pointActiveBgColor: #ff7c80; // 点读点选中的颜色
 @pointBgColor: #66cccc; // 点读点背景色
+
 .point {
   position: absolute;
   display: flex;
@@ -18,8 +19,15 @@
   background-color: @pointActiveBgColor; // filter: drop-shadow(@pointActiveBgColor 0px 0px 10px);
 }
 
+.pageitem__content {
+  .point__custom-area {
+    background-image: none;
+    background-color: transparent;
+  }
+}
+
 .point__custom-area--rect {
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 .point__custom-area--circle {
@@ -27,7 +35,7 @@
 }
 
 .point__custom-area--square {
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 .point__custom-text {

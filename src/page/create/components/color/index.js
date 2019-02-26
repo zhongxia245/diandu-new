@@ -1,5 +1,6 @@
 import './index.less'
 import React, { Component } from 'react'
+import classnames from 'classnames'
 
 class ColorItem extends Component {
   constructor(props) {
@@ -14,20 +15,25 @@ class ColorItem extends Component {
     this.setState({ value: color })
     this.props.callback && this.props.callback(color)
   }
+
+  handleSetTransparent = () => {
+    this.setState({ value: 'transparent' })
+    this.props.callback && this.props.callback('transparent')
+  }
+
   render() {
-    const { title, name } = this.props.config || {}
+    const { title, name, showTransparent } = this.props.config || {}
     return (
-      <div className={`color-item ${this.props.className}`}>
-        <div className="color-item__title">
-          <span>{title}</span>
-          <input
-            type="color"
-            value={this.state.value || '#010101'}
-            name={name}
-            onChange={this.handleChange}
-            onKeyUp={this.handleChange}
-          />
-        </div>
+      <div className={classnames('color-item', this.props.className)}>
+        <span>{title}</span>
+        <input
+          type="color"
+          value={this.state.value || '#010101'}
+          name={name}
+          onChange={this.handleChange}
+          onKeyUp={this.handleChange}
+        />
+        {showTransparent && <a onClick={this.handleSetTransparent}>透明</a>}
       </div>
     )
   }

@@ -17,8 +17,8 @@ export default ({
   callback = () => {},
   onChecked = () => {}
 }) => {
-  const CONFIG = getFormatConfigByType(pointData.type, pointData.data.triggerType === 'area') || []
-  const formatConfig = pointData['format_config'] || {}
+  const { type, format_config = {}, data = {} } = pointData
+  const CONFIG = getFormatConfigByType(type, data['triggerType'] === 'area') || []
 
   return (
     <div className="tools__item">
@@ -26,11 +26,11 @@ export default ({
       <div className="tools-item__content">
         {CONFIG.map(item => {
           // 区域模式， 不能设置点读点的缩放比例
-          if (pointData['data'] && pointData['data']['triggerType'] === 'area' && item['name'] === 'point_scale') {
+          if (data['triggerType'] === 'area' && item['name'] === 'point_scale') {
             return
           }
           let key = `${item.name}_${pageIndex}_${pointIndex}`
-          let value = formatConfig[item.name] || item['defaultValue']
+          let value = format_config[item.name] || item['defaultValue']
 
           switch (item.type) {
             // 滑块组件

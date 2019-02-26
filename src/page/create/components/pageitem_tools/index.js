@@ -269,9 +269,7 @@ class Tools extends Component {
               onClick={this.handleDraw.bind(this, 'circle')}
             />
           </div>
-          {this.state.selectNewAreaStyle ? (
-            <p className="tools__draw_area_tip">现在可以在背景页上绘制新的区域样式</p>
-          ) : null}
+          {this.state.selectNewAreaStyle && <p className="tools__draw_area_tip">现在可以在背景页上绘制新的区域样式</p>}
         </div>
       )
     }
