@@ -116,7 +116,17 @@ const CustomImg = ({
 
 // 区域点读点
 const CustomArea = props => {
-  const { data, pageIndex, pointIndex, className, style, other, active, getPageItemBgAutoWH, ...otherProps } = props
+  const {
+    data,
+    pageIndex,
+    pointIndex,
+    className,
+    style,
+    other,
+    active,
+    getPageItemBgAutoWH,
+    onClick = () => {}
+  } = props
   let autoWH = getPageItemBgAutoWH(other.baseInfo)
   let pointStyle = {
     left: data.x * autoWH.width,
@@ -126,9 +136,9 @@ const CustomArea = props => {
     ...style
   }
   let pointData = data.data || {}
+
   return (
     <div
-      {...otherProps}
       key={pointIndex}
       style={pointStyle}
       className={classnames(
@@ -142,6 +152,7 @@ const CustomArea = props => {
         }
       )}
       data-index={pointIndex}
+      onClick={onClick}
     >
       {pointIndex + 1}
       {active ? <ResizeControl {...props} /> : ''}

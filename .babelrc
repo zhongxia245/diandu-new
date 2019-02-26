@@ -1,30 +1,26 @@
 {
   "plugins": [
-    [
-      "transform-runtime",
-      {
-        "polyfill": true
-      }
-    ],
-    [
-      "import",
-      // {
-      //   "libraryName": "antd-mobile",
-      //   "style": true
-      // },
-      {
-        "libraryName": "antd",
-        "style": true
-      }
-    ]
+    ["transform-runtime", {
+      "polyfill": true
+    }],
+    ["import", {
+      "libraryName": "antd",
+      "style": true
+    }],
+    ["import", {
+      "libraryName": "antd-mobile",
+      "style": true
+    }],
+    ["import", {
+      "libraryName": "lodash",
+      "libraryDirectory": "",
+      "camel2DashComponentName": false, // default: true
+    }]
   ],
   "presets": [
-    [
-      "env",
-      {
-        "modules": false
-      }
-    ],
+    ["env", {
+      "modules": false
+    }],
     "stage-0",
     "react"
   ]

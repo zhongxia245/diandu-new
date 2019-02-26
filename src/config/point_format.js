@@ -1,5 +1,9 @@
 import _ from 'lodash'
-import { EVENT_VIDEO_GET_POSTER } from '@/page/create/handle/_index'
+import {
+  EVENT_VIDEO_GET_POSTER,
+  EVENT_AUDIO_APPLY_CURRENT_PAGE,
+  EVENT_AUDIO_APPLY_ALL_PAGE
+} from '@/page/create/handle'
 import { hex2Rgba } from 'common/js/utils'
 
 export const POINT_FORMAT_TYPE = {
@@ -28,7 +32,8 @@ export const POINT_FORMAT_CONFIG = [
     max: 1,
     min: 0,
     step: 0.01,
-    defaultValue: 1
+    defaultValue: 0,
+    marks: { 0: '不透明', 1: '透明' }
   },
   {
     type: POINT_FORMAT_TYPE.SLIDER,
@@ -48,20 +53,14 @@ export const POINT_FORMAT_CONFIG = [
     max: 1,
     min: 0,
     step: 0.01,
-    defaultValue: 1
+    defaultValue: 0,
+    marks: { 0: '不透明', 1: '透明' }
   },
   {
     type: POINT_FORMAT_TYPE.COLOR,
     title: '边线颜色',
     name: 'border_color',
     styleName: 'borderColor'
-  },
-  // video相关
-  {
-    type: POINT_FORMAT_TYPE.BUTTON,
-    title: '视频区域海报图',
-    name: 'poster_time',
-    event: EVENT_VIDEO_GET_POSTER
   },
   {
     type: POINT_FORMAT_TYPE.SLIDER,
@@ -135,6 +134,28 @@ export const POINT_FORMAT_CONFIG = [
         value: 'underline'
       }
     ]
+  },
+  // video相关
+  {
+    type: POINT_FORMAT_TYPE.BUTTON,
+    title: '视频区域海报图',
+    name: 'poster_time',
+    event: EVENT_VIDEO_GET_POSTER
+  },
+  // audio 相关
+  {
+    type: POINT_FORMAT_TYPE.BUTTON,
+    title: '应用到本页的区域音频',
+    name: 'apply_current_page_format',
+    event: EVENT_AUDIO_APPLY_CURRENT_PAGE,
+    onlyArea: true // 只有区域点读点展示
+  },
+  {
+    type: POINT_FORMAT_TYPE.BUTTON,
+    title: '应用到所有区域音频',
+    name: 'apply_all_page_format',
+    event: EVENT_AUDIO_APPLY_ALL_PAGE,
+    onlyArea: true // 只有区域点读点展示
   }
 ]
 
@@ -144,7 +165,7 @@ const DEFAULT_FORMAT_CONFIG = ['point_scale', 'border_opacity', 'border_width', 
 // 不同点读点类型特有的设置参数
 const POINT_FORMAT_CONFIG_TYPE = {
   video: ['poster_time'],
-  audio: [],
+  audio: ['apply_current_page_format', 'apply_all_page_format'],
   input: [
     'border_opacity',
     'border_width',
@@ -162,18 +183,28 @@ const POINT_FORMAT_CONFIG_TYPE = {
 
 /**
  * 遍历格式设置列表，选择出需要的配置参数
+ *
  * @param types 配置类型列表
  * @param mergeDefault 是否合并默认的配置参数
+ * @param isArea 是否为区域点读点
  */
-const getConfigByTypeList = (types = [], mergeDefault = true) => {
+const getConfigByTypeList = (types = [], mergeDefault = true, isArea = false) => {
   if (mergeDefault) {
     types = _.unionWith(DEFAULT_FORMAT_CONFIG, types)
   }
+
   let newConfig = []
   for (let i = 0; i < types.length; i++) {
     for (let j = 0; j < POINT_FORMAT_CONFIG.length; j++) {
-      if (types[i] === POINT_FORMAT_CONFIG[j]['name']) {
-        newConfig.push(POINT_FORMAT_CONFIG[j])
+      // 只有区域音频展示的
+      if (POINT_FORMAT_CONFIG[j]['onlyArea']) {
+        if (types[i] === POINT_FORMAT_CONFIG[j]['name'] && isArea) {
+          newConfig.push(POINT_FORMAT_CONFIG[j])
+        }
+      } else {
+        if (types[i] === POINT_FORMAT_CONFIG[j]['name']) {
+          newConfig.push(POINT_FORMAT_CONFIG[j])
+        }
       }
     }
   }
@@ -181,18 +212,23 @@ const getConfigByTypeList = (types = [], mergeDefault = true) => {
 }
 
 /**
- * 根据点读点类型获取点读格式化配置
+ * 根据点读点类型获取点读格式化配置,合并数组并去重
+ *
  * @param {string} type 点读点类型
+ * @param {bool} isArea 是否有区域点读点
  */
-export const getFormatConfigByType = type => {
+export const getFormatConfigByType = (type, isArea) => {
   switch (type) {
+    // 视频
     case 'video':
-      // 合并数组并去重
       return getConfigByTypeList(POINT_FORMAT_CONFIG_TYPE['video'])
+    // 音频
     case 'audio':
-      return getConfigByTypeList(POINT_FORMAT_CONFIG_TYPE['audio'])
+      return getConfigByTypeList(POINT_FORMAT_CONFIG_TYPE['audio'], true, isArea)
+    // 文本框
     case 'input':
       return getConfigByTypeList(POINT_FORMAT_CONFIG_TYPE['input'], false)
+    // 插入图形
     case 'page_shape':
       return getConfigByTypeList(POINT_FORMAT_CONFIG_TYPE['page_shape'], false)
     default:
@@ -234,9 +270,12 @@ export const getFormatConfigStyle = (pointData, rcForm) => {
     for (let i = 0; i < configs.length; i++) {
       let styleName = configs[i]['styleName']
       let key = configs[i]['name']
-
+      if (key === 'btn_opacity') {
+        // FIXED: 产品建议，透明度1表示透明，0 标识不透明, 跟CSS样式相反
+        styles[styleName] = 1 - format_config['btn_opacity']
+      }
       // 边框透明度和边框颜色处理一个即可
-      if (key === 'border_opacity' && format_config[key] !== undefined) {
+      else if (key === 'border_opacity' && format_config[key] !== undefined) {
         // FIXED: 产品建议，透明度1表示透明，0 标识不透明, 跟CSS样式相反
         let color = hex2Rgba(format_config['border_color'], 1 - format_config['border_opacity'])
         styles['borderColor'] = color

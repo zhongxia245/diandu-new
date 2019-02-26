@@ -1,5 +1,7 @@
 @resizeBtnBorderColor: #0dbf0d; // 改变区域大小的点颜色
 @resizeBtnBgColor: #fff; // 改变区域大小的点颜色
+@resizeBtnPosition: -6px; // 改变区域大小的位置
+
 .u-resize {
   width: 8px;
   height: 8px;
@@ -9,7 +11,7 @@
 }
 
 .u-resize__left {
-  left: -4px;
+  left: @resizeBtnPosition;
   top: 50%;
   transform: translateY(-50%);
   cursor: w-resize;
@@ -17,7 +19,7 @@
 }
 
 .u-resize__right {
-  right: -4px;
+  right: @resizeBtnPosition;
   top: 50%;
   transform: translateY(-50%);
   cursor: e-resize;
@@ -25,7 +27,7 @@
 }
 
 .u-resize__top {
-  top: -4px;
+  top: @resizeBtnPosition;
   left: 50%;
   transform: translateX(-50%);
   cursor: n-resize;
@@ -33,7 +35,7 @@
 }
 
 .u-resize__bottom {
-  bottom: -4px;
+  bottom: @resizeBtnPosition;
   left: 50%;
   transform: translateX(-50%);
   cursor: s-resize;
@@ -41,26 +43,26 @@
 }
 
 .u-resize__lt {
-  top: -4px;
-  left: -4px;
+  top: @resizeBtnPosition;
+  left: @resizeBtnPosition;
   cursor: nw-resize;
 }
 
 .u-resize__lb {
   cursor: sw-resize;
-  left: -4px;
-  bottom: -4px;
+  left: @resizeBtnPosition;
+  bottom: @resizeBtnPosition;
 }
 
 .u-resize__rt {
-  right: -4px;
-  top: -4px;
+  right: @resizeBtnPosition;
+  top: @resizeBtnPosition;
   cursor: ne-resize;
 }
 
 .u-resize__rb {
-  right: -4px;
-  bottom: -4px;
+  right: @resizeBtnPosition;
+  bottom: @resizeBtnPosition;
   cursor: se-resize;
 }
 
@@ -69,7 +71,7 @@
   left: 0;
   top: 0;
   height: 100%;
-  border-left: 1px solid @resizeBtnBorderColor;
+  // border-left: 1px solid @resizeBtnBorderColor;
 }
 
 .u-resize__border-top {
@@ -77,7 +79,7 @@
   left: 0;
   top: 0;
   width: 100%;
-  border-top: 1px solid @resizeBtnBorderColor;
+  // border-top: 1px solid @resizeBtnBorderColor;
 }
 
 .u-resize__border-right {
@@ -85,7 +87,7 @@
   right: 0;
   top: 0;
   height: 100%;
-  border-right: 1px solid @resizeBtnBorderColor;
+  // border-right: 1px solid @resizeBtnBorderColor;
 }
 
 .u-resize__border-bottom {
@@ -93,5 +95,5 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  border-bottom: 1px solid @resizeBtnBorderColor;
+  // border-bottom: 1px solid @resizeBtnBorderColor;
 }

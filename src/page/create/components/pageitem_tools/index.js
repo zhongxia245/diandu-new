@@ -8,13 +8,13 @@ import classnames from 'classnames'
 import { Grid } from 'antd-mobile'
 import { Checkbox, Switch, Tabs } from 'antd'
 import { ReactWebUploader } from 'common/js/components'
-import { SliderItem, ColorItem } from '@/page/create/components'
 
-import { POINT, PRE_PAGE_ID, PRE_POINT_CLASS, EVENT_NAMES, getFormatConfigByType } from '@/config'
+import { POINT, PRE_PAGE_ID, PRE_POINT_CLASS, EVENT_NAMES } from '@/config'
 import { DrawCustomArea } from '@/page/create/utils/draw/_index'
 import Event from 'common/js/event.js'
 import RenderContent from './mod/rendercontent'
 import { AnimationSetting } from './mod/toolitem'
+import FormatSetting from './format_setting'
 
 class Tools extends Component {
   constructor(props) {
@@ -198,96 +198,17 @@ class Tools extends Component {
   renderFormat = () => {
     const { pageIndex, pointIndex } = this.props
     const pointData = this.getPointData()
-    const CONFIG = getFormatConfigByType(pointData.type) || []
-    const formatConfig = pointData['format_config'] || {}
     return (
-      <div className="tools__item">
-        <h4>格式设置</h4>
-        <div className="tools-item__content">
-          {CONFIG.map((item, index) => {
-            // 区域模式， 不能设置点读点的缩放比例
-            if (pointData['data'] && pointData['data']['triggerType'] === 'area' && item['name'] === 'point_scale') {
-              return
-            }
-            let key = `${item.name}_${pageIndex}_${pointIndex}`
-            let value = formatConfig[item.name] || item['defaultValue']
-
-            switch (item.type) {
-              // 滑块组件
-              case POINT.POINT_FORMAT_TYPE.SLIDER:
-                return (
-                  <SliderItem
-                    className="format-config__item"
-                    config={item}
-                    key={key}
-                    value={value}
-                    callback={this.handleFormatCallback.bind(this, item)}
-                  />
-                )
-              // 颜色选择组件
-              case POINT.POINT_FORMAT_TYPE.COLOR:
-                return (
-                  <ColorItem
-                    className="format-config__item"
-                    config={item}
-                    key={key}
-                    value={value}
-                    callback={this.handleFormatCallback.bind(this, item)}
-                  />
-                )
-              // 按钮组件
-              case POINT.POINT_FORMAT_TYPE.BUTTON:
-                return (
-                  <div
-                    key={key}
-                    className="format-config__item u-btn u-btn--green"
-                    onClick={() => {
-                      Event.emit(item.event, {
-                        getPointData: this.getPointData,
-                        setPointData: this.setPointData
-                      })
-                    }}
-                  >
-                    {item.title}
-                  </div>
-                )
-              case POINT.POINT_FORMAT_TYPE.SELECT:
-                return (
-                  <div className="select__item format-config__item">
-                    <span> {item['title']}</span>
-                    <select onChange={this.handleFormatCallback.bind(this, item)}>
-                      {item['values'].map((subItem, subIndex) => {
-                        return (
-                          <option value={subItem['value']} key={subIndex} selected={subIndex === value}>
-                            {subItem['key']}
-                          </option>
-                        )
-                      })}
-                    </select>
-                  </div>
-                )
-              case POINT.POINT_FORMAT_TYPE.CHECKBOX_LIST:
-                let configs = item['configs'] || []
-                return (
-                  <div className="checkbox-list__item format-config__item">
-                    {configs.map((subitem, subindex) => {
-                      return (
-                        <label key={subindex}>
-                          <input
-                            type="checkbox"
-                            checked={value && value[subitem['name']]}
-                            onChange={this.handleFormatCheckbox.bind(this, item['name'], subitem)}
-                          />
-                          <span>{subitem['title']}</span>
-                        </label>
-                      )
-                    })}
-                  </div>
-                )
-            }
-          })}
-        </div>
-      </div>
+      <FormatSetting
+        pageIndex={pageIndex}
+        pointIndex={pointIndex}
+        pointData={pointData}
+        callback={this.handleFormatCallback}
+        onChecked={this.handleFormatCheckbox}
+        getPointData={this.getPointData}
+        setPointData={this.setPointData}
+        form={this.props.form}
+      />
     )
   }
 
@@ -447,7 +368,7 @@ class Tools extends Component {
             {this.renderFormat()}
           </Tabs.TabPane>
           <Tabs.TabPane tab="激发模式" key={3}>
-            {this.renderFormat()}
+            {this.renderTrigger()}
           </Tabs.TabPane>
           <Tabs.TabPane tab="动画设置" key={4}>
             <AnimationSetting {...this.props} getPointData={this.getPointData} setPointData={this.setPointData} />

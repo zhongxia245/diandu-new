@@ -24,6 +24,7 @@ class App extends Component {
 
   componentDidMount() {
     const { setFieldsValue, getFieldProps } = this.props.form
+
     // FIXED: 先注册表单，使用才不用警告
     getFieldProps('covers')
     getFieldProps('pages')

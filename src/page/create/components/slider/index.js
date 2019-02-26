@@ -21,7 +21,7 @@ class SliderItem extends Component {
   }
 
   render() {
-    const { title, min, max, step } = this.props.config || {}
+    const { title, min, max, step, marks } = this.props.config || {}
     let val = this.state.value
     return (
       <div className={`slider-item ${this.props.className}`}>
@@ -34,6 +34,7 @@ class SliderItem extends Component {
           min={min}
           max={max}
           step={step}
+          marks={marks}
           handleStyle={{
             borderColor: '#01ca97',
             backgroundColor: '#01ca97'
