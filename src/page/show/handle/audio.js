@@ -4,7 +4,7 @@
  */
 import { Toast } from 'antd-mobile'
 import Event from 'common/js/event.js'
-import { EVENT_NAME } from '../common/_const'
+import { EVENT_NAME } from '../common/const'
 import { isEqualSrc, setAudioSrc } from './util'
 
 let tempCurrentAudioPointId = null

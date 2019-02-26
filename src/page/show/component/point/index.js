@@ -1,14 +1,14 @@
-import './_point.less'
+import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
 import { Toast, Modal } from 'antd-mobile'
 import Event from 'common/js/event.js'
-import { EVENT_NAME } from '../../common/_const'
+import { EVENT_NAME } from '../../common/const'
 import { IconFont } from 'common/js/components'
 import { getVideoImage } from 'common/js/utils'
 import { isMobile } from 'common/js/utils/user_agent.js'
 import { getFormatConfigStyle, PAGE_CONTENT_TYPE } from '@/config'
-import { CustomShapePoint } from './mod/_index'
+import CustomShapePoint from '../custom_shape'
 
 const DEFAULT_POINT_SIZE = 50
 

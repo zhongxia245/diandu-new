@@ -3,7 +3,7 @@ import { Toast } from 'antd-mobile'
 import { isDev, urlParam } from 'common/js/utils'
 import { saveHandler, getHandler } from './data_handler'
 import queryString from 'common/js/utils/query_string'
-import { convertBase64UrlToBlob } from '@/page/create/utils/_index'
+import { convertBase64UrlToBlob } from '@/page/create/utils'
 
 const axiosInstance = Axios.create({ baseURL: '/' })
 

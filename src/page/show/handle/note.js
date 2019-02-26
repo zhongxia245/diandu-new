@@ -1,5 +1,5 @@
 import Event from 'common/js/event.js'
-import { EVENT_NAME } from '../common/_const'
+import { EVENT_NAME } from '../common/const'
 import CustomModal from 'common/js/components/custom_modal.js'
 
 Event.on(EVENT_NAME.MODAL_NOTE_SHOW, pointData => {

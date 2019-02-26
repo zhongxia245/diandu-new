@@ -1,5 +1,6 @@
 import './index.less'
 import 'animate.css'
+import 'antd-mobile/dist/antd-mobile.less'
 import './handle'
 
 import React from 'react'
@@ -12,7 +13,7 @@ import iScroll from 'iscroll'
 import queryString from 'common/js/utils/query_string'
 import { getData } from '@/ajax'
 
-import { setShare } from './common/_share'
+import { setShare } from './common/share'
 import Show from './show'
 
 let id = queryString('id')

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import classnames from 'classnames'
 import { IconFont } from 'common/js/components'
 import { Accordion, Grid, Slider } from 'antd-mobile'
-import { previewAnimation } from '@/page/create/utils/_index'
+import { previewAnimation } from '@/page/create/utils/index'
 import { ANIMATIONS, SETTINGS } from '@/config/animation'
 
 // 获取该动画是否可以设置方向

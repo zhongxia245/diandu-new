@@ -19,7 +19,7 @@ import { calculateWHByDom } from 'common/js/utils'
 import { IconFont } from 'common/js/components'
 import CustomModal from 'common/js/components/custom_modal.js'
 
-import { Drag, getImageWH } from '@/page/create/utils/_index'
+import { Drag, getImageWH } from '@/page/create/utils/index'
 import { savePageTpl, getPageTpl, uploadBase64Img } from '@/ajax'
 import { PageItemTools, PageShape, PageTplList, Point } from '../index'
 import { ALLOW_ADD_POINT, initEvent } from './event_handle'

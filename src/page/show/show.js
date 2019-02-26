@@ -3,10 +3,10 @@ import React, { Component } from 'react'
 import classnames from 'classnames'
 import Swiper from 'swiper/dist/js/swiper.min.js'
 import { isMobile } from 'common/js/utils/user_agent.js'
-import { PageItem, Header } from './component/_index'
+import { PageItem, Header } from './component'
 import Event from 'common/js/event.js'
-import { EVENT_NAME } from './common/_const'
-import { runAnimation, runBlink } from './common/_animation'
+import { EVENT_NAME } from './common/const'
+import { runAnimation, runBlink } from './common/animation'
 
 export default class Show extends Component {
   constructor(props) {
@@ -52,8 +52,6 @@ export default class Show extends Component {
         }
       }
     }
-
-    console.log(swiperOptions)
 
     // PC需要前进后退按钮
     if (!isMobile()) {

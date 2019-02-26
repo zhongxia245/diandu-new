@@ -1,8 +1,8 @@
-import './_pointitem.less'
+import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
 import { calculateWHByDom } from 'common/js/utils'
-import { Point } from '../_index'
+import { Point } from '../index'
 import { PAGE_SIZE } from '@/config'
 export default class PageItem extends Component {
   /**

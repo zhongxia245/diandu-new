@@ -5,7 +5,7 @@
 import './index.less'
 import React, { Component } from 'react'
 import { EVENT_NAMES } from '@/config'
-import { Drag } from '@/page/create/utils/_index'
+import { Drag } from '@/page/create/utils/index'
 import Event from 'common/js/event.js'
 
 let originalPointData = null

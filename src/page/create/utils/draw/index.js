@@ -2,7 +2,7 @@
  * 绘制区域的方法
  */
 
-import './_index.less'
+import './index.less'
 
 const DEFAULT_CONFIG = {
   disabled: false,

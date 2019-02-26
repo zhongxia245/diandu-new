@@ -1,4 +1,4 @@
-import { previewAnimation } from '@/page/create/utils/_index'
+import { previewAnimation } from '@/page/create/utils'
 
 /**
  * 运行动画

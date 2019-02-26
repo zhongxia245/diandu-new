@@ -1,9 +1,10 @@
-import './_header.less'
+import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
 import { IconFont } from 'common/js/components'
 import Event from 'common/js/event.js'
-import { EVENT_NAME } from '../../common/_const'
+import { EVENT_NAME } from '../../common/const'
+
 export default class Header extends Component {
   constructor(props) {
     super(props)
@@ -33,14 +34,12 @@ export default class Header extends Component {
       <div className="page__header">
         <IconFont type="menu2" />
         <div className="page-header__gap" />
-        {bgAudioSrc ? (
+        {bgAudioSrc && (
           <IconFont
             type="music"
             className={classnames('icon__music', { 'icon__music--play': this.state.bgAudioPlay })}
             onClick={this.handleStopBgAudio}
           />
-        ) : (
-          ''
         )}
       </div>
     )

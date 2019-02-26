@@ -4,7 +4,7 @@
 import { Toast } from 'antd-mobile'
 import CustomModal from 'common/js/components/custom_modal.js'
 import Event from 'common/js/event.js'
-import { EVENT_NAME } from '../common/_const'
+import { EVENT_NAME } from '../common/const'
 
 Event.on(EVENT_NAME.VIDEO_PLAY, ({ src }) => {
   if (src) {
@@ -13,7 +13,7 @@ Event.on(EVENT_NAME.VIDEO_PLAY, ({ src }) => {
     CustomModal.show({
       closable: true,
       wrapClassName: 'custom-modal--video',
-      render: prpos => (
+      render: () => (
         <div>
           <video controls controlsList="nodownload" src={src} />
         </div>

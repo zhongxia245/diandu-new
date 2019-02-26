@@ -10,7 +10,7 @@ import { Checkbox, Switch, Tabs } from 'antd'
 import { ReactWebUploader } from 'common/js/components'
 
 import { POINT, PRE_PAGE_ID, PRE_POINT_CLASS, EVENT_NAMES } from '@/config'
-import { DrawCustomArea } from '@/page/create/utils/draw/_index'
+import { DrawCustomArea } from '@/page/create/utils/draw'
 import Event from 'common/js/event.js'
 import RenderContent from './mod/rendercontent'
 import { AnimationSetting } from './mod/toolitem'

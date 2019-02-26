@@ -1,4 +1,4 @@
-import Drag from './_drag'
+import Drag from './drag'
 
 export const getImageWH = path => {
   return new Promise((resolve, reject) => {

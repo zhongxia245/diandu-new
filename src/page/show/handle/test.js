@@ -4,7 +4,7 @@ import Swiper from 'swiper/dist/js/swiper.js'
 import Event from 'common/js/event.js'
 import { isMobile } from 'common/js/utils/user_agent.js'
 import CustomModal from 'common/js/components/custom_modal.js'
-import { EVENT_NAME } from '../common/_const'
+import { EVENT_NAME } from '../common/const'
 
 Event.on(EVENT_NAME.MODAL_TEST_SHOW, pointData => {
   let questions = (pointData.data && pointData.data.questions) || []
