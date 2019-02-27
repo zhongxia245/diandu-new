@@ -1,10 +1,7 @@
-.modal__pagetpl {
-  width: 850px;
-}
-
 .page-tpl-list {
   position: relative;
   padding: 10px;
+
   ul {
     display: flex;
     overflow: auto;
@@ -14,6 +11,7 @@
     min-height: 300px;
     max-height: 500px;
   }
+
   li {
     display: inline-block;
     margin: 20px 12px;
@@ -22,22 +20,27 @@
     border: 1px solid #efefef;
     text-align: center;
     cursor: pointer;
+
     img {
       display: inline-block;
       border-radius: 3px;
       height: 100%;
       width: auto;
     }
+
     p {
       font-weight: bold;
     }
+
     &:hover {
       box-shadow: 0 0 3px green;
     }
   }
+
   .page-tpl-list__item--active {
     box-shadow: 0 0 10px green !important;
   }
+
   .u-btn {
     margin-right: 20px;
     border: 1px solid #DDD;

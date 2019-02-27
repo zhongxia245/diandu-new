@@ -80,7 +80,7 @@ class CustomAreaInput extends Component {
       other,
       active,
       getPageItemBgAutoWH,
-      ...otherProps
+      onClick = () => {}
     } = this.props
     let autoWH = getPageItemBgAutoWH(other.baseInfo)
     let pointStyle = {
@@ -99,13 +99,13 @@ class CustomAreaInput extends Component {
 
     return (
       <div
-        {...otherProps}
         key={pointIndex}
         style={pointStyle}
         className={classnames('point', `point__${pageIndex}_${pointIndex}`, 'point__custom-area-input', className, {
           'point--active': active
         })}
         data-index={pointIndex}
+        onClick={onClick}
         {...activeProps}
       >
         {active && showTextarea ? (

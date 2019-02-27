@@ -1,9 +1,5 @@
 .modal__shape {
-  width: 860px;
   user-select: none;
-  .am-modal-body {
-    height: 500px;
-  }
 }
 
 .page-shape {
@@ -13,6 +9,7 @@
 .page-shape__list {
   display: flex;
   flex-wrap: wrap;
+
   li {
     position: relative;
     display: flex;
@@ -26,12 +23,15 @@
     border: 1px solid #ddd;
     border-radius: 3px;
     cursor: pointer;
+
     &:hover {
       box-shadow: 0 0 10px #999;
+
       .page-shape-list__btn {
         display: block;
       }
     }
+
     img {
       max-width: 100%;
       max-height: 100%;
@@ -39,38 +39,41 @@
       height: auto;
     }
   }
+
   .page-shape-list__btn {
     position: absolute;
     right: 0;
     bottom: 0;
     left: 0;
     display: none;
-    height: 30px;
+    height: 25px;
     border-top: 1px solid #ddd;
     background: #EEE;
     text-align: center;
-    line-height: 30px;
+    line-height: 25px;
   }
 }
 
 .page-shape-list__empty {
-  margin-left: 80px;
   margin-top: 20%;
+  margin-left: 80px;
 }
 
 .page-share__category {
-  text-align: left;
-  border-bottom: 1px solid #DDD;
   padding: 10px;
+  border-bottom: 1px solid #DDD;
+  text-align: left;
+
   li {
     display: inline-block;
-    padding: 0 5px;
     margin-left: 15px;
-    font-size: 14px;
-    color: #1e92ea;
-    cursor: pointer;
+    padding: 0 5px;
     border-bottom: 2px solid transparent;
+    color: #1e92ea;
+    font-size: 14px;
+    cursor: pointer;
   }
+
   .category--active {
     border-color: #1e92ea;
   }

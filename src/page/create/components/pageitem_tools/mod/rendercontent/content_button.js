@@ -3,13 +3,13 @@
  * 渲染成编辑器[文本框使用，多页签文本框使用]
  */
 import React, { Component } from 'react'
-
-import CustomModal from 'common/js/components/custom_modal.js'
+import { CustomAntdModal } from 'common/js/components'
 
 class ContentButton extends Component {
   handleShowModal = () => {
-    CustomModal.show({ render: prpos => <div>Hello Modal!</div> })
+    CustomAntdModal.show({ render: props => <div>Hello Modal!</div> })
   }
+
   render() {
     return (
       <div className="content-button">

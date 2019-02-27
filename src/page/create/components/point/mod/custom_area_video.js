@@ -43,7 +43,7 @@ class CustomAreaVideo extends Component {
       other,
       active,
       getPageItemBgAutoWH,
-      ...otherProps
+      onClick = () => {}
     } = this.props
 
     let autoWH = getPageItemBgAutoWH(other.baseInfo)
@@ -64,7 +64,6 @@ class CustomAreaVideo extends Component {
 
     return (
       <div
-        {...otherProps}
         key={pointIndex}
         style={pointStyle}
         className={classnames(
@@ -79,6 +78,7 @@ class CustomAreaVideo extends Component {
           }
         )}
         data-index={pointIndex}
+        onClick={onClick}
       >
         {pointIndex + 1}
         {active ? <ResizeControl {...this.props} /> : ''}

@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Cropper from 'react-cropper'
 import 'cropperjs/dist/cropper.css'
 import { uploadBase64Img } from '@/ajax'
+import { Button } from 'antd'
 
 export default class ModalCropper extends Component {
   constructor(props) {
@@ -14,12 +15,12 @@ export default class ModalCropper extends Component {
 
   onCropper = () => {
     uploadBase64Img(this.cropper.getCroppedCanvas()).then(result => {
-      this.props.onClose(result.data)
+      this.props.onOk && this.props.onOk(result.data)
     })
   }
 
   render() {
-    const { onClose, url } = this.props
+    const { url, onCancel = () => {} } = this.props
     return (
       <div className="react-cropper">
         <Cropper
@@ -38,8 +39,12 @@ export default class ModalCropper extends Component {
           guides={true}
         />
         <div className="cropper__btns">
-          <button onClick={onClose}>取消</button>
-          <button onClick={this.onCropper}>确定</button>
+          <Button onClick={onCancel} style={{ marginRight: '15px' }}>
+            取消
+          </Button>
+          <Button type="primary" onClick={this.onCropper}>
+            确定
+          </Button>
         </div>
       </div>
     )

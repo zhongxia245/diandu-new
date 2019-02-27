@@ -4,7 +4,8 @@
 import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
-import { message, Modal } from 'antd'
+import { message, Modal, Empty, Button } from 'antd'
+
 class PageTplList extends Component {
   constructor(props) {
     super(props)
@@ -22,6 +23,7 @@ class PageTplList extends Component {
   handleSubmitTpl = () => {
     const { data, setPageData, getPageData } = this.props
     const { selectIndex } = this.state
+
     if (selectIndex !== '') {
       let pageData = JSON.parse(data[selectIndex]['data'] || '{}')
       // 如果当前点读页有内容，则提示是否覆盖，否则则直接覆盖
@@ -34,12 +36,12 @@ class PageTplList extends Component {
           okText: '覆盖',
           onOk: () => {
             setPageData(pageData)
-            this.props.onClose()
+            this.props.onOk && this.props.onOk()
           }
         })
       } else {
         setPageData(pageData)
-        this.props.onClose()
+        this.props.onOk && this.props.onOk()
       }
     } else {
       message.info('请选择一个点读页模板')
@@ -52,12 +54,12 @@ class PageTplList extends Component {
     const hasContent = data.length !== 0
     return (
       <div className="page-tpl-list">
-        {/* <Tabs tabs={TABS}> */}
-        <ul>
-          {hasContent ? (
-            data.map((item, index) => {
+        {hasContent ? (
+          <ul>
+            {data.map((item, index) => {
               return (
                 <li
+                  key={index}
                   className={classnames({
                     'page-tpl-list__item--active': selectIndex === index
                   })}
@@ -67,19 +69,19 @@ class PageTplList extends Component {
                   <p>{item.name}</p>
                 </li>
               )
-            })
-          ) : (
-            <div style={{ width: '100%', paddingTop: 120 }}>素材库为空</div>
-          )}
-        </ul>
-        {/* </Tabs> */}
+            })}
+          </ul>
+        ) : (
+          <Empty />
+        )}
+
         <div className="page-tpl-list__footer">
-          <div className="u-btn" onClick={onClose}>
+          <Button onClick={onClose} style={{ marginRight: '15px' }}>
             取消
-          </div>
-          <div className="u-btn u-btn--green" onClick={this.handleSubmitTpl}>
+          </Button>
+          <Button type="primary" onClick={this.handleSubmitTpl}>
             确定
-          </div>
+          </Button>
         </div>
       </div>
     )

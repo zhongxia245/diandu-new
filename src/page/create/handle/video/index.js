@@ -3,8 +3,8 @@
  */
 import './index.less'
 import React, { Component } from 'react'
-import { Slider } from 'antd'
-import CustomModal from 'common/js/components/custom_modal.js'
+import { Slider, Button } from 'antd'
+import { CustomAntdModal } from 'common/js/components'
 import Event from 'common/js/event.js'
 import { getVideoImage } from 'common/js/utils'
 
@@ -12,10 +12,10 @@ import { getVideoImage } from 'common/js/utils'
 export const EVENT_VIDEO_GET_POSTER = 'video_get_poster'
 
 Event.on(EVENT_VIDEO_GET_POSTER, param => {
-  CustomModal.show({
+  CustomAntdModal.show({
+    title: '设置视频海报',
+    footer: null,
     className: 'modal__video-poster',
-    maskClosable: false,
-    closable: false,
     render: props => <VideoPoster {...param} {...props} />
   })
 })
@@ -52,20 +52,21 @@ class VideoPoster extends Component {
     this.setState({ val })
   }
 
-  handleGetVideoPoster = val => {
+  handleGetVideoPoster = () => {
     this.getVideoPoster()
   }
 
   handleSubmit = () => {
-    const { setPointData, onClose } = this.props
+    const { setPointData, onOk } = this.props
     const { pointData, val } = this.state
     setPointData({
       data: { ...pointData.data, posterTime: val }
     })
-    onClose && onClose()
+    onOk && onOk()
   }
 
   render() {
+    const { onOk = () => {} } = this.props
     const { min, max, val, step, base64 } = this.state
 
     let style = {}
@@ -97,12 +98,12 @@ class VideoPoster extends Component {
           />
         </div>
         <div className="video-poster__btns">
-          <div className="u-btn" onClick={this.props.onClose}>
+          <Button onClick={onOk} style={{ marginRight: '15px' }}>
             取消
-          </div>
-          <div className="u-btn u-btn--green" onClick={this.handleSubmit}>
+          </Button>
+          <Button type="primary" onClick={this.handleSubmit}>
             确定
-          </div>
+          </Button>
         </div>
       </div>
     )

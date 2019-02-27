@@ -132,9 +132,8 @@ class Exam extends Component {
 
   handleSubmit = () => {
     const { questions } = this.state
-    console.log('提交表单:', questions)
     this.props.onSubmit && this.props.onSubmit(questions)
-    this.props.onClose && this.props.onClose()
+    this.props.onOk && this.props.onOk()
   }
 
   renderAnswer(data) {

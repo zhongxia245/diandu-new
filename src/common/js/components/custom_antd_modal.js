@@ -37,9 +37,9 @@ export default {
       onCancel: () => {
         this.hide()
       },
-      onOk: () => {
+      onOk: data => {
         this.hide()
-        callback && callback(param)
+        callback && callback(data)
       },
       ...param
     })

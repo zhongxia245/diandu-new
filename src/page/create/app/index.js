@@ -8,7 +8,7 @@ import React, { Component } from 'react'
 import { createForm } from 'rc-form'
 import classnames from 'classnames'
 import { message, Icon } from 'antd'
-import { ReactWebUploader, CustomModal, IconFont, CustomAntdModal } from 'common/js/components'
+import { ReactWebUploader, IconFont, CustomAntdModal } from 'common/js/components'
 import { isDev, queryString } from 'common/js/utils'
 import { ModalCropper, GlobalPageSetting, PageItem, AppHeader } from '@/page/create/components'
 import { saveData } from '@/ajax'
@@ -65,10 +65,11 @@ class App extends Component {
     let reader, file
     let files = e.target.files
     let done = url => {
-      CustomModal.show({
+      CustomAntdModal.show({
         title: '选择封面图片',
         className: 'modal__cropper',
         url: url,
+        footer: null,
         render: props => {
           return <ModalCropper {...props} />
         },
@@ -461,7 +462,7 @@ class App extends Component {
         <div className="page">
           <div className="page__header">创建点读页</div>
           <div className="page__setting">
-            {/* 页面常规设置*/}
+            {/* 页面常规设置 renderBaseInfo  renderCompetence  renderCharge 会报不可控组件错误*/}
             {this.renderBaseInfo()}
             {this.renderCompetence()}
             {this.renderCharge()}

@@ -47,7 +47,7 @@ export default class CustomShapePoint extends Component {
       other,
       active,
       getPageItemBgAutoWH,
-      ...otherProps
+      onClick = () => {}
     } = this.props
     const { svgData } = this.state
 
@@ -70,13 +70,13 @@ export default class CustomShapePoint extends Component {
         ref={dom => {
           this.dom = dom
         }}
-        {...otherProps}
         key={pointIndex}
         style={pointStyle}
         className={classnames('point', `point__${pageIndex}_${pointIndex}`, 'point__custom-shape', className, {
           'point--active': active
         })}
         data-index={pointIndex}
+        onClick={onClick}
       >
         {active ? <ResizeControl {...this.props} /> : ''}
         {svgData ? <i dangerouslySetInnerHTML={{ __html: this.state.svgData }} /> : ''}

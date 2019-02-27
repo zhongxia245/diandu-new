@@ -17,9 +17,9 @@ import _ from 'lodash'
 
 import { calculateWHByDom } from 'common/js/utils'
 import { IconFont } from 'common/js/components'
-import CustomModal from 'common/js/components/custom_modal.js'
+import { CustomAntdModal } from 'common/js/components'
 
-import { Drag, getImageWH } from '@/page/create/utils/index'
+import { Drag, getImageWH } from '@/page/create/utils'
 import { savePageTpl, getPageTpl, uploadBase64Img } from '@/ajax'
 import { PageItemTools, PageShape, PageTplList, Point } from '../index'
 import { ALLOW_ADD_POINT, initEvent } from './event_handle'
@@ -210,10 +210,11 @@ class PageItem extends Component {
 
   // 插入形状或者图片
   handleDrawPageShape = () => {
-    CustomModal.show({
-      maskClosable: false,
+    CustomAntdModal.show({
+      width: 900,
       title: '图形库',
       className: 'modal__shape',
+      footer: null,
       render: props => (
         <PageShape
           {...props}
@@ -270,23 +271,24 @@ class PageItem extends Component {
     }
   }
 
-  handleShowTplList = () => {
-    getPageTpl().then(result => {
-      let list = []
-      for (let i = 0; i < result.length; i++) {
-        if (result[i].data && result[i].data !== 'undefined' && result[i].pic) {
-          list.push(result[i])
-        }
-      }
+  handleShowTplList = async () => {
+    let result = await getPageTpl()
 
-      CustomModal.show({
-        maskClosable: false,
-        title: '点读页模板列表',
-        className: 'modal__pagetpl',
-        render: props => (
-          <PageTplList {...props} data={list} setPageData={this.setPageData} getPageData={this.getPageData} />
-        )
-      })
+    let list = []
+    for (let i = 0; i < result.length; i++) {
+      if (result[i].data && result[i].data !== undefined && result[i].pic) {
+        list.push(result[i])
+      }
+    }
+
+    CustomAntdModal.show({
+      width: 900,
+      title: '点读页模板列表',
+      className: 'modal__pagetpl',
+      footer: null,
+      render: props => (
+        <PageTplList {...props} data={list} setPageData={this.setPageData} getPageData={this.getPageData} />
+      )
     })
   }
 
@@ -430,7 +432,7 @@ class PageItem extends Component {
               <span>竖屏背景图比例9：16</span>
 
               <div>
-                {pageCount > 1 ? (
+                {pageCount > 1 && (
                   <React.Fragment>
                     <div
                       style={{ display: pageIndex === 0 ? 'none' : '' }}
@@ -449,8 +451,6 @@ class PageItem extends Component {
                       下移
                     </div>
                   </React.Fragment>
-                ) : (
-                  ''
                 )}
 
                 {isHide ? (

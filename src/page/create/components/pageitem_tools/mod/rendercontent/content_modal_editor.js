@@ -3,18 +3,16 @@
  * 渲染成编辑器[文本框使用，多页签文本框使用]
  */
 import React, { Component } from 'react'
-import { Tabs, Modal } from 'antd-mobile'
-import { message } from 'antd'
-
-import CustomModal from 'common/js/components/custom_modal.js'
-import { DraftEditor } from 'common/js/components'
+import { Tabs } from 'antd-mobile'
+import { message, Button } from 'antd'
+import { DraftEditor, CustomAntdModal } from 'common/js/components'
 
 class ContentModalEditor extends Component {
   handleShowModal = () => {
-    CustomModal.show({
+    CustomAntdModal.show({
+      title: '设置内容',
+      footer: null,
       className: 'modal__content-editor',
-      closable: true,
-      maskClosable: false,
       render: props => <ModalEditor {...this.props} {...props} />
     })
   }
@@ -78,20 +76,13 @@ class ModalEditor extends Component {
   }
 
   handleAddTab = () => {
-    Modal.prompt('请输入新增页签标题', '', [
-      { text: '取消' },
-      {
-        text: '添加',
-        onPress: value => {
-          let tabsData = this.getData()
-          tabsData.push({ key: ++this.tabCount, title: value, content: '请输入内容' })
-          console.log(tabsData)
-          this.setState({
-            tabs: tabsData
-          })
-        }
-      }
-    ])
+    let title = prompt('请输入新增页签标题')
+    let tabsData = this.getData()
+    tabsData.push({ key: ++this.tabCount, title: title, content: '请输入内容' })
+    console.log(tabsData)
+    this.setState({
+      tabs: tabsData
+    })
   }
 
   // 修改页签标题
@@ -101,29 +92,16 @@ class ModalEditor extends Component {
     if (tabIndex === clickTabIndex) {
       let tabsData = this.getData()
       let data = tabsData[tabIndex] || {}
-      Modal.prompt(
-        '请输入新的页面标题',
-        '',
-        [
-          ({ text: '取消' },
-          {
-            text: '保存',
-            onPress: value => {
-              data['title'] = value
-              this.setState({
-                tabs: tabsData
-              })
-            }
-          })
-        ],
-        'default',
-        data.title
-      )
+      let title = prompt('请输入新的页面标题', data['title'])
+      data['title'] = title
+      this.setState({
+        tabs: tabsData
+      })
     }
   }
 
   handleSubmit = () => {
-    const { setPointData, getPointData, onClose } = this.props
+    const { setPointData, getPointData, onOk } = this.props
     const pointData = getPointData()
     let data = this.getData()
     setPointData({
@@ -132,7 +110,7 @@ class ModalEditor extends Component {
         tabs: data
       }
     })
-    onClose && onClose()
+    onOk && onOk()
     message.success('保存成功')
   }
 
@@ -155,19 +133,18 @@ class ModalEditor extends Component {
           })}
         </Tabs>
         <div className="modal-mul-notes__footer">
-          {tabs.length > 1 ? (
-            <div className="u-btn u-btn--red" onClick={this.handleDelCurrentTab}>
+          {tabs.length > 1 && (
+            <Button type="danger" onClick={this.handleDelCurrentTab} style={{ marginRight: '15px' }}>
               删除本页
-            </div>
-          ) : (
-            ''
+            </Button>
           )}
-          <div className="u-btn u-btn--green" onClick={this.handleAddTab}>
+
+          <Button onClick={this.handleAddTab} style={{ marginRight: '15px' }}>
             添加选项卡
-          </div>
-          <div className="u-btn u-btn--green" onClick={this.handleSubmit}>
+          </Button>
+          <Button type="primary" onClick={this.handleSubmit}>
             保存
-          </div>
+          </Button>
         </div>
       </div>
     )
