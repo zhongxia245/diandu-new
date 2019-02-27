@@ -3,7 +3,6 @@
  * 创建点读页面入口页
  */
 import './index.less'
-import 'antd-mobile/dist/antd-mobile.less'
 import React, { Component } from 'react'
 import { createForm } from 'rc-form'
 import classnames from 'classnames'

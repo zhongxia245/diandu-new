@@ -4,10 +4,8 @@
 import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
-// 目前grid无法替换
-import { Grid } from 'antd-mobile'
 import { Checkbox, Switch, Tabs } from 'antd'
-import { ReactWebUploader } from 'common/js/components'
+import { ReactWebUploader, Grid } from 'common/js/components'
 
 import { POINT, PRE_PAGE_ID, PRE_POINT_CLASS, EVENT_NAMES } from '@/config'
 import { DrawCustomArea } from '@/page/create/utils/draw'
@@ -135,12 +133,12 @@ class Tools extends Component {
     let isActive = item.type === pointData.type
     return (
       <div
-        className={classnames('am-grid-item-inner-content', {
-          'tools-type__item--active': isActive
+        className={classnames('custom-dd-grid-item', {
+          'custom-dd-grid-item--active': isActive
         })}
       >
-        <img className="am-grid-icon" src={isActive ? item.iconActive : item.icon} />
-        <div className="am-grid-text">{item.text}</div>
+        <img src={isActive ? item.iconActive : item.icon} />
+        <div>{item.text}</div>
       </div>
     )
   }
@@ -171,13 +169,7 @@ class Tools extends Component {
               return (
                 <div className="tools-type__item" key={index}>
                   <h5>{item.title}</h5>
-                  <Grid
-                    hasLine={false}
-                    renderItem={this.renderItem}
-                    activeClassName="tools-type__item--active"
-                    data={item.list}
-                    onClick={this.handleSelectType}
-                  />
+                  <Grid hasLine={false} renderItem={this.renderItem} data={item.list} onClick={this.handleSelectType} />
                 </div>
               )
             } else {

@@ -1,0 +1,52 @@
+.dd-grid {
+  .dd-flexbox {
+    display: flex;
+  }
+
+  .dd-grid-item {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    flex-direction: column;
+    cursor: pointer;
+    text-align: center;
+    overflow: hidden;
+
+    img {
+      max-width: 35px;
+      max-height: 35px;
+    }
+
+    svg {
+      max-width: 15px;
+      max-height: 15px;
+    }
+
+    div {
+      font-size: 11px;
+      color: #000;
+      word-break: keep-all;
+    }
+  }
+
+  // .dd-grid-item--active {
+  //   background: #ddd;
+  //   div {
+  //     color: #01ca97;
+  //   }
+  //   svg {
+  //     fill: #01ca97;
+  //   }
+  // }
+}
+
+
+.dd-grid-border {
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+
+  .dd-grid-item {
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+  }
+}

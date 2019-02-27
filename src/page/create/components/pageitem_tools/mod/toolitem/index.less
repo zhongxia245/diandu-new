@@ -1,83 +1,56 @@
 .tool-item__animation {
-  .custom-am-grid-item {
-    .am-grid-icon {
-      margin-top: 0 !important;
-      height: 25px !important;
-    }
+  .ant-collapse {
+    border-radius: 0;
+    border: 0;
 
-    .am-grid-text {
-      margin-top: 0 !important;
-    }
-  }
-
-  .am-grid-item {
-    cursor: pointer;
-
-    .am-grid-item__animation--active {
-      background: #DDD;
-    }
-
-    .am-grid-item-content {
-      padding: 0 !important;
-    }
-  }
-
-  .am-accordion {
-    .am-accordion-header {
-      height: 40px !important;
-      background-color: #f2f2f2 !important;
-      font-size: 14px !important;
-      line-height: 40px !important;
-      cursor: pointer;
-
-      i {
-        top: 12px !important;
-        right: 12px !important;
+    .ant-collapse-item {
+      .ant-collapse-header {
+        padding: 10px 10px 10px 40px;
       }
-    }
 
-    .am-accordion-content-box {
-      padding: 10px;
+      .ant-collapse-content-box {
+        padding: 10px;
 
-      h5 {
-        margin-top: 15px;
+        h5 {
+          margin-top: 15px;
 
-        &:first-child {
-          margin-top: 0;
-        }
+          &:first-child {
+            margin-top: 0;
+          }
 
-        label {
-          float: right;
-          color: #333;
-          font-size: 12px;
+          label {
+            float: right;
+            color: #333;
+            font-size: 12px;
 
-          input {
-            margin-right: 5px;
+            input {
+              margin-right: 5px;
+            }
           }
         }
       }
-    }
 
-    .accordion-panel__header {
-      display: flex;
-      align-items: center;
-      user-select: none;
+      .ant-collapse__header {
+        display: flex;
+        align-items: center;
+        user-select: none;
 
-      p {
-        flex: 1;
-      }
+        p {
+          flex: 1;
+        }
 
-      span {
-        display: inline-block;
-        margin-right: 10px;
-        padding: 0 5px;
-        height: 20px;
-        border: 1px solid #ff7c80;
-        border-radius: 3px;
-        color: #ff7c80;
-        text-align: center;
-        font-size: 12px;
-        line-height: 20px;
+        span {
+          display: inline-block;
+          margin-right: 10px;
+          padding: 0 5px;
+          height: 20px;
+          border: 1px solid #ff7c80;
+          border-radius: 3px;
+          color: #ff7c80;
+          text-align: center;
+          font-size: 12px;
+          line-height: 20px;
+        }
       }
     }
   }
@@ -139,11 +112,11 @@
       width: 50px;
     }
 
-    .am-slider-wrapper {
+    .ant-slider {
       flex: 1;
       margin: 0 15px;
 
-      .am-slider-handle {
+      .ant-slider-handle {
         margin-top: -5px;
         margin-left: -5px;
         width: 12px;
@@ -160,4 +133,5 @@
       line-height: 20px;
     }
   }
+
 }

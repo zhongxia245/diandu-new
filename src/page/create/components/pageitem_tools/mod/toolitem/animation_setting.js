@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import classnames from 'classnames'
-import { IconFont } from 'common/js/components'
-import { Accordion, Grid, Slider } from 'antd-mobile'
+import { IconFont, Grid } from 'common/js/components'
+import { Collapse, Slider } from 'antd'
 import { previewAnimation } from '@/page/create/utils'
 import { ANIMATIONS, SETTINGS } from '@/config/animation'
 
@@ -93,28 +93,26 @@ class AnimationSetting extends Component {
 
   renderPanelHeader(index) {
     return (
-      <div className="accordion-panel__header">
-        <p>
-          动画
-          {index + 1}
-        </p>
+      <div className="ant-collapse__header">
+        <p>动画{index + 1}</p>
         <span onClick={this.handleDelAnimation.bind(this, index)}>删除</span>
       </div>
     )
   }
 
   // 动画方案
-  renderAnimationItem(currentAnimation, item) {
+  renderAnimationItem(currentAnimation, item, key) {
     let isActive =
       currentAnimation['className'] === item['className'] || currentAnimation['direction'] === item['className']
     return (
       <div
-        className={classnames('custom-am-grid-item am-grid-item-inner-content', {
-          'am-grid-item__animation--active': isActive
+        key={key}
+        className={classnames('custom-dd-grid-item', {
+          'custom-dd-grid-item--active': isActive
         })}
       >
-        <IconFont className="am-grid-icon" type={item['icon']} />
-        <div className="am-grid-text">{item['title']}</div>
+        <IconFont type={item['icon']} />
+        <div>{item['title']}</div>
       </div>
     )
   }
@@ -132,7 +130,14 @@ class AnimationSetting extends Component {
         return (
           <div key={i} className="animation-setting__item">
             <span>{title}</span>
-            <Slider value={val || 0} min={min} max={max} step={step} onChange={this.handleChange.bind(this, key)} />
+            <Slider
+              tipFormatter={null}
+              value={val || 0}
+              min={min}
+              max={max}
+              step={step}
+              onChange={this.handleChange.bind(this, key)}
+            />
             <span className="animation-setting__item-box">{val || 0}s</span>
           </div>
         )
@@ -169,7 +174,7 @@ class AnimationSetting extends Component {
       <div className="tools__item tool-item__animation">
         <h4>动画设置</h4>
         <div className="tools-item__content">
-          <Accordion
+          <Collapse
             className="animation-accordion"
             accordion={true}
             defaultActiveKey="0"
@@ -178,7 +183,7 @@ class AnimationSetting extends Component {
             {animations.map((item, index) => {
               let directions = getDirections(item['className'])
               return (
-                <Accordion.Panel key={index} header={this.renderPanelHeader(index)}>
+                <Collapse.Panel key={index} header={this.renderPanelHeader(index)}>
                   <h5>
                     <span>方案</span>
                     <label>
@@ -191,10 +196,9 @@ class AnimationSetting extends Component {
                     </label>
                   </h5>
                   <Grid
-                    hasLine={true}
                     columnNum={5}
+                    activeClassName="dd-grid-item--active"
                     renderItem={this.renderAnimationItem.bind(this, item)}
-                    activeClassName="tools-type__item--active"
                     data={ANIMATIONS}
                     onClick={this.handleSelectAnimation}
                   />
@@ -214,10 +218,9 @@ class AnimationSetting extends Component {
                         </label>
                       </h5>
                       <Grid
-                        hasLine={true}
+                        activeClassName="dd-grid-item--active"
                         columnNum={5}
                         renderItem={this.renderAnimationItem.bind(this, item)}
-                        activeClassName="tools-type__item--active"
                         data={directions}
                         onClick={this.handleSelectDirection}
                       />
@@ -231,10 +234,10 @@ class AnimationSetting extends Component {
                       return this.renderSetting(setting, i)
                     })}
                   </div>
-                </Accordion.Panel>
+                </Collapse.Panel>
               )
             })}
-          </Accordion>
+          </Collapse>
         </div>
         <div className="tools-item__footer">
           <div className="u-btn u-btn--green" onClick={this.handleAddAnimation}>
