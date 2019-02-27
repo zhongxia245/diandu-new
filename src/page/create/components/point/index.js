@@ -5,7 +5,7 @@
  */
 import './index.less'
 import React, { Component } from 'react'
-import { Modal } from 'antd-mobile'
+import { Modal } from 'antd'
 import { calculateWHByDom } from 'common/js/utils'
 import { PAGE_SIZE, PAGE_CONTENT_TYPE, getFormatConfigStyle } from '@/config'
 import {
@@ -113,35 +113,30 @@ class Point extends Component {
           }
         } else {
           // delete ， 选中的点读点， 并且是未被删除的
-          confirmModal = Modal.alert(
-            '确定删除该点读点？',
-            <label className="cbx__confirm-delete">
-              <input
-                type="checkbox"
-                onClick={e => {
-                  notShowDeleteConfirm = e.target.checked
-                }}
-              />
-              下次删除不再确认？
-            </label>,
-            [
-              {
-                text: '取消',
-                style: 'default',
-                onPress: () => {
-                  confirmModal = null
-                }
-              },
-              {
-                text: '确定',
-                onPress: () => {
-                  this.handleRemoveData()
-                  // 下次删除则不需要在弹出删除弹窗
-                  notShowDeleteConfirm && localStorage.setItem('diandu:point_delete_confirm', true)
-                }
-              }
-            ]
-          )
+          confirmModal = Modal.confirm({
+            title: '确定删除该点读点？',
+            content: (
+              <label className="cbx__confirm-delete">
+                <input
+                  type="checkbox"
+                  onClick={e => {
+                    notShowDeleteConfirm = e.target.checked
+                  }}
+                />
+                下次删除不再确认？
+              </label>
+            ),
+            okText: '确认',
+            cancelText: '取消',
+            onCancel: () => {
+              confirmModal = null
+            },
+            onOk: () => {
+              this.handleRemoveData()
+              // 下次删除则不需要在弹出删除弹窗
+              notShowDeleteConfirm && localStorage.setItem('diandu:point_delete_confirm', true)
+            }
+          })
         }
       } else if (confirmModal) {
         if (keyCode === KEY_CODE['enter']) {

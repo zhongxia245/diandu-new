@@ -3,13 +3,13 @@
  * 渲染成编辑器[文本框使用，多页签文本框使用]
  */
 import React, { Component } from 'react'
-import { Tabs } from 'antd-mobile'
-import { message, Button } from 'antd'
+import { message, Button, Tabs } from 'antd'
 import { DraftEditor, CustomAntdModal } from 'common/js/components'
 
 class ContentModalEditor extends Component {
   handleShowModal = () => {
     CustomAntdModal.show({
+      width: 900,
       title: '设置内容',
       footer: null,
       className: 'modal__content-editor',
@@ -33,18 +33,26 @@ class ModalEditor extends Component {
     super(props)
 
     this.tabCount = 0
+    let tabs = this.getInitTabs()
     this.state = {
-      tabs: this.getInitTabs(),
-      tabIndex: 0
+      tabs: tabs,
+      tabIndex: tabs[0]['key']
     }
   }
 
   getInitTabs = () => {
     const { getPointData } = this.props
     let pointData = getPointData()
-    let tabsData = (pointData.data && pointData.data.tabs) || [{ key: 0, title: '标题', content: '请输入内容' }]
-    this.tabCount = tabsData[tabsData.length - 1]['key'] || tabsData.length
-    return tabsData
+
+    if (pointData && pointData.data && pointData.data.tabs) {
+      let tabs = []
+      pointData.data.tabs.map((item, index) => {
+        tabs.push({ ...item, key: String(index) })
+      })
+      return tabs
+    } else {
+      return [{ key: '1', title: '选项卡1', content: '' }]
+    }
   }
 
   getData = () => {
@@ -57,45 +65,56 @@ class ModalEditor extends Component {
     return tabs
   }
 
-  handleChangeTab = (tabData, tabIndex) => {
-    let tabsData = this.getData()
-    this.setState({
-      tabIndex: tabIndex,
-      tabs: tabsData
-    })
+  onChange = tabIndex => {
+    this.setState({ tabIndex })
   }
 
-  handleDelCurrentTab = () => {
-    const { tabIndex, tabs } = this.state
-    let newTabs = JSON.parse(JSON.stringify(tabs))
-    newTabs.splice(tabIndex, 1)
-    this.setState({
-      tabs: newTabs,
-      tabIndex: tabIndex - 1 < 0 ? 0 : tabIndex - 1
-    })
+  onEdit = (targetKey, action) => {
+    this[action](targetKey)
   }
 
-  handleAddTab = () => {
+  add = () => {
     let title = prompt('请输入新增页签标题')
-    let tabsData = this.getData()
-    tabsData.push({ key: ++this.tabCount, title: title, content: '请输入内容' })
-    console.log(tabsData)
-    this.setState({
-      tabs: tabsData
+    if (!title) return
+
+    const tabs = this.state.tabs
+    const tabIndex = `newTab${this.tabCount++}`
+    tabs.push({ title: title, content: '', key: tabIndex })
+    this.setState({ tabs, tabIndex })
+  }
+
+  remove = targetKey => {
+    let tabIndex = this.state.tabIndex
+    let lastIndex
+    this.state.tabs.forEach((pane, i) => {
+      if (pane.key === targetKey) {
+        lastIndex = i - 1
+      }
     })
+
+    const tabs = this.state.tabs.filter(pane => pane.key !== targetKey)
+    if (tabs.length && tabIndex === targetKey) {
+      if (lastIndex >= 0) {
+        tabIndex = tabs[lastIndex].key
+      } else {
+        tabIndex = tabs[0].key
+      }
+    }
+    this.setState({ tabs, tabIndex })
   }
 
   // 修改页签标题
-  handleUpdateTitle = (tabData, clickTabIndex) => {
-    let { tabIndex } = this.state
+  handleUpdateTitle = targetKey => {
+    let { tabIndex, tabs } = this.state
     // 点击是的当前页签，则修改标题
-    if (tabIndex === clickTabIndex) {
-      let tabsData = this.getData()
-      let data = tabsData[tabIndex] || {}
+    if (tabIndex === targetKey) {
+      let data = tabs[tabIndex]
       let title = prompt('请输入新的页面标题', data['title'])
+      if (!title) return
+
       data['title'] = title
       this.setState({
-        tabs: tabsData
+        tabs: tabs
       })
     }
   }
@@ -115,33 +134,30 @@ class ModalEditor extends Component {
   }
 
   render() {
-    const { tabs } = this.state
+    const { tabs, tabIndex } = this.state
     return (
       <div className="modal__mul-notes">
-        <Tabs usePaged={false} tabs={tabs} onChange={this.handleChangeTab} onTabClick={this.handleUpdateTitle}>
+        <Tabs
+          type="editable-card"
+          onChange={this.onChange}
+          onEdit={this.onEdit}
+          activeKey={tabIndex}
+          onTabClick={this.handleUpdateTitle}
+        >
           {tabs.map(item => {
             return (
-              <div key={item['key']}>
+              <Tabs.TabPane tab={item['title']} key={item['key']}>
                 <DraftEditor
                   html={item['content'] + ''}
                   ref={dom => {
                     this[`ref_editor${item['key']}`] = dom
                   }}
                 />
-              </div>
+              </Tabs.TabPane>
             )
           })}
         </Tabs>
         <div className="modal-mul-notes__footer">
-          {tabs.length > 1 && (
-            <Button type="danger" onClick={this.handleDelCurrentTab} style={{ marginRight: '15px' }}>
-              删除本页
-            </Button>
-          )}
-
-          <Button onClick={this.handleAddTab} style={{ marginRight: '15px' }}>
-            添加选项卡
-          </Button>
           <Button type="primary" onClick={this.handleSubmit}>
             保存
           </Button>

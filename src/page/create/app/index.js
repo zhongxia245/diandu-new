@@ -189,7 +189,7 @@ class App extends Component {
             type="text"
             style={{ width: 423 }}
             placeholder="页面的标题"
-            {...getFieldProps('title', { rules: [{ required: true, message: '页面标题不能为空!' }] })}
+            {...getFieldProps('title', { initialValue: '', rules: [{ required: true, message: '页面标题不能为空!' }] })}
           />
         </div>
 
@@ -198,7 +198,7 @@ class App extends Component {
           <textarea
             style={{ width: 708, height: 100 }}
             placeholder="介绍测试的相关内容、注意点等,简洁不能超过100字"
-            {...getFieldProps('intro', { rules: [{ required: true, message: '简介不能为空!' }] })}
+            {...getFieldProps('intro', { initialValue: '', rules: [{ required: true, message: '简介不能为空!' }] })}
           />
         </div>
 
@@ -206,7 +206,7 @@ class App extends Component {
           <p>关键词</p>
           <div>
             <div>
-              <input type="text" style={{ width: 400 }} {...getFieldProps('keywords')} />
+              <input type="text" style={{ width: 400 }} {...getFieldProps('keywords', { initialValue: '' })} />
               <a
                 style={{ marginLeft: 10 }}
                 className="u-btn u-btn--green"
@@ -299,7 +299,7 @@ class App extends Component {
                   })}
                   dangerouslySetInnerHTML={{ __html: item.title }}
                   onClick={this.handleChange.bind(this, fieldName, item.value)}
-                  {...getFieldProps(fieldName)}
+                  {...getFieldProps(fieldName, { initialValue: '' })}
                 />
               )
             })}
@@ -334,7 +334,7 @@ class App extends Component {
                   })}
                   dangerouslySetInnerHTML={{ __html: item.title }}
                   onClick={this.handleChange.bind(this, fieldName, item.value)}
-                  {...getFieldProps(fieldName)}
+                  {...getFieldProps(fieldName, { initialValue: '' })}
                 />
               )
             })}
@@ -342,7 +342,7 @@ class App extends Component {
         </div>
         <div className="setting__item">
           <p>收费标准</p>
-          <input style={{ width: 200 }} type="number" {...getFieldProps('cost')} />
+          <input style={{ width: 200 }} type="number" {...getFieldProps('cost', { initialValue: '' })} />
           <span className="setting__item-unit">元</span>
         </div>
       </section>
@@ -365,10 +365,14 @@ class App extends Component {
           <p>分享信息</p>
           <div className="setting-item__share">
             <div className="share__header">
-              <textarea placeholder="分享标题" {...getFieldProps('share.title')} />
+              <textarea placeholder="分享标题" {...getFieldProps('share.title', { initialValue: '' })} />
               <div className="share__content">
-                <textarea placeholder="分享描述" {...getFieldProps('share.desc')} />
-                <div className="share__upload" style={shareUploadStyle} {...getFieldProps('share.imgUrl')}>
+                <textarea placeholder="分享描述" {...getFieldProps('share.desc', { initialValue: '' })} />
+                <div
+                  className="share__upload"
+                  style={shareUploadStyle}
+                  {...getFieldProps('share.imgUrl', { initialValue: '' })}
+                >
                   <ReactWebUploader id="btn_upload-shareimg" uploadSuccess={this.handleSharePicSuccess} />
                 </div>
               </div>
