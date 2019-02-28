@@ -101,12 +101,11 @@ class AnimationSetting extends Component {
   }
 
   // 动画方案
-  renderAnimationItem(currentAnimation, item, key) {
+  renderAnimationItem(currentAnimation, item) {
     let isActive =
       currentAnimation['className'] === item['className'] || currentAnimation['direction'] === item['className']
     return (
       <div
-        key={key}
         className={classnames('custom-dd-grid-item', {
           'custom-dd-grid-item--active': isActive
         })}

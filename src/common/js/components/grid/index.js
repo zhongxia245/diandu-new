@@ -1,27 +1,18 @@
+// 可以改成一个无状态组件
+
 import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
 
 class Grid extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      activeIndex: null
-    }
-  }
-
   onClick = activeIndex => {
     const { onClick, data } = this.props
-
     if (activeIndex >= data.length) return
-
-    this.setState({ activeIndex })
     onClick && onClick(data[activeIndex], activeIndex)
   }
 
   renderGridItem(key, item) {
-    const { activeClassName, renderItem } = this.props
-    const { activeIndex } = this.state
+    const { renderItem } = this.props
 
     if (!item) {
       return <div key={key} className="dd-grid-item" />
@@ -30,14 +21,7 @@ class Grid extends Component {
     const { src, text } = item
 
     return (
-      <div
-        key={key}
-        className={classnames('dd-grid-item', {
-          'dd-grid-item--active': activeIndex === key,
-          [activeClassName]: activeIndex === key
-        })}
-        onClick={this.onClick.bind(this, key)}
-      >
+      <div key={key} className="dd-grid-item" onClick={this.onClick.bind(this, key)}>
         {renderItem ? (
           renderItem(item)
         ) : (
