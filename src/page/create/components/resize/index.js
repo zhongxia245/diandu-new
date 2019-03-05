@@ -4,6 +4,7 @@
  */
 import './index.less'
 import React, { Component } from 'react'
+import { cloneDeep } from 'lodash'
 import { EVENT_NAMES } from '@/config'
 import { Drag } from '@/page/create/utils/index'
 import Event from 'common/js/event.js'
@@ -18,7 +19,7 @@ class ResizeControl extends Component {
       selector: `.point__${pageIndex}_${pointIndex} .js-resize-size`,
       beforeMove: () => {
         // 深复制一个对象，否则会引用同一个对象
-        originalPointData = JSON.parse(JSON.stringify(getPointData()))
+        originalPointData = cloneDeep(getPointData())
         // 滑动的时候，禁止添加点读点
         Event.emit(EVENT_NAMES.DISABLED_ADD_POINT, pageIndex)
       },

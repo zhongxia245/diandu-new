@@ -8,8 +8,11 @@ export const getGlobalAudioSetting = data => {
 
   for (let i = 0; i < pages.length; i++) {
     let points = pages[i]['points'] || []
+
     for (let j = 0; j < points.length; j++) {
       if (points[j]['isGlobalAudio']) {
+        globalAudioData[`${i}_${j}`]['pageIndex'] = i
+        globalAudioData[`${i}_${j}`]['pointIndex'] = j
         return globalAudioData[`${i}_${j}`]
       }
     }

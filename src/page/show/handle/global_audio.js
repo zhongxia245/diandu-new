@@ -11,7 +11,7 @@ let isLoaded = false
 const changeSwiperPageByTime = (data, time) => {
   let pageIndex = 0
   for (let i = 0; i < data.length; i++) {
-    if (time > data[i]['time']) {
+    if (data[i] && time > data[i]['time']) {
       pageIndex = data[i]['pageIndex']
     }
   }
@@ -19,8 +19,6 @@ const changeSwiperPageByTime = (data, time) => {
 }
 
 Event.on(EVENT_NAME.GLOBAL_AUDIO_PLAY, (data = {}) => {
-  console.log(data)
-
   let src = data.src || ''
 
   // 不重复设置全程音频地址

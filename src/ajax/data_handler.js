@@ -1,4 +1,37 @@
-import _ from 'lodash'
+import { forEach, isEmpty } from 'lodash'
+
+// 移除已经删除的全程音频配置
+const removeDeletedGlobalAudio = data => {
+  let globalAudio = (data.globalSetting && data.globalSetting.globalAudio) || {}
+  // 没有全程音频则直接返回
+  if (isEmpty(globalAudio)) {
+    return data
+  }
+
+  let pages = data.pages || []
+  let result = []
+
+  for (let i = 0; i < pages.length; i++) {
+    for (let j = 0; j < pages[i]['points'].length; j++) {
+      const point = pages[i]['points'][j]
+      if (point.isGlobalAudio) {
+        result.push(`${i}_${j}`)
+      }
+    }
+  }
+
+  for (const key in globalAudio) {
+    if (globalAudio.hasOwnProperty(key)) {
+      if (result.indexOf(key) === -1) {
+        delete globalAudio[key]
+      }
+    }
+  }
+
+  data.globalSetting.globalAudio = globalAudio
+
+  return data
+}
 
 // 移除已经删除的点读点
 const removePointData = (pageData = {}) => {
@@ -22,6 +55,7 @@ const removePageData = data => {
 // 保存的时候，把一些字段放到接口相对应字段去
 export const saveHandler = (id, data) => {
   data = removePageData(data)
+  data = removeDeletedGlobalAudio(data)
   data.covers = data.covers || []
   data.cost = Number(data.cost)
   let param = {
@@ -51,7 +85,7 @@ export const getHandler = data => {
   try {
     let compData = JSON.parse(data.data)
     let pagesData = compData['pages'] || []
-    _.forEach(pagesData, (item, index) => {
+    forEach(pagesData, (item, index) => {
       item['sort'] = index
     })
     return compData

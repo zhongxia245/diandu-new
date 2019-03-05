@@ -1,10 +1,8 @@
 @import '../../../../common/css/base.less';
-
 @keyframes rotate {
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(359deg);
   }
@@ -12,29 +10,32 @@
 
 .page__header {
   position: relative;
-  height: 40px;
-  min-height: 40px;
-  background: #eee;
-  border-bottom: 1px solid #ddd;
-  padding: 10px;
   display: flex;
-
+  align-items: center;
+  padding: 0 10px;
+  min-height: 40px;
+  height: 40px;
+  border-bottom: 1px solid #ddd;
+  background: #eee;
   @media @desktop {
+    flex-direction: column;
+    padding: 10px;
     height: 100%;
     text-align: center;
-    flex-direction: column;
+    .page-header__center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
-
   .icon {
     width: 20px;
     height: 20px;
     cursor: pointer;
-
     @media @desktop {
       margin-top: 10px;
     }
   }
-
   .icon__music--play {
     animation: rotate 3s linear infinite;
   }

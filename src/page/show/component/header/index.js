@@ -6,7 +6,8 @@ import Event from 'common/js/event.js'
 import { EVENT_NAME } from '../../handle/const'
 import { Icon, Drawer, Empty } from 'antd'
 
-const ICON_STYLE = { fontSize: '20px' }
+const ICON_STYLE = { fontSize: '25px' }
+
 export default class Header extends Component {
   constructor(props) {
     super(props)
@@ -63,15 +64,15 @@ export default class Header extends Component {
   }
 
   render() {
-    const { bgAudioSrc, globalAudioData } = this.props
+    const { bgAudioSrc, globalAudioData, pageIndex } = this.props
     const { globalAudioPlay, drawerVisible, bgAudioPlay, globalAudioLoading } = this.state
 
     return (
       <div className="page__header">
         <Icon type="bars" style={ICON_STYLE} onClick={this.action.showDrawer} />
 
-        <div style={{ flex: 1, textAlign: 'center' }}>
-          {globalAudioData && (
+        <div className="page-header__center" style={{ flex: 1, textAlign: 'center' }}>
+          {globalAudioData && pageIndex >= globalAudioData['pageIndex'] && (
             <Icon
               type={globalAudioLoading ? 'loading' : globalAudioPlay ? 'pause-circle' : 'play-circle'}
               style={ICON_STYLE}

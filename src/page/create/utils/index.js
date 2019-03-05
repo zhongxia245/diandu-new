@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash'
 import Drag from './drag'
 
 export const getImageWH = path => {
@@ -31,7 +32,7 @@ const convertBase64UrlToBlob = urlData => {
  * @param {Number} interval 动画之间的间隔
  */
 const previewAnimation = (selector, animations, interval = 10) => {
-  animations = JSON.parse(JSON.stringify(animations))
+  animations = cloneDeep(animations)
 
   let { className, direction, duration, delay, alternate, linear, count, cycle } = animations[0]
 

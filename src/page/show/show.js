@@ -13,7 +13,11 @@ export default class Show extends Component {
   constructor(props) {
     super(props)
     this.swiper = null
-    this.state = {}
+    this.state = {
+      currentIndex: 0,
+      contentW: document.body.clientWidth,
+      contentH: document.body.clientHeight
+    }
   }
 
   initData = () => {
@@ -46,9 +50,8 @@ export default class Show extends Component {
       },
       effect: globalSetting.swiperEffect || 'slide', // 'slide'（普通切换、默认）,"fade"（淡入）"cube"（方块）"coverflow"（3d流）"flip"（3d翻转）
       on: {
-        transitionEnd: swiper => {
-          // let pointData = pages[this.swiper.activeIndex]
-          // runAnimation(pointData, this.swiper.activeIndex)
+        transitionEnd: () => {
+          this.setState({ currentIndex: this.swiper.activeIndex })
           runBlink(this.swiper.activeIndex)
         }
       }
@@ -71,28 +74,22 @@ export default class Show extends Component {
      * TODO: initData 放在  construct 里面，则计算图片缩放比例出错，什么鬼, 排查下
      */
     this.initData()
-    this.setState(
-      {
-        contentW: document.querySelector('.pageitem__content').clientWidth,
-        contentH: document.querySelector('.pageitem__content').clientHeight
-      },
-      () => {
-        this.initSwiper()
-        runBlink(0)
-      }
-    )
+
+    let contentW = document.querySelector('.pageitem__content').clientWidth
+    let contentH = document.querySelector('.pageitem__content').clientHeight
+    this.setState({ contentW, contentH }, () => {
+      this.initSwiper()
+      runBlink(0)
+    })
 
     // 横竖屏切换，或者设备切换，则重新自动适配大小
     window.onresize = () => {
       let newHeight = document.querySelector('.pageitem__content').clientHeight
       let newWidth = document.querySelector('.pageitem__content').clientWidth
-      this.setState({
-        contentW: newWidth,
-        contentH: newHeight
-      })
+      this.setState({ contentW: newWidth, contentH: newHeight })
     }
 
-    // 自动播放背景音频
+    // auto play background audio
     if (this.props.data.bgAudio && this.props.data.bgAudio.src) {
       if (isMobile()) {
         // 移动端增加一层遮罩，点击自动播放背景音乐，播放后则去掉遮罩
@@ -127,6 +124,7 @@ export default class Show extends Component {
       <div className="show">
         <Header
           form={this.props.form}
+          pageIndex={this.state.currentIndex}
           globalAudioData={getGlobalAudioSetting(data)}
           bgAudioSrc={data.bgAudio && data.bgAudio.src}
         />

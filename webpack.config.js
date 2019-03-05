@@ -6,7 +6,7 @@ const HappyPack = require('happypack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const QiniuPlugin = require('./webpack.qiniu')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const CONFIG = require('./config')
 
@@ -103,9 +103,9 @@ let plugins = [
 if (isLocal) {
   plugins.push(new webpack.HotModuleReplacementPlugin())
 }
-if (isProd) {
-  plugins.push(new BundleAnalyzerPlugin())
-}
+// if (isProd) {
+//   plugins.push(new BundleAnalyzerPlugin())
+// }
 
 // 生产环境上传七牛插件,暂时不用
 // if (isProd) {
@@ -156,7 +156,7 @@ module.exports = {
     progress: false,
     compress: true,
     port: CONFIG.port,
-    host: '127.0.0.1',
+    host: '0.0.0.0',
     disableHostCheck: true,
     contentBase: path.resolve(__dirname, CONFIG.outputPath)
   },
