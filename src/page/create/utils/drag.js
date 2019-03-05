@@ -3,6 +3,7 @@
  * @param selector 需要拖动的选择器
  * @param callback 移动的回调
  */
+import { throttle } from 'lodash'
 export default options => {
   // 获取屏幕寛高，防止点读位移除背景图
   let params = {
@@ -37,7 +38,7 @@ export default options => {
         let disY = e1.clientY - params.currentY
         let x = params.left + disX
         let y = params.top + disY
-        options.callback({ x: x, y: y, disX: disX, disY: disY, index: $tar.data().index, e: e })
+        throttle(options.callback({ x: x, y: y, disX: disX, disY: disY, index: $tar.data().index, e: e }), 100)
       }
     })
 

@@ -1,18 +1,17 @@
 import './index.less'
 import 'animate.css'
-import 'antd-mobile/dist/antd-mobile.less'
 import './handle'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-
 import { createForm } from 'rc-form'
-import { Toast } from 'antd-mobile'
+import { message, LocaleProvider } from 'antd'
+import zhCN from 'antd/lib/locale-provider/zh_CN'
 import ReactIScroll from 'react-iscroll'
 import iScroll from 'iscroll'
+
 import queryString from 'common/js/utils/query_string'
 import { getData } from '@/ajax'
-
 import { setShare } from './common/share'
 import Show from './show'
 
@@ -31,20 +30,23 @@ let RcShow = createForm()(Show)
 if (id) {
   getData(id).then((data = {}) => {
     console.log(data)
+
     if (checkCharge(data)) {
       setShare(data.share)
       document.title = `${data.title} - 点读`
 
       ReactDOM.render(
         <ReactIScroll iScroll={iScroll}>
-          <RcShow data={data} />
+          <LocaleProvider locale={zhCN}>
+            <RcShow data={data} />
+          </LocaleProvider>
         </ReactIScroll>,
         document.getElementById('app')
       )
     } else {
-      Toast.info('对不起，该点读为收费项目，请付费查看', 100, null, false)
+      message.warning('对不起，该点读为收费项目，请付费查看', 100, null, false)
     }
   })
 } else {
-  Toast.info('该点读页不存在', 100, null, false)
+  message.error('该点读页不存在', 100, null, false)
 }

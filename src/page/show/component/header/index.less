@@ -1,8 +1,10 @@
 @import '../../../../common/css/base.less';
+
 @keyframes rotate {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(359deg);
   }
@@ -16,23 +18,24 @@
   border-bottom: 1px solid #ddd;
   padding: 10px;
   display: flex;
+
   @media @desktop {
     height: 100%;
     text-align: center;
     flex-direction: column;
   }
+
   .icon {
     width: 20px;
     height: 20px;
     cursor: pointer;
+
     @media @desktop {
       margin-top: 10px;
     }
   }
+
   .icon__music--play {
     animation: rotate 3s linear infinite;
-  }
-  .page-header__gap {
-    flex: 1;
   }
 }

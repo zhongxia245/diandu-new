@@ -1,14 +1,14 @@
 import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
-import { Toast, Modal } from 'antd-mobile'
 import Event from 'common/js/event.js'
-import { EVENT_NAME } from '../../common/const'
+import { EVENT_NAME } from '../../handle/const'
 import { IconFont } from 'common/js/components'
 import { getVideoImage } from 'common/js/utils'
 import { isMobile } from 'common/js/utils/user_agent.js'
 import { getFormatConfigStyle, PAGE_CONTENT_TYPE } from '@/config'
 import CustomShapePoint from '../custom_shape'
+import { message, Modal } from 'antd'
 
 const DEFAULT_POINT_SIZE = 50
 
@@ -105,23 +105,28 @@ class Point extends Component {
         break
       case 'link':
         if (pointData.data && pointData.data.link) {
-          Modal.alert('跳转提示', '是否打开到该超链接点读点设置的页面?', [
-            { text: '取消', style: 'default' },
-            { text: '打开', onPress: () => window.open(pointData.data.link) }
-          ])
+          Modal.confirm({
+            title: '跳转提示',
+            content: '是否打开到该超链接点读点设置的页面?',
+            okText: '打开',
+            cancelText: '取消',
+            onOk: () => {
+              window.open(pointData.data.link)
+            }
+          })
         } else {
-          Toast.info('该超链接点读点没有设置URL', 3, null, false)
+          message.info('该超链接点读点没有设置URL')
         }
         break
       case 'test':
         if (pointData.data && pointData.data.questions) {
           Event.emit(EVENT_NAME.MODAL_TEST_SHOW, pointData)
         } else {
-          Toast.info('该测试点读点没有题目数据', 3, null, false)
+          message.info('该测试点读点没有题目数据')
         }
         break
       default:
-        Toast.info(pointData.type, 3, null, false)
+        message.info(pointData.type)
     }
   }
 

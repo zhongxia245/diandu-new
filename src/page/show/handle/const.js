@@ -13,5 +13,11 @@ export const EVENT_NAME = {
   MODAL_NOTE_SHOW: 'event_note_show',
   MODAL_TABSNOTE_SHOW: 'event_tabsnote_show',
   // 测试点读点展示
-  MODAL_TEST_SHOW: 'event_test_show'
+  MODAL_TEST_SHOW: 'event_test_show',
+  // 全程音频
+  GLOBAL_AUDIO_STOP: 'event_global_audio_stop',
+  GLOBAL_AUDIO_PLAY: 'event_global_audio_play',
+  GLOBAL_AUDIO_LOADING: 'event_global_audio_loading',
+  // swiper
+  SWIPER_CHANGE_PAGE: 'event_swiper_change_page'
 }

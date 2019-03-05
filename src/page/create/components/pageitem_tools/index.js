@@ -4,8 +4,8 @@
 import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
-import { Checkbox, Switch, Tabs } from 'antd'
-import { ReactWebUploader, Grid } from 'common/js/components'
+import { Switch, Tabs } from 'antd'
+import { Grid } from 'common/js/components'
 
 import { POINT, PRE_PAGE_ID, PRE_POINT_CLASS, EVENT_NAMES } from '@/config'
 import { DrawCustomArea } from '@/page/create/utils/draw'
@@ -13,6 +13,7 @@ import Event from 'common/js/event.js'
 import RenderContent from './mod/rendercontent'
 import { AnimationSetting } from './mod/toolitem'
 import FormatSetting from './format_setting'
+import Trigger from './trigger'
 
 class Tools extends Component {
   constructor(props) {
@@ -82,11 +83,11 @@ class Tools extends Component {
     })
   }
 
-  handleSwitch = (item, checked) => {
+  handleSwitch = checked => {
     if (checked) {
-      this.setPointData({ type: item.type })
+      this.setPointData({ isGlobalAudio: checked })
     } else {
-      this.setPointData({ type: '' })
+      this.setPointData({ isGlobalAudio: false })
     }
   }
 
@@ -176,7 +177,11 @@ class Tools extends Component {
               return (
                 <div className="tools-type__item" key={index}>
                   <h5>{item.title}</h5>
-                  <Switch checked={pointData.type === item.type} onChange={this.handleSwitch.bind(this, item)} />
+                  <Switch
+                    disabled={pointData.type !== 'audio'}
+                    checked={pointData.isGlobalAudio}
+                    onChange={this.handleSwitch}
+                  />
                 </div>
               )
             }
@@ -204,147 +209,9 @@ class Tools extends Component {
     )
   }
 
-  // 触发模式
-  renderTrigger = () => {
-    const pointData = this.getPointData()
-    let data = pointData.data || {}
-
-    // 处理触发区域类型选择
-    const handleTypeCheckChange = (name, e) => {
-      let checked = e.target.checked
-      data['triggerType'] = checked ? name : ''
-      this.setPointData({ data })
-    }
-
-    // 处理自定义点模式，初始及运动还是静止
-    const handleStateCheckChange = (name, e) => {
-      let checked = e.target.checked
-      data['runType'] = checked ? name : ''
-      this.setPointData({ data })
-    }
-
-    // 文本框和slider数据处理
-    const handleChange = (name, e) => {
-      let val = e.target ? e.target.value : e
-      data[name] = val
-      this.setPointData({ data })
-    }
-
-    const handleUploadSuccessCustomImg = (file, path) => {
-      data['customPath'] = path
-      this.setPointData({ data })
-    }
-
-    const renderCustomArea = () => {
-      return (
-        <div className="tools__trigger-content">
-          <p className="u-green">直接在背景图片上绘制区域</p>
-          <div className="tools__trigger-type-list">
-            <div
-              className={classnames('tools__trigger--rect', {
-                'tools__trigger--active': data.areaType === 'rect'
-              })}
-              onClick={this.handleDraw.bind(this, 'rect')}
-            />
-
-            <div
-              className={classnames('tools__trigger--square', {
-                'tools__trigger--active': data.areaType === 'square'
-              })}
-              onClick={this.handleDraw.bind(this, 'square')}
-            />
-
-            <div
-              className={classnames('tools__trigger--circle', {
-                'tools__trigger--active': data.areaType === 'circle'
-              })}
-              onClick={this.handleDraw.bind(this, 'circle')}
-            />
-          </div>
-          {this.state.selectNewAreaStyle && <p className="tools__draw_area_tip">现在可以在背景页上绘制新的区域样式</p>}
-        </div>
-      )
-    }
-
-    const renderCustomPoint = () => {
-      return (
-        <div className="tools__trigger-content">
-          <div className="tools__trigger-content-item">
-            <p className="u-green">点读点注释文字</p>
-            <p className="u-gray">（不超过10个字）</p>
-            <input
-              type="text"
-              maxLength={10}
-              value={data['customTitle']}
-              onChange={handleChange.bind(this, 'customTitle')}
-            />
-          </div>
-          <div className="tools__trigger-content-item">
-            <p className="u-green">自定义点读点按钮图案</p>
-            <div className="tools__trigger-upload">
-              <div className="tools__trigger-upload-img">
-                <div className="tools__trigger-upload-tip">
-                  {data['customPath'] ? <img src={data['customPath']} /> : '上传图片'}
-                </div>
-                <ReactWebUploader
-                  id={`btn_upload_custom_img_${this.props.pageIndex}`}
-                  className="tools__trigger-webuploader"
-                  uploadSuccess={handleUploadSuccessCustomImg}
-                />
-              </div>
-              <span>请采用背景透明的png图片</span>
-            </div>
-          </div>
-          <div className="tools__trigger-content-item">
-            <Checkbox
-              checked={data['runType'] === 'start_run'}
-              className="trigger__checkbox"
-              style={{ marginBottom: 10 }}
-              onChange={handleStateCheckChange.bind(this, 'start_run')}
-            >
-              初始及运动
-            </Checkbox>
-            <Checkbox
-              checked={data['runType'] === 'click_run'}
-              className="trigger__checkbox"
-              onChange={handleStateCheckChange.bind(this, 'click_run')}
-            >
-              初始及静止，点击后运动
-            </Checkbox>
-          </div>
-        </div>
-      )
-    }
-
-    return (
-      <div className="tools__item tools__trigger">
-        <h4>激发模式</h4>
-        <div className="tools-item__content">
-          <div className="tools__trigger-type">
-            <Checkbox
-              className="trigger__checkbox"
-              checked={data.triggerType === 'area'}
-              onChange={handleTypeCheckChange.bind(this, 'area')}
-            >
-              区域
-            </Checkbox>
-            <Checkbox
-              className="trigger__checkbox"
-              checked={data.triggerType === 'point'}
-              onChange={handleTypeCheckChange.bind(this, 'point')}
-            >
-              点
-            </Checkbox>
-          </div>
-          {data.triggerType === 'area' && renderCustomArea()}
-          {data.triggerType === 'point' && renderCustomPoint()}
-          {pointData.type === 'video' && <div className="u-btn u-btn--small u-btn--green u-m10">设置播放区</div>}
-        </div>
-      </div>
-    )
-  }
-
   render() {
+    const { pageIndex, pointIndex } = this.props
+    let pointData = this.getPointData()
     return (
       <div className="pageitem__tools">
         <Tabs tabPosition="left" type="card">
@@ -358,7 +225,15 @@ class Tools extends Component {
             {this.renderFormat()}
           </Tabs.TabPane>
           <Tabs.TabPane tab="激发模式" key={3}>
-            {this.renderTrigger()}
+            <Trigger
+              pointId={`${pageIndex}_${pointIndex}`}
+              pageIndex={pageIndex}
+              form={this.props.form}
+              selectNewAreaStyle={this.state.selectNewAreaStyle}
+              pointData={pointData}
+              setPointData={this.setPointData}
+              handleDraw={this.handleDraw}
+            />
           </Tabs.TabPane>
           <Tabs.TabPane tab="动画设置" key={4}>
             <AnimationSetting {...this.props} getPointData={this.getPointData} setPointData={this.setPointData} />

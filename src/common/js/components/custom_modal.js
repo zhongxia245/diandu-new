@@ -1,49 +1,50 @@
-/**
- * 把Antd-mobile 的 Model 组件，封装成函数调用的方式
- * import CustomModal from 'common/js/components/custom_modal.js'
- * CustomModal.show({render:(props)=><div>Hello Modal!</div>})
- */
-import { Modal } from 'antd-mobile'
+// /**
+//  * NOTE: 目前全部替换掉了，使用 antd 的弹窗
+//  * 把Antd-mobile 的 Model 组件，封装成函数调用的方式
+//  * import CustomModal from 'common/js/components/custom_modal.js'
+//  * CustomModal.show({render:(props)=><div>Hello Modal!</div>})
+//  */
+// import { Modal } from 'antd-mobile'
 
-const CustomModal = ({ render, className, wrapClassName, maskClosable = true, closable = true, ...otherProps }) => {
-  return (
-    <Modal
-      wrapClassName={`custom-modal ${wrapClassName}`}
-      className={className}
-      transparent
-      maskClosable={maskClosable}
-      closable={closable}
-      {...otherProps}
-    >
-      {render && render(otherProps)}
-    </Modal>
-  )
-}
+// const CustomModal = ({ render, className, wrapClassName, maskClosable = true, closable = true, ...otherProps }) => {
+//   return (
+//     <Modal
+//       wrapClassName={`custom-modal ${wrapClassName}`}
+//       className={className}
+//       transparent
+//       maskClosable={maskClosable}
+//       closable={closable}
+//       {...otherProps}
+//     >
+//       {render && render(otherProps)}
+//     </Modal>
+//   )
+// }
 
-let render = props => {
-  const container = document.createElement('div')
-  document.body.appendChild(container)
-  render = nextProps => {
-    props = { ...props, ...nextProps }
-    ReactDOM.render(<CustomModal {...props} />, container)
-  }
-  render()
-}
+// let render = props => {
+//   const container = document.createElement('div')
+//   document.body.appendChild(container)
+//   render = nextProps => {
+//     props = { ...props, ...nextProps }
+//     ReactDOM.render(<CustomModal {...props} />, container)
+//   }
+//   render()
+// }
 
-export default {
-  show({ callback, ...param }) {
-    render({
-      ...param,
-      visible: true,
-      onClose: param => {
-        this.hide()
-        if (callback) {
-          callback(param.target ? null : param)
-        }
-      }
-    })
-  },
-  hide() {
-    render({ visible: false })
-  }
-}
+// export default {
+//   show({ callback, ...param }) {
+//     render({
+//       ...param,
+//       visible: true,
+//       onClose: param => {
+//         this.hide()
+//         if (callback) {
+//           callback(param.target ? null : param)
+//         }
+//       }
+//     })
+//   },
+//   hide() {
+//     render({ visible: false })
+//   }
+// }

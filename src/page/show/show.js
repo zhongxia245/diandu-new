@@ -5,8 +5,9 @@ import Swiper from 'swiper/dist/js/swiper.min.js'
 import { isMobile } from 'common/js/utils/user_agent.js'
 import { PageItem, Header } from './component'
 import Event from 'common/js/event.js'
-import { EVENT_NAME } from './common/const'
+import { EVENT_NAME } from './handle/const'
 import { runAnimation, runBlink } from './common/animation'
+import { getGlobalAudioSetting } from './utils'
 
 export default class Show extends Component {
   constructor(props) {
@@ -103,6 +104,11 @@ export default class Show extends Component {
         this.playBgAudio()
       }
     }
+
+    // global audio trigger change swiper pageIndex
+    Event.on(EVENT_NAME.SWIPER_CHANGE_PAGE, index => {
+      this.swiper.slideTo && this.swiper.slideTo(index)
+    })
   }
 
   playBgAudio = e => {
@@ -114,12 +120,16 @@ export default class Show extends Component {
   }
 
   render() {
-    const { form } = this.props
+    const { form, data } = this.props
     const pages = form.getFieldValue('pages') || []
 
     return (
       <div className="show">
-        <Header form={this.props.form} bgAudioSrc={this.props.data.bgAudio && this.props.data.bgAudio.src} />
+        <Header
+          form={this.props.form}
+          globalAudioData={getGlobalAudioSetting(data)}
+          bgAudioSrc={data.bgAudio && data.bgAudio.src}
+        />
         <div className="swiper-container pageitem__content">
           <div className="swiper-wrapper">
             {pages.map((item, index) => {

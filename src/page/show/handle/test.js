@@ -3,14 +3,14 @@ import classnames from 'classnames'
 import Swiper from 'swiper/dist/js/swiper.js'
 import Event from 'common/js/event.js'
 import { isMobile } from 'common/js/utils/user_agent.js'
-import CustomModal from 'common/js/components/custom_modal.js'
-import { EVENT_NAME } from '../common/const'
+import CustomAntdModal from 'common/js/components/custom_antd_modal'
+import { EVENT_NAME } from '../handle/const'
 
 Event.on(EVENT_NAME.MODAL_TEST_SHOW, pointData => {
   let questions = (pointData.data && pointData.data.questions) || []
 
-  CustomModal.show({
-    maskClosable: false,
+  CustomAntdModal.show({
+    centered: true,
     wrapClassName: 'modal__test',
     render: prpos => <Test {...prpos} data={questions} />
   })
@@ -48,10 +48,7 @@ class Test extends Component {
         noSwiping: true
       }
     }
-    this.swiper = new Swiper(
-      '.modal__questions .swiper-container',
-      swiperOptions
-    )
+    this.swiper = new Swiper('.modal__questions .swiper-container', swiperOptions)
   }
 
   componentDidMount() {
@@ -125,8 +122,7 @@ class Test extends Component {
 
                     // 判断是否为答案
                     let isAnswer = isCheckbox
-                      ? Array.isArray(answerIndex) &&
-                        answerIndex.indexOf(subIndex) !== -1
+                      ? Array.isArray(answerIndex) && answerIndex.indexOf(subIndex) !== -1
                       : subIndex === answerIndex
 
                     /**
@@ -137,10 +133,8 @@ class Test extends Component {
                     let showRightOrError =
                       showAnswer &&
                       (isCheckbox
-                        ? answerIndex.indexOf(subIndex) !== -1 ||
-                          selectAnswerIndex.indexOf(subIndex) !== -1
-                        : subIndex === answerIndex ||
-                          selectAnswerIndex === subIndex)
+                        ? answerIndex.indexOf(subIndex) !== -1 || selectAnswerIndex.indexOf(subIndex) !== -1
+                        : subIndex === answerIndex || selectAnswerIndex === subIndex)
 
                     return (
                       <li
@@ -149,14 +143,7 @@ class Test extends Component {
                           'answer--show': showRightOrError
                         })}
                         onClick={
-                          showAnswer
-                            ? () => {}
-                            : this.handleSelectAnswer.bind(
-                                this,
-                                index,
-                                subIndex,
-                                isCheckbox
-                              )
+                          showAnswer ? () => {} : this.handleSelectAnswer.bind(this, index, subIndex, isCheckbox)
                         }
                       >
                         <label
@@ -170,16 +157,12 @@ class Test extends Component {
                             type={isCheckbox ? 'checkbox' : 'radio'}
                             disabled={showAnswer}
                             checked={
-                              isCheckbox
-                                ? selectAnswerIndex.indexOf(subIndex) !== -1
-                                : selectAnswerIndex === subIndex
+                              isCheckbox ? selectAnswerIndex.indexOf(subIndex) !== -1 : selectAnswerIndex === subIndex
                             }
                           />
                           {answer}
                           {showAnswer && showRightOrError ? (
-                            <span className="answer--flag">
-                              {isAnswer ? '✓' : '✗'}
-                            </span>
+                            <span className="answer--flag">{isAnswer ? '✓' : '✗'}</span>
                           ) : (
                             ''
                           )}
@@ -227,14 +210,10 @@ class Test extends Component {
       <div className="modal-questions__info">
         <ul>
           {data.map((item, index) => {
-            let cls =
-              selectAnswers[index] !== undefined
-                ? 'status--done'
-                : 'status--undone'
+            let cls = selectAnswers[index] !== undefined ? 'status--done' : 'status--undone'
             let isCheckbox = item['type'] === 1
             let isRight = isCheckbox
-              ? JSON.stringify(selectAnswers[index]) ===
-                JSON.stringify(item['answerIndex'])
+              ? JSON.stringify(selectAnswers[index]) === JSON.stringify(item['answerIndex'])
               : selectAnswers[index] === item['answerIndex']
             if (showAnswer) {
               if (isRight) {
@@ -245,11 +224,7 @@ class Test extends Component {
               }
             }
             return (
-              <li
-                key={index}
-                className={cls}
-                onClick={this.handleGoto.bind(this, index)}
-              >
+              <li key={index} className={cls} onClick={this.handleGoto.bind(this, index)}>
                 {index}
               </li>
             )
@@ -260,18 +235,14 @@ class Test extends Component {
             ? this.renderInfoBtn({
                 className: 'status--right',
                 title: '正确',
-                value: `${parseFloat((rightCount / data.length) * 100).toFixed(
-                  0
-                )}%`
+                value: `${parseFloat((rightCount / data.length) * 100).toFixed(0)}%`
               })
             : ''}
           {showAnswer
             ? this.renderInfoBtn({
                 className: 'status--error',
                 title: '错误',
-                value: `${parseFloat(
-                  (1 - rightCount / data.length) * 100
-                ).toFixed(0)}%`
+                value: `${parseFloat((1 - rightCount / data.length) * 100).toFixed(0)}%`
               })
             : ''}
           {showAnswer

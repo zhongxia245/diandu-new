@@ -1,6 +1,6 @@
-import { Toast } from 'antd-mobile'
+import { message } from 'antd'
 import Event from 'common/js/event.js'
-import { EVENT_NAME } from '../common/const'
+import { EVENT_NAME } from '../handle/const'
 import { setAudioSrc } from './util'
 
 const bgAudioPlayer = new Audio()
@@ -20,7 +20,7 @@ Event.on(EVENT_NAME.BGAUDIO_PLAY, (data = {}) => {
       console.log('播放背景音乐异常', error)
     }
   } else {
-    Toast.info('找不到背景音乐地址', 2, null, false)
+    message.error('找不到背景音乐地址')
   }
 })
 

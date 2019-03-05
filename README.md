@@ -45,7 +45,7 @@
 
 ### 3.3 优化代码
 
-- [ ] 升级到最新脚手架
+- [x] 升级到最新脚手架
 - [ ] 打包除 dll
 - [ ] 使用 React.lazy 异步组件
 - [ ] 替换数据管理，或者升级到最新的 rc-form
@@ -65,3 +65,14 @@ React 富文本编辑器
 2.  draft-js
     https://github.com/facebook/draft-js
     Star 12990
+
+3. https://braft.margox.cn/
+    美观的一个文档
+
+拖动，改变 div 大小的库
+1. http://interactjs.io/
+
+
+
+
+2. 

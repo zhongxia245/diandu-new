@@ -4,7 +4,8 @@
  */
 import React, { Component } from 'react'
 import { message, Button, Tabs } from 'antd'
-import { DraftEditor, CustomAntdModal } from 'common/js/components'
+import DraftEditor from 'common/js/components/drafteditor'
+import { CustomAntdModal } from 'common/js/components'
 
 class ContentModalEditor extends Component {
   handleShowModal = () => {

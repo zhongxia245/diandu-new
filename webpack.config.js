@@ -6,6 +6,7 @@ const HappyPack = require('happypack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const QiniuPlugin = require('./webpack.qiniu')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const CONFIG = require('./config')
 
@@ -102,6 +103,9 @@ let plugins = [
 if (isLocal) {
   plugins.push(new webpack.HotModuleReplacementPlugin())
 }
+if (isProd) {
+  plugins.push(new BundleAnalyzerPlugin())
+}
 
 // 生产环境上传七牛插件,暂时不用
 // if (isProd) {
@@ -117,6 +121,20 @@ if (isLocal) {
 // }
 
 module.exports = {
+  stats: {
+    colors: true,
+    modules: false,
+    children: false,
+    chunks: false,
+    chunkModules: false,
+    chunkOrigins: false,
+    moduleTrace: false,
+    publicPath: false,
+    assets: true,
+    entrypoints: false,
+    warnings: false,
+    performance: true
+  },
   mode: isLocal ? 'development' : 'production',
   devtool: isLocal && CONFIG.sourceMap ? 'cheap-module-eval-source-map' : false,
   entry: {
@@ -141,6 +159,18 @@ module.exports = {
     host: '127.0.0.1',
     disableHostCheck: true,
     contentBase: path.resolve(__dirname, CONFIG.outputPath)
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        default: {
+          test: /(react|react-dom|core-js|es6-promise|jquery|lodash|antd)/,
+          name: `${CONFIG.inputPath}/chunks/vendor`,
+          chunks: 'all'
+        },
+        vendors: false
+      }
+    }
   },
   resolve: {
     extensions: ['.js', '.jsx', 'json', '.less'],

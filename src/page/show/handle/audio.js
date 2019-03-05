@@ -2,9 +2,9 @@
  * 音频播放处理方式
  * 页面中只会存在一个音频对象，用来播放音频， 通过派发事件直接就能播放。
  */
-import { Toast } from 'antd-mobile'
+import { message } from 'antd'
 import Event from 'common/js/event.js'
-import { EVENT_NAME } from '../common/const'
+import { EVENT_NAME } from '../handle/const'
 import { isEqualSrc, setAudioSrc } from './util'
 
 let tempCurrentAudioPointId = null
@@ -58,7 +58,7 @@ Event.on(EVENT_NAME.AUDIO_PLAY, ({ src, id }) => {
       }
     }
   } else {
-    Toast.info('该点读点未上传音频文件', 3, null, false)
+    message.error('该点读点未上传音频文件')
   }
 })
 

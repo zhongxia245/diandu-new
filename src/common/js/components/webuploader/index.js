@@ -5,7 +5,7 @@ import WebUploader from 'webuploader/dist/webuploader.html5only.min.js'
 import uuid from 'uuid/v4'
 import _ from 'lodash'
 import { isDev } from 'common/js/utils'
-import { Toast } from 'antd-mobile'
+import { message } from 'antd'
 
 let BASE_URL = '/edu/course/diandu_v1'
 if (isDev()) {
@@ -64,7 +64,7 @@ export default class ReactWebUploader extends Component {
       if (result && result.indexOf('error') === -1) {
         uploadSuccess && uploadSuccess(file, result)
       } else {
-        Toast.info(`上传文件失败:${result}`)
+        message.warn(`上传文件失败:${result}`)
       }
     })
 
@@ -89,7 +89,7 @@ export default class ReactWebUploader extends Component {
         error(type)
       } else {
         if (type === 'Q_TYPE_DENIED') {
-          Toast.info('不支持上传该类型的文件', 3, null, false)
+          message.warn('不支持上传该类型的文件')
         }
       }
     })

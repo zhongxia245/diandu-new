@@ -3,7 +3,7 @@
  * 渲染成编辑器[文本框使用，多页签文本框使用]
  */
 import React, { Component } from 'react'
-import { DraftEditor } from 'common/js/components'
+import DraftEditor from 'common/js/components/drafteditor'
 import { message } from 'antd'
 
 class ContentEditor extends Component {

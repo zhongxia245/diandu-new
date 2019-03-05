@@ -21,7 +21,7 @@ class PageTplList extends Component {
   }
 
   handleSubmitTpl = () => {
-    const { data, setPageData, getPageData } = this.props
+    const { data, setPageData, getPageData, onOk } = this.props
     const { selectIndex } = this.state
 
     if (selectIndex !== '') {
@@ -36,12 +36,12 @@ class PageTplList extends Component {
           okText: '覆盖',
           onOk: () => {
             setPageData(pageData)
-            this.props.onOk && this.props.onOk()
+            onOk && onOk()
           }
         })
       } else {
         setPageData(pageData)
-        this.props.onOk && this.props.onOk()
+        onOk && onOk()
       }
     } else {
       message.info('请选择一个点读页模板')
@@ -49,7 +49,7 @@ class PageTplList extends Component {
   }
 
   render() {
-    const { data = [], onClose } = this.props
+    const { data = [], onCancel } = this.props
     const { selectIndex } = this.state
     const hasContent = data.length !== 0
     return (
@@ -76,7 +76,7 @@ class PageTplList extends Component {
         )}
 
         <div className="page-tpl-list__footer">
-          <Button onClick={onClose} style={{ marginRight: '15px' }}>
+          <Button onClick={onCancel} style={{ marginRight: '15px' }}>
             取消
           </Button>
           <Button type="primary" onClick={this.handleSubmitTpl}>

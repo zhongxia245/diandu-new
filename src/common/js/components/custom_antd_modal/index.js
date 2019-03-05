@@ -1,17 +1,37 @@
 /**
  * 把Antd-mobile 的 Model 组件，封装成函数调用的方式
- import CustomAntdModal from 'common/js/components/custom_antd_modal.js'
+ import CustomAntdModal from 'common/js/components/custom_antd_modal'
  CustomAntdModal.show({render:(props)=><div>Hello Modal!</div>})
  */
-import { Modal } from 'antd'
+import { Modal, Row, Button } from 'antd'
 import classnames from 'classnames'
+import './index.less'
+
+// 因为用自带的底部按钮，用函数调用的形式，无法使用关闭回调处理
+export const CustomAntdFooter = ({ cancelText = '取消', okText = '确定', onOk = () => {}, onCancel = () => {} }) => (
+  <Row className="custom-antd-modal__footer">
+    <Button onClick={onCancel}>{cancelText}</Button>
+    <Button type="primary" onClick={onOk}>
+      {okText}
+    </Button>
+  </Row>
+)
 
 const CustomAntdModal = props => {
-  const { title, render, className, ...otherProps } = props
+  const { title, render, className, visible, ...otherProps } = props
   return (
-    <Modal title={title} wrapClassName={classnames('custom-antd-modal', className)} {...otherProps}>
-      {render && render(props)}
-    </Modal>
+    visible && (
+      <Modal
+        id="custom-antd-modal"
+        title={title}
+        footer={null}
+        visible={visible}
+        wrapClassName={classnames('custom-antd-modal', className)}
+        {...otherProps}
+      >
+        {render && render(props)}
+      </Modal>
+    )
   )
 }
 

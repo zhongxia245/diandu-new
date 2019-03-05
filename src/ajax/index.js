@@ -1,5 +1,5 @@
 import Axios from 'axios'
-import { Toast } from 'antd-mobile'
+import { message } from 'antd'
 import { isDev, urlParam } from 'common/js/utils'
 import { saveHandler, getHandler } from './data_handler'
 import queryString from 'common/js/utils/query_string'
@@ -18,7 +18,7 @@ axiosInstance.interceptors.response.use(resp => {
   if (resp.status === 200) {
     return resp.data
   } else {
-    Toast.fail('请求接口报错!')
+    message.error('请求接口报错!')
     console.log(resp)
     return Promise.reject(resp)
   }

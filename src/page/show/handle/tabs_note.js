@@ -1,26 +1,24 @@
 import Event from 'common/js/event.js'
-import { EVENT_NAME } from '../common/const'
-import CustomModal from 'common/js/components/custom_modal.js'
-import { Tabs } from 'antd-mobile'
+import { EVENT_NAME } from '../handle/const'
+import CustomAntdModal from 'common/js/components/custom_antd_modal'
+import { Tabs } from 'antd'
 
 Event.on(EVENT_NAME.MODAL_TABSNOTE_SHOW, pointData => {
   let tabs = (pointData.data && pointData.data.tabs) || []
-  CustomModal.show({
+  CustomAntdModal.show({
+    centered: true,
     wrapClassName: 'modal__tabs_note',
-    render: prpos => <TabsNote tabs={tabs} />
+    render: () => <TabsNote tabs={tabs} />
   })
 })
 
 const TabsNote = ({ tabs }) => (
-  <Tabs tabs={tabs}>
+  <Tabs>
     {tabs.map(item => {
-      console.log(item)
       return (
-        <div
-          className="u-padding-10"
-          key={item['key']}
-          dangerouslySetInnerHTML={{ __html: decodeURIComponent(item.content) }}
-        />
+        <Tabs.TabPane tab={item['title']} key={item['key']}>
+          <div className="u-padding-10" dangerouslySetInnerHTML={{ __html: decodeURIComponent(item.content) }} />
+        </Tabs.TabPane>
       )
     })}
   </Tabs>
