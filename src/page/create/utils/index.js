@@ -82,4 +82,26 @@ const previewAnimation = (selector, animations, interval = 10) => {
     })
 }
 
-export { Drag, convertBase64UrlToBlob, previewAnimation }
+// 根据秒数获取时间格式字符串    72 => 01:12
+const getTimeByNum = (val = 0) => {
+  let minute = parseInt(val / 60, 10)
+  if (minute < 10) {
+    minute = '0' + minute
+  }
+
+  let second = parseInt(val % 60, 10)
+  if (second < 10) {
+    second = '0' + second
+  }
+  return `${minute}:${second}`
+}
+
+// 根据时间获取秒数 01:12 => 72
+const getNumByTime = (text = '') => {
+  let times = text.split(':')
+  let time = Number(times[0]) * 60 + Number(times[1])
+  if (!time) time = 0
+  return time
+}
+
+export { Drag, convertBase64UrlToBlob, previewAnimation, getTimeByNum, getNumByTime }

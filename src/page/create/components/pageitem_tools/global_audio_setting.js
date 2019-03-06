@@ -12,22 +12,10 @@
  * }
  */
 import React, { Component } from 'react'
-import { Alert, Slider, Row, Col, Button, Tag, message } from 'antd'
+import { Alert, Slider, Row, Col, Button, Tag, message, Input, Tooltip } from 'antd'
 import { CustomAntdFooter } from 'common/js/components/custom_antd_modal'
+import { getNumByTime, getTimeByNum } from '@/page/create/utils'
 import './global_audio_setting.less'
-
-const getFormatTime = val => {
-  let minute = parseInt(val / 60, 10)
-  if (minute < 10) {
-    minute = '0' + minute
-  }
-
-  let second = parseInt(val % 60, 10)
-  if (second < 10) {
-    second = '0' + second
-  }
-  return `${minute}:${second}`
-}
 
 class GlobalAudioSetting extends Component {
   constructor(props) {
@@ -41,6 +29,14 @@ class GlobalAudioSetting extends Component {
       globalSetting['globalAudio'][pointId] &&
       globalSetting['globalAudio'][pointId]['data']) || [{ pageIndex: pageIndex, time: 0 }]
 
+    // 给文本框使用的
+    let data = []
+    globalAudioData.map(item => {
+      if (item) {
+        data[item['pageIndex']] = getTimeByNum(item['time'])
+      }
+    })
+
     let mp3Src = (pointData.data && pointData.data.src) || ''
 
     this.state = {
@@ -49,7 +45,7 @@ class GlobalAudioSetting extends Component {
       duration: 0,
       currentTime: 0,
       mp3Src: mp3Src,
-      globalAudioData: globalAudioData
+      data: data
     }
 
     this.playerAudio = null
@@ -100,22 +96,33 @@ class GlobalAudioSetting extends Component {
     },
     // 选择时间
     selectTime: index => {
-      let { globalAudioData, currentTime } = this.state
-      globalAudioData[index] = { pageIndex: index, time: parseInt(currentTime, 10) }
-      this.setState({ globalAudioData })
+      let { currentTime, data } = this.state
+      data[index] = getTimeByNum(parseInt(currentTime, 10))
+      this.setState({ data })
     },
     change: val => {
       this.playerAudio.currentTime = val
       this.setState({ currentTime: val })
     },
+    changeInput: (index, e) => {
+      let { data } = this.state
+      let text = e.target.value
+      data[index] = text
+      this.setState({ data })
+    },
     submit: () => {
-      const { mp3Src, globalAudioData } = this.state
+      const { mp3Src, data } = this.state
       const { form, pointId } = this.props
       const { getFieldValue, setFieldsValue } = form
 
       let globalSetting = getFieldValue('globalSetting') || {}
 
       globalSetting['globalAudio'] = globalSetting['globalAudio'] || []
+
+      let globalAudioData = []
+      data.map((time, index) => {
+        globalAudioData[index] = { pageIndex: index, time: getNumByTime(time) }
+      })
 
       globalSetting['globalAudio'][pointId] = {
         src: mp3Src,
@@ -130,7 +137,7 @@ class GlobalAudioSetting extends Component {
 
   render() {
     const { pageIndex } = this.props
-    const { pages, duration, currentTime, globalAudioData, play } = this.state
+    const { pages, duration, currentTime, data, play } = this.state
 
     return (
       <div className="global-audio-setting">
@@ -145,11 +152,11 @@ class GlobalAudioSetting extends Component {
             value={currentTime}
             min={0}
             max={duration}
-            tipFormatter={val => getFormatTime(val)}
+            tipFormatter={val => getTimeByNum(val)}
             onChange={this.action.change}
           />
           <Tag style={{ width: '100px' }}>
-            {getFormatTime(currentTime)}/{getFormatTime(duration)}
+            {getTimeByNum(currentTime)}/{getTimeByNum(duration)}
           </Tag>
           <Button
             shape="circle"
@@ -162,13 +169,34 @@ class GlobalAudioSetting extends Component {
         <Row gutter={16} type="flex">
           {pages.map((item, index) => {
             let src = item.baseInfo && item.baseInfo.bgSrc
-            let time = (globalAudioData[index] && globalAudioData[index]['time']) || 0
+            let disabled = index <= pageIndex
+            let time = data[index]
+
             return (
               <Col key={index} span={6}>
                 <div style={{ backgroundImage: `url(${src})` }}>
-                  <Button disabled={index <= pageIndex} onClick={this.action.selectTime.bind(this, index)}>
-                    {time !== undefined ? getFormatTime(time) : <span style={{ color: '#ccc' }}>点击设置时间</span>}
-                  </Button>
+                  {(!disabled || index === pageIndex) && (
+                    <div className="global-audio-setting__time">
+                      <Input
+                        size="small"
+                        type="text"
+                        value={time}
+                        disabled={disabled}
+                        placeholder="请设置时间"
+                        onChange={this.action.changeInput.bind(this, index)}
+                      />
+                      <Tooltip placement="top" title="使用当前音频时间">
+                        <Button
+                          size="small"
+                          type="primary"
+                          icon="edit"
+                          shape="circle"
+                          disabled={disabled}
+                          onClick={this.action.selectTime.bind(this, index)}
+                        />
+                      </Tooltip>
+                    </div>
+                  )}
                 </div>
               </Col>
             )
