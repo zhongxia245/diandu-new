@@ -228,6 +228,7 @@ class Tools extends Component {
             <Trigger
               pointId={`${pageIndex}_${pointIndex}`}
               pageIndex={pageIndex}
+              pointIndex={pointIndex}
               form={this.props.form}
               selectNewAreaStyle={this.state.selectNewAreaStyle}
               pointData={pointData}

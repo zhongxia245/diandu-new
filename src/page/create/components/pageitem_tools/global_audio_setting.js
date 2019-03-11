@@ -21,10 +21,11 @@ class GlobalAudioSetting extends Component {
   constructor(props) {
     super(props)
 
-    const { form, pointData, pointId, pageIndex } = props
+    const { form, pointData, pointIndex, pageIndex } = props
     const { getFieldsValue } = form
     let { pages = [], globalSetting = {} } = getFieldsValue() || {}
 
+    let pointId = `${pageIndex}_${pointIndex}`
     let globalAudioData = (globalSetting['globalAudio'] &&
       globalSetting['globalAudio'][pointId] &&
       globalSetting['globalAudio'][pointId]['data']) || [{ pageIndex: pageIndex, time: 0 }]
@@ -112,10 +113,11 @@ class GlobalAudioSetting extends Component {
     },
     submit: () => {
       const { mp3Src, data } = this.state
-      const { form, pointId } = this.props
+      const { form, pointIndex, pageIndex } = this.props
       const { getFieldValue, setFieldsValue } = form
 
       let globalSetting = getFieldValue('globalSetting') || {}
+      let pointId = `${pageIndex}_${pointIndex}`
 
       globalSetting['globalAudio'] = globalSetting['globalAudio'] || []
 

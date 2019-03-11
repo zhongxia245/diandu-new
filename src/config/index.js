@@ -2,7 +2,13 @@
  * 公共常量配置
  */
 
-import { POINT_FORMAT_CONFIG, POINT_FORMAT_TYPE, getFormatConfigByType, getFormatConfigStyle } from './point_format'
+import {
+  POINT_FORMAT_CONFIG,
+  POINT_FORMAT_TYPE,
+  POINT_FORMAT_CATEGORY,
+  getFormatConfigByType,
+  getFormatConfigStyle
+} from './point_format'
 import { POINT_TYPE, POINT_EFFECT_TYPE } from './point_type'
 
 export const PRE_PAGE_ID = '_pageitem_id_' // 点读页前缀id
@@ -46,7 +52,8 @@ export const POINT = {
   POINT_TYPE,
   POINT_EFFECT_TYPE,
   POINT_FORMAT_CONFIG,
-  POINT_FORMAT_TYPE
+  POINT_FORMAT_TYPE,
+  POINT_FORMAT_CATEGORY
 }
 
 // 根据点读点类型，获取点读点配置

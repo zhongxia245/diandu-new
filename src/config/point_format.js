@@ -6,6 +6,7 @@ import {
 } from '@/page/create/handle'
 import { hex2Rgba } from 'common/js/utils'
 
+// 格式化组件类型
 export const POINT_FORMAT_TYPE = {
   SLIDER: 'slider',
   COLOR: 'color',
@@ -14,6 +15,17 @@ export const POINT_FORMAT_TYPE = {
   SWITCH: 'switch',
   CHECKBOX_LIST: 'checkbox_list' //  多个复选框组合
 }
+
+// 2019-03-07 21:49:40
+// 分类是需要的，但是目前提供的这几种分类，无法包含所有,只有针对文本框才有非常多的格式设置，意义不是很大
+// 格式化选项的分类
+// 没有分类的统统放在分类设置里面
+export const POINT_FORMAT_CATEGORY = [
+  { label: '通用设置', key: '' },
+  { label: '文字设置', key: 'setting_text' },
+  { label: '边线设置', key: 'setting_border' }
+]
+
 // 点读点格式设置
 export const POINT_FORMAT_CONFIG = [
   {
@@ -24,26 +36,6 @@ export const POINT_FORMAT_CONFIG = [
     min: 50,
     step: 10,
     defaultValue: 100
-  },
-  {
-    type: POINT_FORMAT_TYPE.SLIDER,
-    title: '边线透明度',
-    name: 'border_opacity',
-    max: 1,
-    min: 0,
-    step: 0.05,
-    defaultValue: 0,
-    marks: { 0: '不透明', 1: '透明' }
-  },
-  {
-    type: POINT_FORMAT_TYPE.SLIDER,
-    title: '边线宽度',
-    name: 'border_width',
-    styleName: 'borderWidth',
-    max: 20,
-    min: 0,
-    step: 1,
-    defaultValue: 1
   },
   {
     type: POINT_FORMAT_TYPE.SLIDER,
@@ -58,28 +50,6 @@ export const POINT_FORMAT_CONFIG = [
   },
   {
     type: POINT_FORMAT_TYPE.COLOR,
-    title: '边线颜色',
-    name: 'border_color',
-    styleName: 'borderColor'
-  },
-  {
-    type: POINT_FORMAT_TYPE.SLIDER,
-    title: '字体大小',
-    name: 'fontsize',
-    styleName: 'fontSize',
-    max: 30,
-    min: 10,
-    step: 1,
-    defaultValue: 14
-  },
-  {
-    type: POINT_FORMAT_TYPE.COLOR,
-    title: '字体颜色',
-    name: 'color',
-    styleName: 'color'
-  },
-  {
-    type: POINT_FORMAT_TYPE.COLOR,
     title: '背景颜色',
     name: 'background_color',
     styleName: 'backgroundColor',
@@ -90,6 +60,57 @@ export const POINT_FORMAT_CONFIG = [
     title: '图形填充色',
     name: 'fill_color',
     styleName: 'fill'
+  },
+
+  // 边线设置
+  {
+    type: POINT_FORMAT_TYPE.SLIDER,
+    title: '边线透明度',
+    name: 'border_opacity',
+    max: 1,
+    min: 0,
+    step: 0.05,
+    defaultValue: 0,
+    marks: { 0: '不透明', 1: '透明' },
+    category: 'setting_border'
+  },
+  {
+    type: POINT_FORMAT_TYPE.SLIDER,
+    title: '边线宽度',
+    name: 'border_width',
+    styleName: 'borderWidth',
+    max: 20,
+    min: 0,
+    step: 1,
+    defaultValue: 1,
+    category: 'setting_border'
+  },
+
+  {
+    type: POINT_FORMAT_TYPE.COLOR,
+    title: '边线颜色',
+    name: 'border_color',
+    styleName: 'borderColor',
+    category: 'setting_border'
+  },
+  // 字体设置
+  {
+    type: POINT_FORMAT_TYPE.SLIDER,
+    title: '字体大小',
+    name: 'fontsize',
+    styleName: 'fontSize',
+    max: 30,
+    min: 10,
+    step: 1,
+    defaultValue: 14,
+    category: 'setting_text'
+  },
+  {
+    type: POINT_FORMAT_TYPE.COLOR,
+    title: '字体颜色',
+    name: 'color',
+    styleName: 'color',
+    category: 'setting_text'
   },
   {
     type: POINT_FORMAT_TYPE.SELECT,
@@ -107,10 +128,25 @@ export const POINT_FORMAT_CONFIG = [
   },
   {
     type: POINT_FORMAT_TYPE.SELECT,
-    title: '对齐方式',
-    name: 'text_align',
-    styleName: 'textAlign',
-    values: [{ key: '左对齐', value: 'left' }, { key: '居中', value: 'center' }, { key: '右对齐', value: 'right' }]
+    title: '左右对齐',
+    name: 'justify_content',
+    styleName: 'justifyContent',
+    values: [
+      { key: '左对齐', value: 'flex-strt' },
+      { key: '居中', value: 'center' },
+      { key: '右对齐', value: 'flex-end' }
+    ]
+  },
+  {
+    type: POINT_FORMAT_TYPE.SELECT,
+    title: '上下对齐',
+    name: 'align_items',
+    styleName: 'alignItems',
+    values: [
+      { key: '上对齐', value: 'flex-strt' },
+      { key: '居中', value: 'center' },
+      { key: '下对齐', value: 'flex-end' }
+    ]
   },
   {
     type: POINT_FORMAT_TYPE.CHECKBOX_LIST,
@@ -179,7 +215,8 @@ const POINT_FORMAT_CONFIG_TYPE = {
     'color',
     'background_color',
     'font_family',
-    'text_align',
+    'justify_content',
+    'align_items',
     'font_setting'
   ],
   page_shape: ['point_scale', 'btn_opacity', 'fill_color'] // 这一项不合并默认的
@@ -327,7 +364,7 @@ export const getFormatConfigStyle = (pointData, rcForm) => {
     }
 
     // 字体设置
-    else if (['font_family', 'text_align'].indexOf(key) !== -1) {
+    else if (['font_family', 'justify_content', 'align_items'].indexOf(key) !== -1) {
       if (format_config[key]) {
         let fontFamilyList = configs[i]['values']
         styles[styleName] = fontFamilyList[format_config[key]]['value']

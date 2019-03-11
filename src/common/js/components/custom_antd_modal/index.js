@@ -19,19 +19,18 @@ export const CustomAntdFooter = ({ cancelText = '取消', okText = '确定', onO
 
 const CustomAntdModal = props => {
   const { title, render, className, visible, ...otherProps } = props
+  if (!visible) return null
   return (
-    visible && (
-      <Modal
-        id="custom-antd-modal"
-        title={title}
-        footer={null}
-        visible={visible}
-        wrapClassName={classnames('custom-antd-modal', className)}
-        {...otherProps}
-      >
-        {render && render(props)}
-      </Modal>
-    )
+    <Modal
+      id="custom-antd-modal"
+      title={title}
+      footer={null}
+      visible={visible}
+      wrapClassName={classnames('custom-antd-modal', className)}
+      {...otherProps}
+    >
+      {render && render(props)}
+    </Modal>
   )
 }
 
@@ -51,7 +50,7 @@ export default {
       visible: true,
       maskClosable: false,
       keyboard: false,
-      width: 720,
+      width: 900,
       cancelText: '取消',
       okText: '确定',
       onCancel: () => {

@@ -10,9 +10,14 @@
   font-size: 14px;
   line-height: 1.5;
   user-select: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+
   &.point--active {
     background: transparent;
   }
+
   .custom-area-input__textarea {
     position: relative;
     z-index: 1;
@@ -23,6 +28,7 @@
     border-radius: 3px;
     cursor: text;
   }
+
   .custom-area-input__mask {
     position: fixed;
     top: 0;

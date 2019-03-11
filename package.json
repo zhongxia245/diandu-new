@@ -32,7 +32,7 @@
     "event-emitter": "0.3.5",
     "html-to-draftjs": "1.4.0",
     "html2canvas": "1.0.0-alpha.12",
-    "interactjs": "^1.3.4",
+    "interactjs": "^1.4.0-alpha.32+sha.7899eaa",
     "is_js": "^0.9.0",
     "iscroll": "5.2.0",
     "jquery": "^3.3.1",

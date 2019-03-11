@@ -10,7 +10,9 @@ Event.on(EVENT_NAME.VIDEO_PLAY, ({ src }) => {
   if (src) {
     Event.emit(EVENT_NAME.AUDIO_STOP)
     Event.emit(EVENT_NAME.BGAUDIO_STOP)
+
     CustomAntdModal.show({
+      title: '视频播放',
       centered: true,
       wrapClassName: 'custom-modal--video',
       render: () => (

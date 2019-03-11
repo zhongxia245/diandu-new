@@ -29,7 +29,7 @@ export default options => {
     params.top = parseInt($tar.css('top'), 10)
     options.beforeMove && options.beforeMove()
 
-    $(document).on('mousemove', function(e1) {
+    const move = function(e1) {
       e1.preventDefault()
       e1.stopPropagation()
 
@@ -38,9 +38,11 @@ export default options => {
         let disY = e1.clientY - params.currentY
         let x = params.left + disX
         let y = params.top + disY
-        throttle(options.callback({ x: x, y: y, disX: disX, disY: disY, index: $tar.data().index, e: e }), 100)
+        options.callback({ x: x, y: y, disX: disX, disY: disY, index: $tar.data().index, e: e })
       }
-    })
+    }
+
+    $(document).on('mousemove', throttle(move, 50))
 
     $(document).on('mouseup', function(e2) {
       e2.preventDefault()

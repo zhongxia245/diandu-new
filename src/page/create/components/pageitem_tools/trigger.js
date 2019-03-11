@@ -3,15 +3,16 @@ import { Checkbox, Button } from 'antd'
 import classnames from 'classnames'
 import { ReactWebUploader, CustomAntdModal } from 'common/js/components'
 import GlobalAudioSetting from './global_audio_setting'
+import VideoPlayArea from './video_play_area'
 
 class Trigger extends Component {
   showGlobalAudioModal = () => {
-    const { form, pointData, pointId, pageIndex } = this.props
+    const { form, pointData, pointIndex, pageIndex } = this.props
     CustomAntdModal.show({
       title: '设置全程音频时间节点',
       render: ({ onCancel, onOk }) => (
         <GlobalAudioSetting
-          pointId={pointId}
+          pointIndex={pointIndex}
           pageIndex={pageIndex}
           form={form}
           pointData={pointData}
@@ -25,7 +26,7 @@ class Trigger extends Component {
   // 处理触发区域类型选择
   handleTypeCheckChange = (name, e) => {
     const { pointData } = this.props
-    let data = pointData.data
+    let data = pointData.data || {}
     let checked = e.target.checked
     data['triggerType'] = checked ? name : ''
     this.props.setPointData({ data })
@@ -49,11 +50,32 @@ class Trigger extends Component {
     this.props.setPointData({ data })
   }
 
+  // 成功上传自定义图片
   handleUploadSuccessCustomImg = (file, path) => {
     const { pointData } = this.props
     let data = pointData.data
     data['customPath'] = path
     this.props.setPointData({ data })
+  }
+
+  // 设置播放区
+  handleSetPlayArea = () => {
+    const { form, pointData, pageIndex, setPointData } = this.props
+    CustomAntdModal.show({
+      title: '设置播放区',
+      render: ({ onCancel, onOk }) => {
+        return (
+          <VideoPlayArea
+            form={form}
+            pageIndex={pageIndex}
+            pointData={pointData}
+            onCancel={onCancel}
+            onOk={onOk}
+            setPointData={setPointData}
+          />
+        )
+      }
+    })
   }
 
   renderCustomArea(data) {
@@ -166,9 +188,17 @@ class Trigger extends Component {
               </Checkbox>
             </div>
           )}
+
           {data.triggerType === 'area' && this.renderCustomArea(data)}
+
           {data.triggerType === 'point' && this.renderCustomPoint(data)}
-          {pointData.type === 'video' && <Button type="primary">设置播放区</Button>}
+
+          {pointData.type === 'video' && (
+            <Button type="primary" onClick={this.handleSetPlayArea}>
+              设置播放区
+            </Button>
+          )}
+
           {pointData.isGlobalAudio && (
             <Button type="primary" onClick={this.showGlobalAudioModal}>
               设置全程音频节点

@@ -211,7 +211,6 @@ class PageItem extends Component {
   // 插入形状或者图片
   handleDrawPageShape = () => {
     CustomAntdModal.show({
-      width: 900,
       title: '图形库',
       className: 'modal__shape',
       footer: null,
@@ -282,7 +281,6 @@ class PageItem extends Component {
     }
 
     CustomAntdModal.show({
-      width: 900,
       title: '点读页模板列表',
       className: 'modal__pagetpl',
       footer: null,

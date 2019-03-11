@@ -10,7 +10,6 @@ import { CustomAntdModal } from 'common/js/components'
 class ContentModalEditor extends Component {
   handleShowModal = () => {
     CustomAntdModal.show({
-      width: 900,
       title: '设置内容',
       footer: null,
       className: 'modal__content-editor',

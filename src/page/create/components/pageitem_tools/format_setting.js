@@ -4,7 +4,6 @@
 import React from 'react'
 import { POINT, getFormatConfigByType } from '@/config'
 import Event from 'common/js/event.js'
-
 import { SliderItem, ColorItem } from '../index'
 
 export default ({
@@ -19,6 +18,8 @@ export default ({
 }) => {
   const { type, format_config = {}, data = {} } = pointData
   const CONFIG = getFormatConfigByType(type, data['triggerType'] === 'area') || []
+
+  console.log(POINT.POINT_FORMAT_CATEGORY)
 
   return (
     <div className="tools__item">

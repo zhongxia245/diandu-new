@@ -1,6 +1,7 @@
 import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
+import { message, Modal } from 'antd'
 import Event from 'common/js/event.js'
 import { EVENT_NAME } from '../../handle/const'
 import { IconFont } from 'common/js/components'
@@ -8,7 +9,7 @@ import { getVideoImage } from 'common/js/utils'
 import { isMobile } from 'common/js/utils/user_agent.js'
 import { getFormatConfigStyle, PAGE_CONTENT_TYPE } from '@/config'
 import CustomShapePoint from '../custom_shape'
-import { message, Modal } from 'antd'
+import PlayAreaVideo from './playarea_video'
 
 const DEFAULT_POINT_SIZE = 50
 
@@ -23,7 +24,8 @@ class Point extends Component {
     this.state = {
       isLoadedPoster: false,
       videoPoster: '',
-      showVideo: false
+      showVideo: false,
+      showVideoPlayArea: false
     }
   }
 
@@ -70,7 +72,6 @@ class Point extends Component {
     }
   }
   /**
-   * TODO: 后面多了，可以拆分出来
    * 点击点读点触发的操作
    * video 视频：播放视频
    * audio 音频：播放音频
@@ -91,11 +92,16 @@ class Point extends Component {
         })
         break
       case 'video':
-        Event.emit(EVENT_NAME.VIDEO_PLAY, {
-          src: src,
-          id: pointId,
-          form: form
-        })
+        // 使用播放区
+        if (pointData.data && pointData.data.playArea && pointData.data.triggerType !== 'area') {
+          this.setState({ showVideoPlayArea: !this.state.showVideoPlayArea })
+        } else {
+          Event.emit(EVENT_NAME.VIDEO_PLAY, {
+            id: pointId,
+            form: form,
+            src: src
+          })
+        }
         break
       case 'note':
         Event.emit(EVENT_NAME.MODAL_NOTE_SHOW, pointData)
@@ -128,6 +134,10 @@ class Point extends Component {
       default:
         message.info(pointData.type)
     }
+  }
+
+  toggleVideoPlayArea = () => {
+    this.setState({ showVideoPlayArea: !this.state.showVideoPlayArea })
   }
 
   renderAudioStatusEffect() {
@@ -191,16 +201,16 @@ class Point extends Component {
         onClick={
           isMobile()
             ? this.handleClickPoint.bind(this, data, pointIndex)
-            : () => {
+            : e => {
+                e.stopPropagation()
+                e.preventDefault()
                 this.setState({ showVideo: true }, () => {
                   handlePlayPcVideo(pointIndex)
                 })
               }
         }
       >
-        {isMobile() ? (
-          ''
-        ) : (
+        {!isMobile() && (
           <React.Fragment>
             <IconFont
               type="play1"
@@ -365,12 +375,20 @@ class Point extends Component {
           jsx = this.renderCustomText()
         }
       }
-    }
-    if (data.type === PAGE_CONTENT_TYPE['input']['name']) {
+    } else if (data.type === PAGE_CONTENT_TYPE['input']['name']) {
       jsx = this.renderCustomInput()
     } else if (data.type === PAGE_CONTENT_TYPE['shape']['name']) {
       jsx = this.renderCustomShape()
     }
+
+    // 音频播放区，则多加一个播放区到页面上
+    if (data.type === 'video' && pointData.playArea && pointData.playArea.x) {
+      return [
+        HocPoint(jsx, { id: `${pageIndex}_${pointIndex}` }),
+        this.state.showVideoPlayArea && <PlayAreaVideo data={pointData} onClose={this.toggleVideoPlayArea} />
+      ]
+    }
+
     return HocPoint(jsx, { id: `${pageIndex}_${pointIndex}` })
   }
 }

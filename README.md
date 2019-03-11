@@ -38,6 +38,7 @@
 - [ ] 点读点层次设置
 - [ ] 动画设置
 - [ ] 3D 模型点读点
+- [x] 视频播放区域, 做了这个任务，发现这个功能没有意义，PC 模式下，可以直接播放，手机模式下弹窗，设置位置没意义
 
 ### 3.2 展示页面
 
@@ -66,13 +67,11 @@ React 富文本编辑器
     https://github.com/facebook/draft-js
     Star 12990
 
-3. https://braft.margox.cn/
+3.  https://braft.margox.cn/
     美观的一个文档
 
 拖动，改变 div 大小的库
+
 1. http://interactjs.io/
 
-
-
-
-2. 
+2)
