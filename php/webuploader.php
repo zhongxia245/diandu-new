@@ -1,35 +1,70 @@
 <?php
-function resize_image($uploadedfile, $dst)
+/**
+ * desription 判断是否gif动画
+ * @param sting $image_file图片路径
+ * @return boolean t 是 f 否
+ */
+function check_gifcartoon($image_file)
 {
-    //     上传的图片文件
-    $src = imagecreatefromjpeg($uploadedfile);
-    //     原图片尺寸
-    list($width, $height) = getimagesize($uploadedfile);
+    $fp = fopen($image_file, 'rb');
+    $image_head = fread($fp, 1024);
+    fclose($fp);
+    return preg_match("/" . chr(0x21) . chr(0xff) . chr(0x0b) . 'NETSCAPE2.0' . "/", $image_head) ? false : true;
+}
 
-    //新    图片尺寸
-    if ($width > 1920) {
-        $newwidth = 1920;
-        $newheight = ($height / $width) * 1920;
-    } else if ($height > 1080) {
-        $newheight = 1080;
-        $newwidth = ($width / $height) * 1080;
+/**
+ * 参考地址：链接中的 方法2可行，方法1不可行
+ * http://www.php.cn/php-weizijiaocheng-377677.html
+ * desription 压缩图片
+ * @param sting $imgsrc 图片路径
+ * @param string $imgdst 压缩后保存路径
+ */
+function resize_image($imgsrc, $imgdst)
+{
+    list($width, $height, $type) = getimagesize($imgsrc);
+    if ($width >= 1920) {
+        $new_width = 1920;
+        $new_height = ($height / $width) * 1920;
+        $quality = 70;
+    } else if ($height >= 1080) {
+        $new_height = 1080;
+        $new_width = ($width / $height) * 1080;
+        $quality = 70;
     } else {
-        $newheight = $height;
-        $newwidth = $width;
+        $new_width = $width;
+        $new_height = $height;
+        $quality = 90;
     }
-
-    //     按新尺寸创建临时图片文件
-    $tmp = imagecreatetruecolor($newwidth, $newheight);
-    //     压缩图片到临时文件
-    imagecopyresampled($tmp, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-    //     将临时文件保存到指定文件
-    $ret = imagejpeg($tmp, $dst, 70);
-
-    imagedestroy($src);
-    imagedestroy($tmp);
-
-    return $ret;
-
+    switch ($type) {
+        case 1:
+            // GIF 图片压缩就没有动画了，不压缩
+            // $giftype = check_gifcartoon($imgsrc);
+            // if ($giftype) {
+            //     header('Content-Type:image/gif');
+            //     $image_wp = imagecreatetruecolor($new_width, $new_height);
+            //     $image = imagecreatefromgif($imgsrc);
+            //     imagecopyresampled($image_wp, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+            //     $result = imagejpeg($image_wp, $imgdst, $quality);
+            //     imagedestroy($image_wp);
+            // }
+            return 1;
+        case 2:
+            header('Content-Type:image/jpeg');
+            $image_wp = imagecreatetruecolor($new_width, $new_height);
+            $image = imagecreatefromjpeg($imgsrc);
+            imagecopyresampled($image_wp, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+            $result = imagejpeg($image_wp, $imgdst, $quality);
+            imagedestroy($image_wp);
+            return $result;
+        case 3:
+            header('Content-Type:image/png');
+            $image_wp = imagecreatetruecolor($new_width, $new_height);
+            $image = imagecreatefrompng($imgsrc);
+            imagecopyresampled($image_wp, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+            $result = imagejpeg($image_wp, $imgdst, $quality);
+            imagedestroy($image_wp);
+            return $result;
+    }
 }
 
 //设置上传目录
@@ -99,16 +134,11 @@ if (!empty($_FILES)) {
 
         //上传成功，返回保存的文件路径
         if (in_array($ext, $imgFile)) {
-            //图片文件，判断是否需要压缩
-            // 原图片尺寸
-            list($width, $height) = getimagesize($path . $filename . '.' . $ext);
-            if ($width > 1920 || $height > 1080) {
-                //压缩图片
-                $ret = resize_image($path . $filename . '.' . $ext, $path . $filename . '.' . $ext);
-                if (!$ret) {
-                    echo json_encode($fileName . "--image resize error!");
-                    exit();
-                }
+            //压缩图片
+            $ret = resize_image($path . $filename . '.' . $ext , $path . $filename . '.' . $ext);
+            if (!$ret) {
+                echo json_encode($fileName . "--image resize error!");
+                exit();
             }
         }
         echo json_encode($returnPath . $filename . '.' . $ext);

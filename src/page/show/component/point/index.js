@@ -245,7 +245,7 @@ class Point extends Component {
     }
     return (
       <div
-        className={classnames('point', `point__custom-area--${pointData.areaType}`, `point--${data.type}`)}
+        className={classnames('point', `point__custom-area--${pointData.areaType}`)}
         style={style}
         onClick={this.handleClickPoint.bind(this, data, pointIndex)}
       >
