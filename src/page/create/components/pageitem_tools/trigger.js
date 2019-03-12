@@ -60,13 +60,14 @@ class Trigger extends Component {
 
   // 设置播放区
   handleSetPlayArea = () => {
-    const { form, pointData, pageIndex, setPointData } = this.props
+    const { form, pointData, pointIndex, pageIndex, setPointData } = this.props
     CustomAntdModal.show({
       title: '设置播放区',
       render: ({ onCancel, onOk }) => {
         return (
           <VideoPlayArea
             form={form}
+            pointIndex={pointIndex}
             pageIndex={pageIndex}
             pointData={pointData}
             onCancel={onCancel}
@@ -193,7 +194,7 @@ class Trigger extends Component {
 
           {data.triggerType === 'point' && this.renderCustomPoint(data)}
 
-          {pointData.type === 'video' && (
+          {pointData.type === 'video' && data.triggerType !== 'area' && (
             <Button type="primary" onClick={this.handleSetPlayArea}>
               设置播放区
             </Button>

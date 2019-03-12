@@ -2,13 +2,13 @@ import './index.less'
 import React from 'react'
 import { calculateWHByDom } from 'common/js/utils'
 
-export default ({ pageIndex, form, children }) => {
+export default ({ pageIndex, form, children, domWidth = 800, domHeight = 450 }) => {
   let baseInfo = form.getFieldValue('pages')[pageIndex]['baseInfo']
   let autoWh = calculateWHByDom({
     width: baseInfo.width,
     height: baseInfo.height,
-    domWidth: 800,
-    domHeight: 450
+    domWidth: domWidth,
+    domHeight: domHeight
   })
   let styles = {
     backgroundImage: `url(${baseInfo.bgSrc})`,

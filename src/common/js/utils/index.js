@@ -6,7 +6,7 @@ import uuid from 'uuid/v4'
  * @param {str} format eg:yyyy-MM-dd hh:mm:ss
  */
 const dateFormat = (date, format) => {
-  var dateProp = {
+  let dateProp = {
     'M+': date.getMonth() + 1,
     'd+': date.getDate(),
     'h+': date.getHours(),
@@ -18,7 +18,7 @@ const dateFormat = (date, format) => {
   if (/(y+)/i.test(format)) {
     format = format.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
   }
-  for (var k in dateProp) {
+  for (let k in dateProp) {
     if (new RegExp('(' + k + ')').test(format)) {
       format = format.replace(
         RegExp.$1,
@@ -97,10 +97,10 @@ const calculateWHByDom = ({ width, height, domWidth, domHeight }) => {
  * @returns
  */
 const hex2Rgba = (colorStr, opacity) => {
-  var rgb = colorStr || '#000000'
-  var a = opacity === undefined ? 1 : opacity
-  var matches = rgb.match(/#([\da-f]{2})([\da-f]{2})([\da-f]{2})/i)
-  var rgba =
+  let rgb = colorStr || '#000000'
+  let a = opacity === undefined ? 1 : opacity
+  let matches = rgb.match(/#([\da-f]{2})([\da-f]{2})([\da-f]{2})/i)
+  let rgba =
     'rgba(' +
     matches
       .slice(1)
@@ -120,37 +120,52 @@ const hex2Rgba = (colorStr, opacity) => {
  * @param {int} scale 截图的比例
  */
 const getVideoImage = (src, currentTime, callback, scale) => {
-  scale = scale || 1
-  var id = '__video_img__' + uuid()
-  var video = document.createElement('video')
-  video.setAttribute('id', id)
-  video.style.display = 'none'
-  document.body.appendChild(video)
+  return new Promise(resolve => {
+    scale = scale || 1
+    let id = '__video_img__' + uuid()
+    let video = document.createElement('video')
+    video.setAttribute('id', id)
+    video.style.display = 'none'
+    document.body.appendChild(video)
 
-  if (video.getAttribute('src') !== src) {
-    video.setAttribute('src', src)
-    video.load()
-  }
-  video.currentTime = currentTime
-  video.addEventListener('loadeddata', function() {
-    var canvas = document.createElement('canvas')
-    canvas.width = video.videoWidth * scale
-    canvas.height = video.videoHeight * scale
-    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height)
-    var base64 = canvas.toDataURL('image/png')
+    if (video.getAttribute('src') !== src) {
+      video.setAttribute('src', src)
+      video.load()
+    }
+    video.currentTime = currentTime
+    video.addEventListener('loadeddata', function() {
+      let canvas = document.createElement('canvas')
+      canvas.width = video.videoWidth * scale
+      canvas.height = video.videoHeight * scale
+      canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height)
+      let base64 = canvas.toDataURL('image/png')
 
-    var data = {
-      totalTime: video.duration,
-      currentTime: video.currentTime,
-      videoWidth: video.videoWidth,
-      videoHeight: video.videoHeight,
-      base64: base64
-    }
-    video.parentNode.removeChild(video)
-    if (callback) {
-      callback(data)
-    }
+      let data = {
+        totalTime: video.duration,
+        currentTime: video.currentTime,
+        videoWidth: video.videoWidth,
+        videoHeight: video.videoHeight,
+        base64: base64
+      }
+      video.parentNode.removeChild(video)
+      callback && callback(data)
+      resolve(data)
+    })
   })
 }
 
-export { queryString, isDev, dateFormat, urlParam, calculateWHByDom, hex2Rgba, getVideoImage }
+const getVideoWH = (src, callback) => {
+  return new Promise(resolve => {
+    let video = document.createElement('video')
+    video.addEventListener('loadeddata', e => {
+      let data = e.path[0]
+      let info = { width: data.videoWidth, height: data.videoHeight, duration: data.duration }
+      callback && callback(info)
+      resolve(info)
+    })
+    video.src = src
+    video.load()
+  })
+}
+
+export { queryString, isDev, dateFormat, urlParam, calculateWHByDom, hex2Rgba, getVideoImage, getVideoWH }

@@ -4,6 +4,7 @@
  * @param callback 移动的回调
  */
 import { throttle } from 'lodash'
+
 export default options => {
   // 获取屏幕寛高，防止点读位移除背景图
   let params = {

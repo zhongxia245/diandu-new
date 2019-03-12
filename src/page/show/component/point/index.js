@@ -382,7 +382,7 @@ class Point extends Component {
     }
 
     // 音频播放区，则多加一个播放区到页面上
-    if (data.type === 'video' && pointData.playArea && pointData.playArea.x) {
+    if (data.type === 'video' && pointData.playArea && pointData.playArea.width) {
       return [
         HocPoint(jsx, { id: `${pageIndex}_${pointIndex}` }),
         this.state.showVideoPlayArea && <PlayAreaVideo data={pointData} onClose={this.toggleVideoPlayArea} />

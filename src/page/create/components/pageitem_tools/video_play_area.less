@@ -1,11 +1,22 @@
 .video-play-area__wapper {
-  .ant-row {
+  .ant-row-flex {
     margin-bottom: 15px;
+  }
+
+  .u-right {
+    text-align: right;
   }
 
   .video-play-area__point {
     position: absolute;
-    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #6cc;
+    border-radius: 50%;
+    background: #6cc;
+    color: #FFF;
+    font-size: 25px;
   }
 
   .video-play-area {
@@ -17,8 +28,8 @@
     overflow: hidden;
     align-items: center;
     justify-content: center;
-    width: 400px;
-    height: 275px;
+    min-width: 100px;
+    min-height: 50px;
     border: 2px solid rgb(102, 204, 204);
     border-radius: 3px;
     background: #00000044;

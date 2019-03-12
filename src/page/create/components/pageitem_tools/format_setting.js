@@ -19,8 +19,6 @@ export default ({
   const { type, format_config = {}, data = {} } = pointData
   const CONFIG = getFormatConfigByType(type, data['triggerType'] === 'area') || []
 
-  console.log(POINT.POINT_FORMAT_CATEGORY)
-
   return (
     <div className="tools__item">
       <h4>格式设置</h4>
