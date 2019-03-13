@@ -72,6 +72,7 @@ class VideoPoster extends Component {
     let style = {}
     if (base64) {
       style['backgroundImage'] = `url(${base64})`
+      style['backgroundColor'] = '#000'
     }
 
     return (

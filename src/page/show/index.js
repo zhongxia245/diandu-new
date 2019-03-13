@@ -38,7 +38,7 @@ if (id) {
       ReactDOM.render(
         <ReactIScroll iScroll={iScroll}>
           <LocaleProvider locale={zhCN}>
-            <RcShow data={data} />
+            <RcShow data={data} id={id} />
           </LocaleProvider>
         </ReactIScroll>,
         document.getElementById('app')

@@ -8,6 +8,7 @@ import { IconFont } from 'common/js/components'
 import { getVideoImage } from 'common/js/utils'
 import { isMobile } from 'common/js/utils/user_agent.js'
 import { getFormatConfigStyle, PAGE_CONTENT_TYPE } from '@/config'
+import queryString from 'common/js/utils/query_string'
 import CustomShapePoint from '../custom_shape'
 import PlayAreaVideo from './playarea_video'
 
@@ -112,12 +113,19 @@ class Point extends Component {
       case 'link':
         if (pointData.data && pointData.data.link) {
           Modal.confirm({
+            centered: true,
             title: '跳转提示',
             content: '是否打开到该超链接点读点设置的页面?',
             okText: '打开',
             cancelText: '取消',
             onOk: () => {
-              window.open(pointData.data.link)
+              if (isMobile()) {
+                let dianduId = queryString('id')
+                localStorage.setItem('diandu:current_page_index', `${dianduId}_${pageIndex}`)
+                window.location.href = pointData.data.link
+              } else {
+                window.open(pointData.data.link)
+              }
             }
           })
         } else {
@@ -184,7 +192,8 @@ class Point extends Component {
     if (hasPoster && this.state.videoPoster) {
       // 有视频海报，则展示，否则去获取视频的第一帧当做海报
       style.display = 'block'
-      style.backgroundSize = 'inherit'
+      style.backgroundSize = 'contain'
+      style.backgroundColor = '#000'
       style.backgroundImage = `url(${this.state.videoPoster})`
     } else {
       style.display = 'none'

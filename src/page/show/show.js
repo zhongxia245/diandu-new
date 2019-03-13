@@ -51,8 +51,10 @@ export default class Show extends Component {
       effect: globalSetting.swiperEffect || 'slide', // 'slide'（普通切换、默认）,"fade"（淡入）"cube"（方块）"coverflow"（3d流）"flip"（3d翻转）
       on: {
         transitionEnd: () => {
-          this.setState({ currentIndex: this.swiper.activeIndex })
-          runBlink(this.swiper.activeIndex)
+          if (this.swiper) {
+            this.setState({ currentIndex: this.swiper.activeIndex })
+            runBlink(this.swiper.activeIndex)
+          }
         }
       }
     }
@@ -63,7 +65,18 @@ export default class Show extends Component {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev'
       }
+    } else {
+      // 如果缓存里面有记录上个页面下标，则跳转过去
+      let currentPageIndex = localStorage.getItem('diandu:current_page_index')
+      if (currentPageIndex) {
+        let info = currentPageIndex.split('_')
+        localStorage.removeItem('diandu:current_page_index')
+        if (String(this.props.id) === info[0]) {
+          swiperOptions.initialSlide = Number(info[1])
+        }
+      }
     }
+
     this.swiper = new Swiper('.swiper-container', swiperOptions)
     runAnimation(pages[0], 0)
   }

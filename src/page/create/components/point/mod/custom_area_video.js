@@ -60,6 +60,7 @@ class CustomAreaVideo extends Component {
     // 有视频海报，则展示，否则去获取视频的第一帧当做海报
     if (this.state.videoPoster) {
       pointStyle.backgroundImage = `url(${this.state.videoPoster})`
+      pointStyle.backgroundColor = '#000'
     }
 
     return (

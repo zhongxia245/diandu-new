@@ -59,7 +59,6 @@ export default class CustomShapePoint extends Component {
       top: data.y * autoWH.height,
       width: data.width * autoWH.width,
       height: data.height * autoWH.height
-      // backgroundImage: `url(${data.data.src})`   // 采用 svg 直接展示,这样可以替换颜色
     }
 
     // 使用 DOM 操作，设置 svg 颜色
